@@ -3,9 +3,7 @@
 ## Backlog
 
 - Favicon
-- Combine JS
 - Add bg color to all image cards for readability
-- Add google analytics
 - Investigate: The following properties are specified on the webpage but NOT supported for the specified 'og:type': article:publisher
 
 ## Icebox
