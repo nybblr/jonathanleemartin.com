@@ -3,7 +3,6 @@
 ## Backlog
 
 - Favicon
-- Add bg color to all image cards for readability
 - Investigate: The following properties are specified on the webpage but NOT supported for the specified 'og:type': article:publisher
 
 ## Icebox
