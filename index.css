@@ -1,5 +1,5 @@
 @import "https://unpkg.com/normalize.css@8.0.0/normalize.css";
-@import "https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i%7CLora:400,400i,700,700i";
+/* @import "https://fonts.googleapis.com/css?family=Playfair+Display:400,700%7CLora:400i,700"; */
 
 :root {
   --playfair: 'Playfair Display', 'Times', serif;

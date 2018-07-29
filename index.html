@@ -54,8 +54,41 @@
     </script>
     <!-- END SEO tags -->
 
+    <link rel="preload" href="build/index.css" as="style">
     <link rel="stylesheet" href="build/index.css">
-    <script src="https://unpkg.com/lazysizes@4.0.4/lazysizes.min.js" async=""></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v13/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v13/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/lora/v12/0QIhMX1D_JOuMw_LIftLtfOm8w.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/lora/v12/0QIvMX1D_JOuMwr7I_FMl_E.woff2" as="font" type="font/woff2" crossorigin>
+    <style type="text/css">
+      @font-face {
+        font-family: 'Lora';
+        font-style: italic;
+        font-weight: 400;
+        src: local('Lora Italic'), local('Lora-Italic'), url(https://fonts.gstatic.com/s/lora/v12/0QIhMX1D_JOuMw_LIftLtfOm8w.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: 'Lora';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Lora Regular'), local('Lora-Regular'), url(https://fonts.gstatic.com/s/lora/v12/0QIvMX1D_JOuMwr7I_FMl_E.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: 'Playfair Display';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url(https://fonts.gstatic.com/s/playfairdisplay/v13/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: 'Playfair Display';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url(https://fonts.gstatic.com/s/playfairdisplay/v13/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2) format('woff2');
+      }
+    </style>
+    <script async src="https://unpkg.com/lazysizes@4.0.4/lazysizes.min.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-6"></script>
     <script>
