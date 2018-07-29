@@ -1,5 +1,5 @@
 @import "https://unpkg.com/normalize.css@8.0.0/normalize.css";
-/* @import "https://fonts.googleapis.com/css?family=Playfair+Display:400,700%7CLora:400i,700"; */
+/* @import "https://fonts.googleapis.com/css?family=Playfair+Display:400,700%7CLora:400,400i"; */
 
 :root {
   --playfair: 'Playfair Display', 'Times', serif;
@@ -325,6 +325,8 @@ iframe {
 
 .card-light {
   --color: var(--black);
+  --secondary-color: var(--black);
+  --primary-color: var(--black);
   color: var(--color);
 }
 
