@@ -59,10 +59,10 @@
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-6"></script>
     <script>
-      window.dataLayer = [
-        ['js', new Date()],
-        ['config', 'UA-30173272-6']
-      ];
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-30173272-6');
     </script>
   </head>
   <body>
