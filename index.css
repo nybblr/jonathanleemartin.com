@@ -11,6 +11,7 @@
   --easing: cubic-bezier(.37,1.12,.07,1);
 
   --inset: 3rem;
+  --card-inset: 2rem;
 
   --break: 0.06em;
 
@@ -335,7 +336,7 @@ iframe {
 
 .card > .content {
   position: relative;
-  padding: 2rem;
+  padding: var(--card-inset);
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -347,8 +348,30 @@ iframe {
 /*     transform: translateY(-0.5em); */
 /* } */
 
-.card > .content a {
+.card > .content a,
+.card > .content iframe {
   pointer-events: all; /* Reenable clicks for links */
+}
+
+.card > .content .no-inset {
+  --margin: calc(-1 * var(--card-inset));
+  margin: 0 var(--margin) var(--margin) var(--margin);
+}
+
+.card > .content .video-wrapper {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: calc(100% * 9/16);
+}
+
+.card > .content iframe {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 
 .card > .content.content-spacey {
@@ -607,10 +630,7 @@ a.card-anchor {
   :root {
     --font-size: 4vw;
     --inset: 1.5rem;
-  }
-
-  .card > .content {
-    padding: var(--inset);
+    --card-inset: var(--inset);
   }
 
   .grid {
