@@ -147,8 +147,9 @@ a {
   font-weight: bold;
 }
 
-.testimonial-author a {
+.book-copy a {
   color: #4f7cab;
+  border-bottom: 2px solid currentColor;
 }
 
 .author-name {
@@ -165,7 +166,7 @@ a {
 }
 
 .author-bio a {
-  border-bottom: 2px solid #ffffff;
+  color: inherit;
 }
 
 .copy-banner {
