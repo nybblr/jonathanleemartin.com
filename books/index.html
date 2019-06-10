@@ -139,8 +139,8 @@
       event.preventDefault();
       stripe.redirectToCheckout({
         items: [{sku: sku, quantity: 1}],
-        successUrl: 'https://jonathanleemartin.com/books/checkout/success',
-        cancelUrl: 'https://jonathanleemartin.com/books/checkout/canceled',
+        successUrl: 'https://jonathanleemartin.com/books/checkout/success/',
+        cancelUrl: 'https://jonathanleemartin.com/books/',
       })
       .then(result => {
         if (result.error) {
