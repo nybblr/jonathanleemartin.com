@@ -74,9 +74,9 @@ a {
   height: 100%;
   border-radius: inherit;
   object-fit: cover;
+  object-position: 5% bottom;
   position: absolute;
   z-index: -1;
-  object-position: left;
   background-color: #1c252f;
 }
 
@@ -104,6 +104,7 @@ a {
 
 .book-cta {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .button-cta {
@@ -125,11 +126,17 @@ a {
   margin-right: 0.5em;
 }
 
-.button-cta:first-child {
+.button-left {
   margin-left: 0;
 }
 
-.button-cta:last-child {
+.button-right {
+  margin-right: 0;
+}
+
+.button-solo {
+  margin-top: 1em;
+  margin-left: 0;
   margin-right: 0;
 }
 
@@ -239,7 +246,7 @@ a {
   }
 
   .book-banner {
-    object-position: 60% bottom;
+    object-position: 55% bottom;
   }
 
   .book-overlay {
@@ -253,7 +260,11 @@ a {
 }
 
 @media (min-width: 850px) {
+  .book-banner {
+    object-position: 50% bottom;
+  }
+
   .book-overlay {
-    padding-left: 50%;
+    padding-left: 48%;
   }
 }
