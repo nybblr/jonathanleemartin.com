@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Encore, JavaScript! Create an MP3 reader with DataViews + TextDecoder.</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,700,700i&display=swap" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" media="screen" />
+
+    
+
+    <meta name="description" content="Learn to parse MP3 metadata with JavaScript’s ArrayBuffers, DataViews, TypedArrays and TextDecoder to create an MP3 player that works in the browser." />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://www.bignerdranch.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/amp/" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Encore, JavaScript! Create an MP3 reader with DataViews + TextDecoder." />
+    <meta property="og:description" content="Now Playing: Learn to parse MP3 metadata with JavaScript’s ArrayBuffers, DataViews, TypedArrays and TextDecoder." />
+    <meta property="og:url" content="https://www.bignerdranch.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/" />
+    <meta property="article:published_time" content="2017-03-23T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-08-09T16:04:11.000Z" />
+    <meta property="article:tag" content="JavaScript" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Encore, JavaScript! Create an MP3 reader with DataViews + TextDecoder." />
+    <meta name="twitter:description" content="Now Playing: Learn to parse MP3 metadata with JavaScript’s ArrayBuffers, DataViews, TypedArrays and TextDecoder." />
+    <meta name="twitter:url" content="https://www.bignerdranch.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="JavaScript" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "Encore, JavaScript! Create an MP3 reader with DataViews + TextDecoder.",
+    "url": "https://jonathanleemartin.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/",
+    "datePublished": "2017-03-23T12:00:00.000Z",
+    "dateModified": "2019-08-09T16:04:11.000Z",
+    "keywords": "JavaScript",
+    "description": "Now Playing: Learn to parse MP3 metadata with JavaScript’s ArrayBuffers, DataViews, TypedArrays and TextDecoder.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-30173272-1');
+</script>
+
+    <script>
+      const ghostHost = "https://jonathanleemartin.com"
+    </script>
+  </head>
+  <body class="post-template tag-javascript">
+    
+
+<div class="main-wrap">
+  
+  <header class="m-header js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://jonathanleemartin.com" class="m-logo in-mobile-topbar">
+        <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+              
+<ul role="menu">
+  <li class="only-desktop" role="menuitem">
+    <a href="https://jonathanleemartin.com" class="m-logo">
+      <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+    </a>
+  </li>
+    <li class="nav-blog">
+      <a href="https://jonathanleemartin.com/blog/">Blog</a>
+    </li>
+    <li class="nav-episodes">
+      <a href="https://jonathanleemartin.com/tldr/">Episodes</a>
+    </li>
+    <li class="nav-youtube">
+      <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a>
+    </li>
+    <li class="nav-books">
+      <a href="https://jonathanleemartin.com/books/">Books</a>
+    </li>
+  <li role="menuitem" class="js-submenu-option">
+    <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+      <span class="icon-more"></span>
+    </button>
+    <div class="m-submenu js-submenu">
+      <div class="l-wrapper in-submenu">
+        <section class="m-recent-articles">
+          <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+          <div class="js-recent-articles">
+                <div>
+                  <a href="/tldr/04-expressions/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/04-expressions.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">04. Expressions</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/03-policies/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/03-policies.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">03. Policies</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/02-router-pattern/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/02-router.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">02. Router Pattern</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/01-nested-ternaries/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">01. Nested Ternaries</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+          </div>
+        </section>
+        <section class="m-tags">
+          <h3 class="m-submenu-title">Tags</h3>
+            <ul>
+                <li>
+                  <a href="/tag/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/tag/node/">Node</a>
+                </li>
+                <li>
+                  <a href="/tag/react/">React</a>
+                </li>
+                <li>
+                  <a href="/tag/web/">Web</a>
+                </li>
+                <li>
+                  <a href="/tag/tldr/">tl;dr</a>
+                </li>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </li>
+</ul>
+
+          </nav>
+          <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+  
+  <header class="m-hero" data-aos="fade">
+  </header>
+  
+  <main>
+    <article>
+      <div class="l-content">
+        <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div class="l-post-content has-subscribe-form js-progress-content">
+            <header class="m-heading">
+              <h1 class="m-heading__title in-post">Encore, JavaScript! Create an MP3 reader with DataViews + TextDecoder.</h1>
+              <div class="m-heading__meta">
+                <a href="/tag/javascript/" class="m-heading__meta__tag">JavaScript</a>
+                <span class="m-heading__meta__divider">&bull;</span>
+                <span class="m-heading__meta__time">March 23, 2017</span>
+              </div>
+            </header>
+            <div class="pos-relative js-post-content">
+              <div class="m-share">
+                <div class="m-share__content js-sticky">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                  <a href="https://twitter.com/intent/tweet?text=Encore%2C%20JavaScript!%20Create%20an%20MP3%20reader%20with%20DataViews%20%2B%20TextDecoder.&url=https://jonathanleemartin.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                  <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
+                    <span class="icon-arrow-top"></span>
+                    <svg>
+                      <circle class="progress-ring__circle js-progress" stroke="#04aeee" fill="transparent" r="0" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/">Big Nerd Ranch blog</a>.</em></small></p>
+<p><em>Check out the <a href="https://github.com/nybblr/mp3-reader">finished code on Github</a>.</em></p>
+<p>Like all good blog posts, this one started with a <a href="https://twitter.com/nybblr/status/833770058291765248">conversation on Twitter</a>. Giovanni Cortés showed off an elegant snippet of Elixir code that leverages destructuring to parse the song metadata (title, author, etc.) from an MP3 audio file.</p>
+<p>About this time I was brainstorming new topics for <a href="/books/front-end-web-development/">our web development guide</a> about JavaScript’s high-performance data types. Although JavaScript’s destructuring isn’t as extensive as Elixir’s, it has great APIs for efficiently operating on large chunks of binary data.</p>
+<p>While reading the tweet, I was also enjoying my favorite orchestral piece—<em>Snöfrid,</em> a beautiful melodrama by the Finnish composer Jean Sibelius—over coffee. So what could be more appropriate during a caffeine high amongst Scandinavian decor than to create an MP3 metadata reader with JavaScript?</p>
+<h2 id="gettingstarted">Getting Started</h2>
+<p>To compose this masterpiece, we will use some standardized APIs available in both the browser and Node. For simplicity we will build a command-line tool with Node, but apart from reading in a file, the code will run as is in the browser!</p>
+<p>MP3 metadata, like the song’s title and composer, is stored in a format called <strong>“ID3”</strong> at the beginning (or end) of an MP3 file. We’ll just pretend it stands for “MP3 information” since the acronym’s true origins seem mysterious.</p>
+<p>There are several revisions of the ID3 spec. Giovanni’s lovely Elixir example extracts <a href="http://id3.org/ID3v1">ID3v1 metadata</a> (called “TAG”) from an MP3 file. The TAG spec is incredibly straightforward to parse since it uses fixed length fields. Unfortunately, it turned out to be too simplistic, so most of the MP3s in your music library use the much more flexible (and complex) <a href="http://id3.org/id3v2.3.0">ID3v2.3.0 spec</a>. This version supports arbitrary length metadata and internationalization via alternate text encodings.</p>
+<p>If you’re interested in seeing an ID3v1 reader, <a href="https://ericbidelman.tumblr.com/post/8343485440/reading-mp3-id3-tags-in-javascript">check out this implementation by Eric Bidelman</a>. His example uses the <a href="https://github.com/jDataView/jDataView">jDataView</a> library, which adds some nice (but non-standard) methods to the <code>DataView</code> API.</p>
+<p><strong>We are going to tackle the ID3v2 spec,</strong> so our JavaScript MP3 reader won’t be an apples-to-apples comparison with the Elixir example, but meanwhile we will explore a few more Web APIs!</p>
+<p>Let’s set up the Node project:</p>
+<pre><code class="language-bash"># Create project directory
+$ mkdir mp3-reader &amp;&amp; cd mp3-reader
+
+# Init package.json with defaults
+$ npm init -y
+
+# Install TextDecoder polyfill
+$ npm install --save text-encoding
+
+# Create main file and make it executable
+$ touch index.js &amp;&amp; chmod u+x index.js
+</code></pre>
+<h2 id="readinginafile">Reading in a File</h2>
+<p>First off, we need to read in a file. In <code>index.js</code>, we’ll use the core <code>fs</code> library to asynchronously read in the specified MP3 file. This is the <em>only</em> Node specific code—after you read in a file, everything else will work in the browser!</p>
+<pre><code class="language-javascript">#!/usr/bin/env node
+let fs = require('fs');
+
+const file = process.argv[2];
+
+fs.readFile(file, (err, data) =&gt; {
+
+});
+</code></pre>
+<p>Since this is an executable file, the first line—called a “<a href="https://en.wikipedia.org/wiki/Shebang_%28Unix%29">shebang</a>”—instructs the shell to execute this script with the Node interpreter. Now we can run it in the terminal:</p>
+<pre><code class="language-bash">./index.js fixtures/sibelius.mp3
+</code></pre>
+<p>When we execute <code>index.js</code>, <code>process.argv</code> will look like this:</p>
+<pre><code class="language-javascript">[ '/Users/jonathan/.nvm/versions/node/v6.10.0/bin/node',
+  '/Users/jonathan/projects/mp3-reader/index.js',
+  'fixtures/sibelius.mp3' ]
+</code></pre>
+<p><code>process.argv</code> is an array of at least two items: the full path to the Node executable and the full path to <code>index.js</code>. Any extra arguments passed to our script will begin at index 2, so <code>process.argv[2]</code> will be the path to the MP3 file we should read.</p>
+<p>The <code>fs.readFile()</code> method accepts a callback, which will be invoked with an error argument and a Node <a href="https://nodejs.org/api/buffer.html"><code>Buffer</code></a> object. <code>Buffer</code>s have been around for a while, but they are specific to Node—you won’t find <code>Buffer</code>s in the browser. However, <a href="https://nodejs.org/api/buffer.html#buffer_buffers_and_typedarray">Node has switched the underlying implementation</a> of <code>Buffer</code> to a standardized JavaScript datatype: <code>ArrayBuffer</code>. In fact, <code>Buffer</code> objects have a <code>.buffer</code> property which returns the underlying <code>ArrayBuffer</code>!</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer"><code>ArrayBuffer</code>s</a> are a performant way to store large chunks of data, especially binary data. You’ll find them in graphics APIs like <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGL</a> and in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Transferable">multithreading</a>. Since they’re part of the core language library, <strong>you can use <code>ArrayBuffer</code>s in both Node.js <em>and</em> the browser!</strong></p>
+<p>To grab the Node <code>Buffer</code>’s underlying <code>ArrayBuffer</code>, we can destructure the <code>data</code> argument, which contains a Node <code>Buffer</code>, to extract just its <code>.buffer</code> property:</p>
+<pre><code class="language-javascript">...
+
+fs.readFile(file, (err, data) =&gt; {
+  if (err) { throw err; }
+
+  let { buffer } = data;
+});
+</code></pre>
+<p>This fancy destructuring syntax is equivalent to <code>let buffer = data.buffer</code>. Now we’re ready to do the actual parsing!</p>
+<h2 id="parsingtheid3header">Parsing the ID3 Header</h2>
+<p>ID3v2 metadata comes at the beginning of the MP3 file and starts off with a 10 byte header. The first 3 bytes should always be the string <code>ID3</code>, followed by 7 more bytes.</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/id3-header.png" alt="Layout of ID3 metadata"></p>
+<p>The first two bytes after <code>ID3</code> (bytes 4 and 5) are version numbers. However, we can’t directly access the data in an <code>ArrayBuffer</code>: we need to create a <code>DataView</code> object to “view” that data.</p>
+<pre><code class="language-javascript">...
+
+const HEADER_SIZE = 10;
+
+fs.readFile(file, (err, data) =&gt; {
+  ...
+
+  let header = new DataView(buffer, 0, HEADER_SIZE);
+
+  let major = header.getUint8(3);
+  let minor = header.getUint8(4);
+  let version = `ID3v2.${major}.${minor}`;
+  console.log(version);
+});
+</code></pre>
+<p><code>DataView</code>s do not contain the data themselves, but they provide a “window” to “peer” into an <code>ArrayBuffer</code>. This means you can create multiple <code>DataView</code>s for the same <code>ArrayBuffer</code>—a clever design pattern for referencing the same chunk of memory with a different lens.</p>
+<p>When creating a <code>DataView</code>, we specify the byte offset of where we want the “window” to start and how many bytes afterwards should be visible. While these two arguments are optional, they prevent us from “peering too far” and will throw useful exceptions if we attempt to access anything beyond these specified boundaries.</p>
+<p>To grab the ID3 version numbers, we used the <code>.getUint8()</code> method. This method reads a single byte at the specified position relative to the <code>DataView</code>’s offset. In this case, it reads bytes 3 and 4 relative to an offset of 0.</p>
+<p>The ID3 metadata section can be fairly long, so next we need to know the ID3 metadata’s total size (in bytes) so we don’t read too far and begin parsing the actual MP3 audio data.</p>
+<pre><code class="language-javascript">...
+
+let synchToInt = synch =&gt; {
+  const mask = 0b01111111;
+  let b1 = synch &amp; mask;
+  let b2 = (synch &gt;&gt; 8) &amp; mask;
+  let b3 = (synch &gt;&gt; 16) &amp; mask;
+  let b4 = (synch &gt;&gt; 24) &amp; mask;
+
+  return b1 | (b2 &lt;&lt; 7) | (b3 &lt;&lt; 14) | (b4 &lt;&lt; 21);
+};
+
+fs.readFile(file, (err, data) =&gt; {
+  ...
+
+  let size = synchToInt(header.getUint32(6));
+});
+</code></pre>
+<p>Quite a bit going on there! Let's break this down. We read a 32-bit integer (4 bytes) starting at offset 6 (bytes 7–10) of the header that tells us how long the rest of the metadata is. Unfortunately, it’s not just a simple 32-bit integer: it’s a so-called “synchsafe” integer.</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/synchsafe-integer.png" alt="Synchsafe integers"></p>
+<p>A <a href="https://en.wikipedia.org/wiki/Synchsafe">synchsafe integer</a> is essentially a 28-bit integer with a <code>0</code> added after every 7 bits. It’s pretty weird, but luckily we have low level boolean logic at our fingertips: we’ll just break up the synchsafe integer into 4 bytes, then combine them back with the 8th bit of each byte removed.</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/synchsafe-to-integer.png" alt="Converting a synchsafe integer to a regular integer"></p>
+<p>Why doesn’t the ID3 spec just use a regular 32-bit integer? MP3 was designed to be broadcast friendly, so audio players need to be able to play an MP3 from any given spot by watching for the next valid chunk of audio. Each chunk of audio begins with 11 bits set to <code>1</code> called the “frame sync.” By using synchsafe integers in the metadata section, this prevents interference with the “frame sync” mechanism. It’s still quite possible to have a sequence of 11 true bits elsewhere, but it’s fairly unlikely and players can easily perform correctness checks.</p>
+<p>We’re done reading the 10-byte ID3 header, now it’s time to start looping through the “frames” that come next:</p>
+<pre><code class="language-javascript">...
+
+fs.readFile(file, (err, data) =&gt; {
+  ...
+
+  let offset = HEADER_SIZE;
+  let id3Size = HEADER_SIZE + size;
+
+  while (offset &lt; id3Size) {
+
+  }
+});
+</code></pre>
+<p>ID3 metadata is stored in consecutive chunks called “frames.” Each frame represents a separate key-value pair, like the song’s title or composer. We can read them in by parsing one frame at a time, then skipping by the size of that frame to read the next one until we reach the end of the ID3 metadata. In a moment, we’ll write a function called <code>decodeFrame()</code> to handle this, but if it was implemented we could parse all the frames like such:</p>
+<pre><code class="language-javascript">...
+
+fs.readFile(file, (err, data) =&gt; {
+  ...
+
+  while (offset &lt; id3Size) {
+    let frame = decodeFrame(buffer, offset);
+    if (!frame) { break; }
+    console.log(`${frame.id}: ${frame.value.length &gt; 200 ? '...' : frame.value}`);
+    offset += frame.size;
+  }
+});
+</code></pre>
+<h2 id="parsinganid3frame">Parsing an ID3 Frame</h2>
+<p>Time to implement <code>decodeFrame()</code>! This function should return an object for one frame (key-value pair) structured like this:</p>
+<pre><code class="language-javascript">{ id: 'TIT2',
+  value: 'Snöfrid (Snowy Peace)',
+  lang: 'eng',
+  size: 257 }
+</code></pre>
+<p>Each frame begins with a 10-byte header, then is followed by the frame’s actual content (the value).</p>
+<pre><code class="language-javascript">...
+
+let decodeFrame = (buffer, offset) =&gt; {
+  let header = new DataView(buffer, offset, HEADER_SIZE + 1);
+  if (header.getUint8(0) === 0) { return; }
+};
+</code></pre>
+<p>After creating an 11-byte <code>DataView</code> (why 11 instead of 10? Hang tight) to inspect the frame’s header, we checked to make sure the first byte isn’t a zero, which would indicate there are no more frames to decode. Many MP3 encoders pad the ID3 metadata section with extra <code>0</code>s (usually 2048 bytes of “null-padding”) to give audio players like iTunes room to insert more metadata without disturbing the rest of the file.</p>
+<p>If the frame doesn’t start with zero, it’s safe to read in the first part of the header: the 4-byte frame ID. Frames are basically a single key-value pair, and the frame ID is the “key” of that pair:</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/id3-frame.png" alt="ID3 Frame format"></p>
+<pre><code class="language-javascript">...
+
+let { TextDecoder } = require('text-encoding');
+let decode = (format, string) =&gt; new TextDecoder(format).decode(string);
+
+let decodeFrame = (buffer, offset) =&gt; {
+  ...
+
+  let id = decode('ascii', new Uint8Array(buffer, offset, 4));
+};
+</code></pre>
+<p>The 4-character frame ID is encoded as an ASCII string, like <code>TIT2</code> (Title) or <code>TCOM</code> (Composer). To read in multiple bytes at a time, we need a different kind of view called a <code>TypedArray</code>. It’s not a constructor you’ll invoke directly, rather it refers to a class of fixed size homogeneous arrays. So to read in a list of unsigned 8-bit integers, we create a new <code>Uint8Array</code> typed array. If we wanted to read in signed (negative) numbers, we would use the <code>Int8Array</code> constructor instead, but that makes no sense for reading in ASCII bytes.</p>
+<p>It’s not enough to fetch an array of 4 bytes—they need to be interpreted, or “decoded,” into a string. Frame IDs map directly to ASCII characters, so we invoked the <code>TextDecoder</code> constructor and its <code>.decode()</code> method to convert the byte array to a string.</p>
+<p>Earlier we created an 11-byte <code>DataView</code> starting at the frame’s beginning. After the 4-byte frame ID comes the frame’s size:</p>
+<pre><code class="language-javascript">...
+
+let decodeFrame = (buffer, offset) =&gt; {
+  ...
+
+  let size = header.getUint32(4);
+  let contentSize = size - 1;
+  let encoding = header.getUint8(HEADER_SIZE);
+
+  let contentOffset = offset + HEADER_SIZE + 1;
+};
+</code></pre>
+<p>Bytes at indices 4–7 represent the rest of the frame’s size as an unsigned 32-bit integer. We don’t care about the 2 flag bytes which follow, so we are done decoding the frame header. But since it is only 10 bytes long, why did we read in 11? The first byte after the frame header (the 11th byte, index 10) specifies how the frame’s content is encoded, so in a way it is part of the frame header. To compensate for this “extra header byte,” we increased the <code>contentOffset</code> and decreased <code>contentSize</code> by <code>1</code>.</p>
+<p>This “encoding byte” can be set to <code>0</code>, <code>1</code>, <code>2</code> or <code>3</code>, and maps to a text encoding like <code>ascii</code> or <code>utf-8</code>. This will help immensely, otherwise we might get gobbledygook if we mistakenly interpreted <code>utf-8</code> text as <code>ascii</code>.</p>
+<h2 id="decodingstrings">Decoding Strings</h2>
+<p>Finally, the frame’s real content begins at offset 11 of the frame. In addition to the encoding byte, some frames are also prefixed with a language descriptor:</p>
+<pre><code class="language-javascript">...
+
+const LANG_FRAMES = [
+  'USLT',
+  'SYLT',
+  'COMM',
+  'USER'
+];
+
+let decodeFrame = (buffer, offset) =&gt; {
+  ...
+
+  let lang;
+  if (LANG_FRAMES.includes(id)) {
+    lang = decode('ascii', new Uint8Array(buffer, contentOffset, 3));
+    contentOffset += 3;
+    contentSize -= 3;
+  }
+};
+</code></pre>
+<p>The language identifier is a 3 letter ASCII string, like <code>eng</code> or <code>deu</code>. Only certain frame types, like <code>COMM</code> (Comments), have a language identifier. Now onward to the real content!</p>
+<pre><code class="language-javascript">...
+
+const ID3_ENCODINGS = [
+  'ascii',
+  'utf-16',
+  'utf-16be',
+  'utf-8'
+];
+
+let decodeFrame = (buffer, offset) =&gt; {
+  ...
+
+  let value = decode(ID3_ENCODINGS[encoding],
+    new Uint8Array(buffer, contentOffset, contentSize));
+};
+</code></pre>
+<p>We finally grab the rest of the frame and decode the bytestream based on the encoding byte. For example, when <code>encoding</code> is set to <code>0</code> we interpret the frame’s content as <code>ascii</code>.</p>
+<p>Now we just need to send everything back in a nice package:</p>
+<pre><code class="language-javascript">...
+
+let decodeFrame = (buffer, offset) =&gt; {
+  ...
+
+  return {
+    id, value, lang,
+    size: size + HEADER_SIZE
+  };
+};
+</code></pre>
+<p>There’s one catch: the frame size didn’t include the 10 byte frame header, so we added <code>HEADER_SIZE</code> to the returned size so the <code>while</code> loop can increment its offset by <code>frame.size</code> to hop to the next frame.</p>
+<p>Time to run our script! Find an MP3 file and pass it to <code>index.js</code>. If it doesn’t print out <code>ID3v2.3.0</code>, try another MP3.</p>
+<pre><code class="language-bash">$ ./index.js fixtures/sibelius.mp3
+
+ID3v2.3.0
+PRIV: ...
+TIT2: Snöfrid (Snowy Peace), Improvisation for Reciter, Chorus and Orchestra, Op. 29
+TPE1: Lahti Symphony Orchestra, Jubilate Choir, Stina Ekblad and Osmo Vänskä
+TALB: Sibelius: The Complete Symphonies - Karelia - Lemminkäinen - Violin Concerto
+TCON: Classical
+TCOM: Jean Sibelius
+TPE3: Osmo Vänskä
+TRCK: 38/43
+TYER: 2011
+COMM: Amazon.com Song ID: 222429669
+TPE2: Lahti Symphony Orchestra and Osmo Vänskä
+TCOP: 2011 Bis
+TPOS: 1/1
+APIC: ...
+</code></pre>
+<p>Hey look! We got the special Unicode characters to interpret correctly. Good ‘ol Osmo Vänskä (the conductor) gets his proper accents for free. If the parser was even one byte off, you’d get gobbledygook. Or if you mixed your <code>ID3_ENCODINGS</code> a bit, you might find yourself staring at <a href="https://en.wikipedia.org/wiki/Byte_order_mark">byte order marks</a> (BOM) and other gunk not-meant-to-be-seen-by-mortals:</p>
+<pre><code>ID3v2.3.0
+PRIV: ...
+TIT2: ǿ﹓nöfrid (Snowy Peace), Improvisation for Reciter, Chorus and Orchestra, Op. 29�
+TPE1: ǿ﹌ahti Symphony Orchestra, Jubilate Choir, Stina Ekblad and Osmo Vänskä�
+TALB: ǿ﹓ibelius: The Complete Symphonies - Karelia - Lemminkäinen - Violin Concerto�
+TCON: ǿ﹃lassical�
+TCOM: ǿ﹊ean Sibelius�
+TPE3: ǿ﹏smo Vänskä�
+TRCK: ǿ︳8/43�
+TYER: ǿ︲011�
+COMM: ť湧䄀洀愀稀漀渀⸀挀漀洀 匀漀渀最 䤀䐀㨀 ㈀㈀㈀㐀㈀㤀㘀㘀㤀
+TPE2: ǿ﹌ahti Symphony Orchestra and Osmo Vänskä�
+TCOP: ǿ︲011 Bis�
+TPOS: ǿ︱/1�
+APIC: ...
+</code></pre>
+<p>Boom! You can <a href="https://github.com/nybblr/mp3-reader">download the finished code here</a>.</p>
+<h2 id="encore">Encore!</h2>
+<p>Thanks to the <code>ArrayBuffer</code>, <code>DataView</code>, <code>TypedArray</code> and <code>TextDecoder</code> APIs, you can easily decode binary file formats. Although dealing with file specs can be notoriously tricky, JavaScript’s console-friendly ways make it easy to practice <a href="https://en.wikipedia.org/wiki/Exploratory_programming">exploratory programming</a> to work out the kinks and off-by-one errors.</p>
+<p>If you need a more extensive MP3 metadata parser for your binary libretti, you’ll probably want to use a library like <a href="https://github.com/aadsm/jsmediatags">JSMediaTags</a>.</p>
+<p>And there you have it! A masterful binary performance of Snöfrid by the JavaScript Symphony Orchestra, conducted by Node.js.</p>
+<blockquote>
+<p><em>If you choose me, then you choose the tempest.</em><br>
+<em>For the hardy poems of the hero’s life say:</em><br>
+<em>Draw your sword against vile giants,</em><br>
+<em>bleed valiantly for the weak,</em><br>
+<em>deny yourself with pleasure, never complain,</em><br>
+<em>fight the hopeless fight and die nameless.</em><br>
+<em>That is the true heroic saga of life.</em></p>
+<p>—Viktor Rydberg</p>
+</blockquote>
+<!--kg-card-end: markdown--><!--kg-card-end: markdown-->
+            </div>
+          </div>
+        </div>
+        <section class="m-subscribe-section">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">Subscribe to our newsletter</h4>
+                <p class="m-subscribe-section__description">
+                  Get the latest posts delivered right to your inbox.
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                
+<form method="post" action="https://jonathanleemartin.us4.list-manage.com/subscribe/post?u=06192382d0d99bb3a3f789d30&amp;id=cb60b1e5bb" id="subscribe-form" class="m-subscribe-section__form">
+  <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+  <fieldset>
+    <label for="EMAIL" class="sr-only">Your email address</label>
+    <input id="EMAIL" name="EMAIL" class="m-input in-subscribe-section" placeholder="Your email address" value="" >
+  </fieldset>
+  <button id="subscribe_button" class="m-button primary block" type="submit">Subscribe</button>
+
+  
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+
+</form>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="m-author">
+          <div class="m-author__content">
+            <div class="m-author__picture">
+              <a href="/author/jonathan/" class="m-author-picture" aria-label="Author picture">
+                <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+              </a>
+            </div>
+            <div class="m-author__info">
+              <h4 class="m-author__name">
+                <a href="/author/jonathan/">Jonathan Lee Martin</a>
+              </h4>
+              <p class="m-author__bio">Jonathan is an educator, writer and international speaker. He guides developers — from career switchers to senior developers at Fortune 100 companies — through their journey into web development.</p>
+              <ul class="m-author-links">
+                <li>
+                  <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon-globe"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="m-recommended">
+          <div class="l-wrapper in-recommended">
+            <h3 class="m-section-title in-recommended">Recommended for you</h3>
+            <div class="m-recommended-articles">
+              <div class="m-recommended-slider js-recommended-articles">
+                
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript featured">
+      <div class="m-article-card__picture">
+      <a href="/blog/dont-over-react/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+        <a href="/blog/dont-over-react/" class="m-article-card__featured js-tooltip" data-tippy-content="Featured" aria-label="Article">
+          <span class="icon-star"></span>
+        </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/dont-over-react/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Don’t Over React! Render Binary Data with Class.</h2>
+          <p class="m-article-card__description">Eventually, your React web app will accept file uploads. JavaScript has exceptional APIs for handling chunks of binary data, but the interaction with React can cause some major performance hiccups. Discover the performance implications of 5 different ways to work with user-submitted binary data!</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>December 5, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript">
+      <div class="m-article-card__picture">
+      <a href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming</h2>
+          <p class="m-article-card__description">With React's stateless functional components you can create ambitious apps that are 98% plain ol' JavaScript. In this real-world example, we'll use functional programming and higher-order components to turn class-based React Components into stateless functional components.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>July 19, 2017</span>
+          <span>&bull;</span>
+          <span>10 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-javascript tag-node">
+      <div class="m-article-card__picture">
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/javascript/" class="m-article-card__tag">JavaScript</a>
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Hi, I’m Node.js and I’ll be your server today.</h2>
+          <p class="m-article-card__description">Tech stack decisions can be hard. Is Node.js the right choice for your service? Have a seat and your server will be right with you.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>April 12, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</div>
+
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results"></div>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>tl;dr &copy; 2019</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>By <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener">Jonathan Lee Martin</a></span>
+    </p>
+    <nav class="m-footer-social">
+        <a href="https://www.facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+          <span class="icon-facebook"></span>
+        </a>
+        <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+          <span class="icon-twitter"></span>
+        </a>
+    </nav>
+  </div>
+</footer>
+
+    <script defer src="/assets/js/manifest.js"></script>
+    <script defer src="/assets/js/polyfill.js"></script>
+    <script defer src="/assets/js/vendor.js"></script>
+    <script defer src="/assets/js/app.js"></script>
+
+      <script defer src="/assets/js/post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/';</script>
+
+
+    
+  </body>
+</html>

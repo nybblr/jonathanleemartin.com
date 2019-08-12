@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Cross Stitching: Elegant Concurrency Patterns for JavaScript</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,700,700i&display=swap" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" media="screen" />
+
+    
+
+    <meta name="description" content="JavaScript is well-suited for managing concurrency, and with the help of the Async IIFE design pattern, you can elegantly architecture highly concurrent web apps and back-ends." />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://www.bignerdranch.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/amp/" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Cross Stitching: Elegant Concurrency Patterns for JavaScript" />
+    <meta property="og:description" content="You&#x27;ve probably heard statements like &quot;JavaScript is a toy language, it doesn&#x27;t support multithreading!&quot; But in fact, JavaScript is tailor-made for concurrency. You&#x27;ll need some patterns to write concurrent code that is performant and readable. Enter the Async IIFE." />
+    <meta property="og:url" content="https://www.bignerdranch.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" />
+    <meta property="article:published_time" content="2017-06-01T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-08-09T16:03:26.000Z" />
+    <meta property="article:tag" content="JavaScript" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cross Stitching: Elegant Concurrency Patterns for JavaScript" />
+    <meta name="twitter:description" content="You&#x27;ve probably heard statements like &quot;JavaScript is a toy language, it doesn&#x27;t support multithreading!&quot; But in fact, JavaScript is tailor-made for concurrency. You&#x27;ll need some patterns to write concurrent code that is performant and readable. Enter the Async IIFE." />
+    <meta name="twitter:url" content="https://www.bignerdranch.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="JavaScript" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "Cross Stitching: Elegant Concurrency Patterns for JavaScript",
+    "url": "https://jonathanleemartin.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/",
+    "datePublished": "2017-06-01T12:00:00.000Z",
+    "dateModified": "2019-08-09T16:03:26.000Z",
+    "keywords": "JavaScript",
+    "description": "You&#x27;ve probably heard statements like &quot;JavaScript is a toy language, it doesn&#x27;t support multithreading!&quot; But in fact, JavaScript is tailor-made for concurrency. You&#x27;ll need some patterns to write concurrent code that is performant and readable. Enter the Async IIFE.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-30173272-1');
+</script>
+
+    <script>
+      const ghostHost = "https://jonathanleemartin.com"
+    </script>
+  </head>
+  <body class="post-template tag-javascript">
+    
+
+<div class="main-wrap">
+  
+  <header class="m-header js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://jonathanleemartin.com" class="m-logo in-mobile-topbar">
+        <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+              
+<ul role="menu">
+  <li class="only-desktop" role="menuitem">
+    <a href="https://jonathanleemartin.com" class="m-logo">
+      <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+    </a>
+  </li>
+    <li class="nav-blog">
+      <a href="https://jonathanleemartin.com/blog/">Blog</a>
+    </li>
+    <li class="nav-episodes">
+      <a href="https://jonathanleemartin.com/tldr/">Episodes</a>
+    </li>
+    <li class="nav-youtube">
+      <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a>
+    </li>
+    <li class="nav-books">
+      <a href="https://jonathanleemartin.com/books/">Books</a>
+    </li>
+  <li role="menuitem" class="js-submenu-option">
+    <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+      <span class="icon-more"></span>
+    </button>
+    <div class="m-submenu js-submenu">
+      <div class="l-wrapper in-submenu">
+        <section class="m-recent-articles">
+          <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+          <div class="js-recent-articles">
+                <div>
+                  <a href="/tldr/04-expressions/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/04-expressions.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">04. Expressions</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/03-policies/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/03-policies.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">03. Policies</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/02-router-pattern/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/02-router.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">02. Router Pattern</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/01-nested-ternaries/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">01. Nested Ternaries</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+          </div>
+        </section>
+        <section class="m-tags">
+          <h3 class="m-submenu-title">Tags</h3>
+            <ul>
+                <li>
+                  <a href="/tag/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/tag/node/">Node</a>
+                </li>
+                <li>
+                  <a href="/tag/react/">React</a>
+                </li>
+                <li>
+                  <a href="/tag/web/">Web</a>
+                </li>
+                <li>
+                  <a href="/tag/tldr/">tl;dr</a>
+                </li>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </li>
+</ul>
+
+          </nav>
+          <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+  
+  <header class="m-hero" data-aos="fade">
+  </header>
+  
+  <main>
+    <article>
+      <div class="l-content">
+        <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div class="l-post-content has-subscribe-form js-progress-content">
+            <header class="m-heading">
+              <h1 class="m-heading__title in-post">Cross Stitching: Elegant Concurrency Patterns for JavaScript</h1>
+              <div class="m-heading__meta">
+                <a href="/tag/javascript/" class="m-heading__meta__tag">JavaScript</a>
+                <span class="m-heading__meta__divider">&bull;</span>
+                <span class="m-heading__meta__time">June 1, 2017</span>
+              </div>
+            </header>
+            <div class="pos-relative js-post-content">
+              <div class="m-share">
+                <div class="m-share__content js-sticky">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                  <a href="https://twitter.com/intent/tweet?text=Cross%20Stitching%3A%20Elegant%20Concurrency%20Patterns%20for%20JavaScript&url=https://jonathanleemartin.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                  <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
+                    <span class="icon-arrow-top"></span>
+                    <svg>
+                      <circle class="progress-ring__circle js-progress" stroke="#04aeee" fill="transparent" r="0" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/">Big Nerd Ranch blog</a>.</em></small></p>
+<p><em>&quot;JavaScript is single-threaded, so it doesn't scale. JavaScript is a toy language because it doesn't support multithreading.&quot;</em> Outside (and inside) the web community, statements like these are common.</p>
+<p>And in a way, it's true: JavaScript’s event loop means your program does <strong>one thing at a time.</strong> This intentional design decision shields us from an entire class of multithreading woes, but it has also birthed the misconception that JavaScript can’t handle concurrency.</p>
+<p>But in fact, JavaScript's design is well-suited for solving a plethora of concurrency problems without succumbing to the &quot;gotchas&quot; of other multithreaded languages. You might say that JavaScript is single-threaded… just so it can be multithreaded!</p>
+<h2 id="recapconcurrency">Recap: Concurrency</h2>
+<p>You may want to do some homework if &quot;<a href="https://en.wikipedia.org/wiki/Concurrent_computing">concurrency</a>&quot; and &quot;<a href="https://en.wikipedia.org/wiki/Parallel_computing">parallelism</a>&quot; are new to your vocabulary. <strong>TL;DR:</strong> for simple programs, we usually write &quot;sequential&quot; or (&quot;serial&quot;) code: one step executes at a time, and must complete before the next step begins. If JavaScript could perform a &quot;blocking&quot; AJAX request with <code>ajaxSync()</code>, serial code might look like this:</p>
+<pre><code class="language-javascript">console.log('About to make a request.');
+let json = ajaxSync('https://api.google.com/search.json');
+console.log(json);
+console.log('Finished the request.');
+
+/*
+  =&gt; About to make a request.
+  ... AJAX request runs ...
+  ... a couple seconds later ...
+  ... AJAX request finishes ...
+  =&gt; { all: ['the', 'things'] }
+  =&gt; Finished the request.
+*/
+</code></pre>
+<p>Until the AJAX request completes, JavaScript pauses (or &quot;blocks&quot;) any lines below from executing. In contrast, concurrency is when the execution of one series of steps can overlap another series of steps. In JavaScript, concurrency is often accomplished with async Web APIs and a callback:</p>
+<pre><code class="language-javascript">console.log('About to make a request.');
+ajaxAsync('https://api.google.com/search.json', json =&gt; {
+  console.log(json);
+  console.log('Finished the request.');
+});
+console.log('Started the request.');
+
+/*
+  =&gt; About to make a request.
+  ... AJAX request runs in the background ...
+  =&gt; Started the request.
+  ... a couple seconds later ...
+  ... AJAX requests finishes ...
+  =&gt; { all: ['the', 'things'] }
+  =&gt; Finished the request.
+*/
+</code></pre>
+<p>In this second version, the AJAX request only &quot;blocks&quot; the code <em>inside</em> the callback (logging the AJAX response), but the JavaScript runtime will go on executing lines after the AJAX request.</p>
+<h2 id="recapeventloop">Recap: Event Loop</h2>
+<p>The JavaScript runtime uses a mechanism, called the &quot;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">event loop</a>,&quot; to keep track of all in-progress async operations so it can notify your program when an operation finishes. If you are unfamiliar with the event loop, check out Philip Robert's exceptional 20 minute overview from ScotlandJS: &quot;<a href="https://vimeo.com/96425312">Help, I'm stuck in an event-loop</a>.&quot;</p>
+<p>Thanks to the event loop, a single thread can perform an admirable amount of work concurrently. But why not just reach for multithreading?</p>
+<p>Software is harder to write (and debug) when it constantly switches between different tasks through multithreading. So unlike many languages, JavaScript finishes one thing at a time—a constraint called &quot;run-to-completion&quot;—and queues up other things to do in the background. Once the current task is done, it grabs the next chunk of work off the queue and executes to completion.</p>
+<p>Since the JavaScript runtime never interrupts code that is already executing on the call stack, you can be sure that shared state (like global variables) won't randomly change mid-function—<a href="https://en.wikipedia.org/wiki/Reentrancy_(computing)">reentrancy</a> isn't even a thing! Run-to-completion makes it easy to reason about highly concurrent code, for which reason Node.js is so popular for backend programming.</p>
+<p>Although your JavaScript code is single-threaded and only does one thing at a time, <em>the JavaScript Runtime and Web APIs are multithreaded!</em> When you pass a callback function to <code>setTimeout()</code> or start an AJAX request with <code>fetch()</code>, you are essentially spinning up a background thread in the runtime. Once that background thread completes, and once the current call stack finishes executing, your callback function is pushed onto the (now empty) call stack and run-to-completion. So your JavaScript code itself is single-threaded, but it <em>orchestrates</em> legions of threads!</p>
+<p>However, we need some patterns to write concurrent code that is performant <em>and</em> readable.</p>
+<h2 id="recappromisechaining">Recap: Promise Chaining</h2>
+<p>Suppose we are building a media library app in the browser and are writing a function called <code>updateMP3Meta()</code> that will read in an MP3 file, parse out some <a href="/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/">ID3 metadata</a> (e.g. song title, composer, artist) and update a matching <code>Song</code> record in the database. Assuming the <code>read()</code>, <code>parseMP3()</code> and <code>Song.findByName()</code> functions return <code>Promise</code>s, we could implement it like this:</p>
+<pre><code class="language-javascript">let read     = (path) =&gt; { ... }; // returns a Promise
+let parseMP3 = (file) =&gt; { ... }; // returns a Promise
+let Song = {
+  findByName(name) { ... } // returns a Promise
+};
+
+let updateMP3Meta = (path) =&gt; {
+  return read(path)
+    .then(file =&gt; {
+      return parseMP3(file).then(meta =&gt; {
+        return Song.findByName(file.name).then(song =&gt; {
+          Object.assign(song, meta);
+          return song.save();
+        });
+      });
+    });
+};
+</code></pre>
+<p>It does the job, but nested <code>.then()</code> callbacks quickly turn into callback hell and obscure intent… and bugs. We might try using <code>Promise</code> chaining to flatten the callback chain:</p>
+<pre><code class="language-javascript">let updateMP3Meta = (path) =&gt; {
+  return read(path)
+    .then(file =&gt; parseMP3(file))
+    .then(meta =&gt; Song.findByName(file.name))
+    .then(song =&gt; {
+      Object.assign(song, meta);
+      return song.save();
+    });
+};
+</code></pre>
+<p>This reads nicely, but unfortunately it won't work: we can't access the <code>file</code> variable from the second <code>.then()</code> callback, nor <code>meta</code> from the third <code>.then()</code> anymore! <code>Promise</code> chaining can tame callback hell, but only by forfeiting JavaScript's closure superpowers. It's hardly ideal—local variables are the bread-and-butter of state management in functional programming.</p>
+<h2 id="recapasyncfunctions">Recap: Async Functions</h2>
+<p>Luckily, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">ES2017 <code>async</code> functions</a> merge the benefits of both approaches. Rewriting our <code>updateMP3Meta()</code> as an <code>async</code> function yields:</p>
+<pre><code class="language-javascript">let updateMP3Meta = async (path) =&gt; {
+  let file = await read(path);
+  let meta = await parseMP3(file);
+  let song = await Song.findByName(file.name);
+  Object.assign(song, meta);
+  return song.save();
+};
+</code></pre>
+<p>Hurray! <code>async</code> functions give us local scoping back without descending into callback hell.</p>
+<p>However, <code>updateMP3Meta()</code> unnecessarily forces some things to run serially. In particular, MP3 parsing and searching the database for a matching <code>Song</code> can actually be done in parallel; but the <code>await</code> operator forces <code>Song.findByName()</code> to run only after <code>parseMP3()</code> finishes.</p>
+<h2 id="workinginparallel">Working in Parallel</h2>
+<p>To get the most out of our single-threaded program, we need to invoke JavaScript's event loop superpowers. We can queue two async operations and wait for both to complete:</p>
+<pre><code class="language-javascript">let updateMP3Meta = (path) =&gt; {
+  return read(path)
+    .then(file =&gt; {
+      return Promise.all([
+        parseMP3(file),
+        Song.findByName(file.name)
+      ]);
+    })
+    .then(([meta, song]) =&gt; {
+      Object.assign(song, meta);
+      return song.save();
+    });
+};
+</code></pre>
+<p>We used <code>Promise.all()</code> to wait for concurrent operations to finish, then aggregated the results to update the <code>Song</code>. <code>Promise.all()</code> works just fine for a few concurrent spots, but code quickly devolves when you alternate between chunks of code that can be executed concurrently and others that are serial. This intrinsic ugliness is not much improved with <code>async</code> functions:</p>
+<pre><code class="language-javascript">let updateMP3Meta = async (path) =&gt; {
+  let file = await read(path);
+  let metaPromise = parseMP3(file);
+  let songPromise = Song.findByName(file.name);
+
+  let meta = await metaPromise;
+  let song = await songPromise;
+
+  Object.assign(song, meta);
+  return song.save();
+};
+</code></pre>
+<p>Instead of using an inline <code>await</code>, we used <code>[meta|song]Promise</code> local variables to begin an operation without blocking, then <code>await</code> both promises. While <code>async</code> functions make concurrent code easier to read, there is an underlying structural ugliness: we are manually telling JavaScript what parts can run concurrently, and when it should block for serial code. It's okay for a spot or two, but when multiple chunks of serial code can be run concurrently, it gets incredibly unruly.</p>
+<p>We are essentially deriving the <a href="https://en.wikipedia.org/wiki/Dependency_graph#Deriving_an_evaluation_order">evaluation order of a dependency tree</a>… and hardcoding the solution. This means &quot;minor&quot; changes, like swapping out a synchronous API for an async one, will cause drastic rewrites. That's a code smell!</p>
+<h2 id="realcode">Real Code</h2>
+<p>To demonstrate this underlying ugliness, let's try a more complex example. I recently worked on an <a href="/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/">MP3 importer</a> in JavaScript that involved a fair amount of async work. (Check out <a href="/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/">my blog post</a> or the <a href="https://github.com/bignerdranch/id3-meta">parser source code</a> if you're interested in working with binary data and text encodings.)</p>
+<p>The main function takes in a <code>File</code> object (from drag-and-drop), loads it into an <code>ArrayBuffer</code>, parses MP3 metadata, computes the MP3's duration, creates an <code>Album</code> in <code>IndexedDB</code> if one doesn't already exist, and finally creates a new <code>Song</code>:</p>
+<pre><code class="language-javascript">import parser from 'id3-meta';
+import read from './file-reader';
+import getDuration from './duration';
+import { mapSongMeta, mapAlbumMeta } from './meta';
+import importAlbum from './album-importer';
+import importSong from './song-importer';
+
+export default async (file) =&gt; {
+  // Read the file
+  let buffer = await read(file);
+
+  // Parse out the ID3 metadata
+  let meta = await parser(file);
+  let songMeta = mapSongMeta(meta);
+  let albumMeta = mapAlbumMeta(meta);
+
+  // Compute the duration
+  let duration = await getDuration(buffer);
+
+  // Import the album
+  let albumId = await importAlbum(albumMeta);
+
+  // Import the song
+  let songId = await importSong({
+    ...songMeta, albumId, file, duration, meta
+  });
+
+  return songId;
+};
+</code></pre>
+<p>This looks straightforward enough, but we're forcing some async operations to run sequentially that can be executed concurrently. In particular, we could compute <code>getDuration()</code> at the same time that we parse the MP3 and import a new album. However, both operations will need to finish before invoking <code>importSong()</code>.</p>
+<p>Our first try might look like this:</p>
+<pre><code class="language-javascript">export default async (file) =&gt; {
+  // Read the file
+  let buffer = await read(file);
+
+  // Compute the duration
+  let durationPromise = getDuration(buffer);
+
+  // Parse out the ID3 metadata
+  let metaPromise = parser(file);
+  let meta = await metaPromise;
+
+  let songMeta = mapSongMeta(meta);
+  let albumMeta = mapAlbumMeta(meta);
+
+  // Import the album
+  let albumIdPromise = importAlbum(albumMeta);
+
+  let duration = await durationPromise;
+  let albumId = await albumIdPromise;
+
+  // Import the song
+  let songId = await importSong({
+    ...songMeta, albumId, file, duration, meta
+  });
+
+  return songId;
+};
+</code></pre>
+<p>That took a fair amount of brain tetris to get the order of <code>await</code>s right: if we hadn't moved <code>getDuration()</code> up a few lines in the function, we would have created a poor solution since <code>importAlbum()</code> only depends on <code>albumMeta</code>, which only depends on <code>meta</code>. But this solution is still suboptimal! <code>getDuration()</code> depends on <code>buffer</code>, but <code>parser()</code> could be executing at the same time as <code>read()</code>. To get the best solution, we would have to use <code>Promise.all()</code> and <code>.then()</code>s.</p>
+<p>To solve the underlying problem without evaluating a dependency graph by hand, we need to define groups of serial steps (which execute one-by-one in a blocking fashion), and combine those groups concurrently.</p>
+<p>What if there was a way to define such a dependency graph that's readable, doesn't break closures, doesn't resort to <code>.then()</code>, and doesn't require a library?</p>
+<h2 id="asynciifes">Async IIFEs</h2>
+<p>That's where <strong>async IIFEs</strong> come in. For every group of serial (dependent) operations, we'll wrap them up into a micro API called a &quot;task&quot;:</p>
+<pre><code class="language-javascript">let myTask = (async () =&gt; {
+  let other = await otherTask;
+  let result = await doCompute(other.thing);
+  return result;
+})();
+</code></pre>
+<p>Since all <code>async</code> functions return a <code>Promise</code>, the <code>myTask</code> local variable contains a <code>Promise</code> that will resolve to <code>result</code>. I prefer to call these <code>*Task</code> instead of <code>*Promise</code>. Inside the async IIFE, operations are sequential, but outside we aren't blocking anything. Furthermore, inside a task we can wait on other tasks to finish, like <code>otherTask</code>, which could be another async IIFE.</p>
+<p>Let's turn the <code>getDuration()</code> section into a task called <code>durationTask</code>:</p>
+<pre><code class="language-javascript">let durationTask = (async () =&gt; {
+  let buffer = await readTask;
+  let duration = await getDuration(buffer);
+  return duration;
+})();
+</code></pre>
+<p>Since these tasks are defined inline, they have access to variables in the outer closure, including other tasks!</p>
+<h2 id="refactoringintoasynctasks">Refactoring into Async Tasks</h2>
+<p>Let's refactor the entire importer with async IIFEs, or &quot;tasks&quot;:</p>
+<pre><code class="language-javascript">export default async (file) =&gt; {
+  // Read the file
+  let readTask = read(file);
+
+  // Parse out the ID3 metadata
+  let metaTask = (async () =&gt; {
+    let meta = await parser(file);
+    let songMeta = mapSongMeta(meta);
+    let albumMeta = mapAlbumMeta(meta);
+    return { meta, songMeta, albumMeta };
+  })();
+
+  // Import the album
+  let albumImportTask = (async () =&gt; {
+    let { albumMeta } = await metaTask;
+    let albumId = await importAlbum(albumMeta);
+    return albumId;
+  })();
+
+  // Compute the duration
+  let durationTask = (async () =&gt; {
+    let buffer = await readTask;
+    let duration = await getDuration(buffer);
+    return duration;
+  })();
+
+  // Import the song
+  let songImportTask = (async () =&gt; {
+    let albumId = await albumImportTask;
+    let { meta, songMeta } = await metaTask;
+    let duration = await durationTask;
+
+    let songId = await importSong({
+      ...songMeta, albumId, file, duration, meta
+    });
+
+    return songId;
+  })();
+
+  let songId = await songImportTask;
+
+  return songId;
+};
+</code></pre>
+<p>Now reading the file, computing duration, parsing metadata and database querying will automatically run concurrently or serially—we were even able to leave <code>getDuration()</code> in its original spot! By declaring tasks and <code>await</code>ing them inside other tasks, we defined a dependency graph for the runtime and let it <em>discover</em> the optimal solution for us.</p>
+<p>Suppose we wanted to add another step to the import process, like retrieving album artwork from a web service:</p>
+<pre><code class="language-javascript">// Look up album artwork from a web service
+let albumArtwork = await fetchAlbumArtwork(albumMeta);
+</code></pre>
+<p>Prior to the async IIFE refactor, adding this feature would have triggered a lot of changes throughout the file, but now we can add it with just a small isolated chunk of additions!</p>
+<pre><code class="language-diff">+// Look up album artwork from a web service
++let artworkTask = (async () =&gt; {
++  let { albumMeta } = await metaTask;
++  let artwork = await fetchAlbumArtwork(albumMeta);
++  return artwork;
++})();
+
+ // Import the album
+ let albumImportTask = (async () =&gt; {
++  let artwork = await artworkTask;
+   let { albumMeta } = await metaTask;
+-  let albumId = await importAlbum(albumMeta);
++  let albumId = await importAlbum({ artwork, ...albumMeta });
+   return albumId;
+ })();
+</code></pre>
+<p>Tasks are declarative, so managing concurrent vs. serial execution order becomes an &quot;execution detail&quot; instead of an &quot;implementation detail&quot;!</p>
+<p>What if we revamped our <code>parser()</code> function so it could synchronously parse an <code>ArrayBuffer</code> instead of a <code>File</code> object? Before this would have triggered a cascade of line reordering, but now the change is trivial:</p>
+<pre><code class="language-diff"> // Parse out the ID3 metadata
+ let metaTask = (async () =&gt; {
++  let buffer = await readTask;
+-  let meta = await parser(file);
++  let meta = parser(buffer);
+   let songMeta = mapSongMeta(meta);
+   let albumMeta = mapAlbumMeta(meta);
+   return { meta, songMeta, albumMeta };
+ })();
+</code></pre>
+<h2 id="objections">Objections</h2>
+<p>It's tempting to take shortcuts and solve the dependency graph yourself. For example, after our changes to <code>parser()</code> above, all of the tasks depend on the file being read in, so you <em>could</em> block the entire function with <code>await read(file)</code> to save a few lines. However, these areas are likely to change, and organizing into serial tasks provides other benefits: these micro APIs make it is easier to read, debug, extract and reason about a complex chunk of concurrency.</p>
+<p>Since we wrapped these tasks into async IIFEs, why not extract them into dedicated functions? For the same reason we couldn't use <code>Promise</code> chaining: we have to give up nested closures and lexically scoped variables. Extracting tasks into top level functions also begs a design question: <em>if all these operations were synchronous, would we still perform this extraction?</em></p>
+<p>If you find yourself extracting <code>async</code> functions (as we did with <code>importAlbum()</code> and <code>importSong()</code>) because of their complexity or reusability, bravo! But ultimately, design principles for breaking down functions should be independent of whether the code is async vs. sync.</p>
+<p>Also, splitting functions or moving them too far from their context makes code harder to grasp, <a href="/blog/youre-killin-me-smalls-are-small-objects-good/">as Josh discusses in his post about extracting methods</a>.</p>
+<h2 id="moretocome">More to Come</h2>
+<p>Functional programming is well-suited to multithreading because it minimizes shared state and opts for local variables as the de facto state mechanism. And thanks to JavaScript's event loop, we can deal with shared state by <em>merging</em> results inside a single thread.</p>
+<p>Next time, we'll examine functional patterns for throttling concurrency on a single thread, then wrap up with techniques for efficiently managing a cluster of Web Workers… without worrying a shred about &quot;thread safety.&quot;</p>
+<!--kg-card-end: markdown--><!--kg-card-end: markdown-->
+            </div>
+          </div>
+        </div>
+        <section class="m-subscribe-section">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">Subscribe to our newsletter</h4>
+                <p class="m-subscribe-section__description">
+                  Get the latest posts delivered right to your inbox.
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                
+<form method="post" action="https://jonathanleemartin.us4.list-manage.com/subscribe/post?u=06192382d0d99bb3a3f789d30&amp;id=cb60b1e5bb" id="subscribe-form" class="m-subscribe-section__form">
+  <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+  <fieldset>
+    <label for="EMAIL" class="sr-only">Your email address</label>
+    <input id="EMAIL" name="EMAIL" class="m-input in-subscribe-section" placeholder="Your email address" value="" >
+  </fieldset>
+  <button id="subscribe_button" class="m-button primary block" type="submit">Subscribe</button>
+
+  
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+
+</form>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="m-author">
+          <div class="m-author__content">
+            <div class="m-author__picture">
+              <a href="/author/jonathan/" class="m-author-picture" aria-label="Author picture">
+                <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+              </a>
+            </div>
+            <div class="m-author__info">
+              <h4 class="m-author__name">
+                <a href="/author/jonathan/">Jonathan Lee Martin</a>
+              </h4>
+              <p class="m-author__bio">Jonathan is an educator, writer and international speaker. He guides developers — from career switchers to senior developers at Fortune 100 companies — through their journey into web development.</p>
+              <ul class="m-author-links">
+                <li>
+                  <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon-globe"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="m-recommended">
+          <div class="l-wrapper in-recommended">
+            <h3 class="m-section-title in-recommended">Recommended for you</h3>
+            <div class="m-recommended-articles">
+              <div class="m-recommended-slider js-recommended-articles">
+                
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript featured">
+      <div class="m-article-card__picture">
+      <a href="/blog/dont-over-react/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+        <a href="/blog/dont-over-react/" class="m-article-card__featured js-tooltip" data-tippy-content="Featured" aria-label="Article">
+          <span class="icon-star"></span>
+        </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/dont-over-react/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Don’t Over React! Render Binary Data with Class.</h2>
+          <p class="m-article-card__description">Eventually, your React web app will accept file uploads. JavaScript has exceptional APIs for handling chunks of binary data, but the interaction with React can cause some major performance hiccups. Discover the performance implications of 5 different ways to work with user-submitted binary data!</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>December 5, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript">
+      <div class="m-article-card__picture">
+      <a href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming</h2>
+          <p class="m-article-card__description">With React's stateless functional components you can create ambitious apps that are 98% plain ol' JavaScript. In this real-world example, we'll use functional programming and higher-order components to turn class-based React Components into stateless functional components.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>July 19, 2017</span>
+          <span>&bull;</span>
+          <span>10 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-javascript tag-node">
+      <div class="m-article-card__picture">
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/javascript/" class="m-article-card__tag">JavaScript</a>
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Hi, I’m Node.js and I’ll be your server today.</h2>
+          <p class="m-article-card__description">Tech stack decisions can be hard. Is Node.js the right choice for your service? Have a seat and your server will be right with you.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>April 12, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</div>
+
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results"></div>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>tl;dr &copy; 2019</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>By <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener">Jonathan Lee Martin</a></span>
+    </p>
+    <nav class="m-footer-social">
+        <a href="https://www.facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+          <span class="icon-facebook"></span>
+        </a>
+        <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+          <span class="icon-twitter"></span>
+        </a>
+    </nav>
+  </div>
+</footer>
+
+    <script defer src="/assets/js/manifest.js"></script>
+    <script defer src="/assets/js/polyfill.js"></script>
+    <script defer src="/assets/js/vendor.js"></script>
+    <script defer src="/assets/js/app.js"></script>
+
+      <script defer src="/assets/js/post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/';</script>
+
+
+    
+  </body>
+</html>

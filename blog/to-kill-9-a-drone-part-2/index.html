@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>To Kill -9 a Drone, Part 2</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,700,700i&display=swap" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" media="screen" />
+
+    
+
+    <meta name="description" content="Jonathan Martin dives into the Parrot Rolling Spider quadcopter with virtual machines and the Linux Bluetooth stack." />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-2/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/blog/to-kill-9-a-drone-part-2/amp/" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="To Kill -9 a Drone, Part 2" />
+    <meta property="og:description" content="Last time, we took a tour of TTYs and serial connections to shell into the Linux-powered Parrot Rolling Spider quadcopter. This time, we’ll telnet in over Bluetooth." />
+    <meta property="og:url" content="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-2/" />
+    <meta property="article:published_time" content="2015-07-10T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-08-09T16:07:07.000Z" />
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="To Kill -9 a Drone, Part 2" />
+    <meta name="twitter:description" content="Last time, we took a tour of TTYs and serial connections to shell into the Linux-powered Parrot Rolling Spider quadcopter. This time, we’ll telnet in over Bluetooth." />
+    <meta name="twitter:url" content="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-2/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "To Kill -9 a Drone, Part 2",
+    "url": "https://jonathanleemartin.com/blog/to-kill-9-a-drone-part-2/",
+    "datePublished": "2015-07-10T12:00:00.000Z",
+    "dateModified": "2019-08-09T16:07:07.000Z",
+    "description": "Last time, we took a tour of TTYs and serial connections to shell into the Linux-powered Parrot Rolling Spider quadcopter. This time, we’ll telnet in over Bluetooth.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-30173272-1');
+</script>
+
+    <script>
+      const ghostHost = "https://jonathanleemartin.com"
+    </script>
+  </head>
+  <body class="post-template">
+    
+
+<div class="main-wrap">
+  
+  <header class="m-header js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://jonathanleemartin.com" class="m-logo in-mobile-topbar">
+        <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+              
+<ul role="menu">
+  <li class="only-desktop" role="menuitem">
+    <a href="https://jonathanleemartin.com" class="m-logo">
+      <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+    </a>
+  </li>
+    <li class="nav-blog">
+      <a href="https://jonathanleemartin.com/blog/">Blog</a>
+    </li>
+    <li class="nav-episodes">
+      <a href="https://jonathanleemartin.com/tldr/">Episodes</a>
+    </li>
+    <li class="nav-youtube">
+      <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a>
+    </li>
+    <li class="nav-books">
+      <a href="https://jonathanleemartin.com/books/">Books</a>
+    </li>
+  <li role="menuitem" class="js-submenu-option">
+    <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+      <span class="icon-more"></span>
+    </button>
+    <div class="m-submenu js-submenu">
+      <div class="l-wrapper in-submenu">
+        <section class="m-recent-articles">
+          <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+          <div class="js-recent-articles">
+                <div>
+                  <a href="/tldr/04-expressions/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/04-expressions.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">04. Expressions</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/03-policies/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/03-policies.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">03. Policies</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/02-router-pattern/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/02-router.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">02. Router Pattern</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/01-nested-ternaries/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">01. Nested Ternaries</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+          </div>
+        </section>
+        <section class="m-tags">
+          <h3 class="m-submenu-title">Tags</h3>
+            <ul>
+                <li>
+                  <a href="/tag/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/tag/node/">Node</a>
+                </li>
+                <li>
+                  <a href="/tag/react/">React</a>
+                </li>
+                <li>
+                  <a href="/tag/web/">Web</a>
+                </li>
+                <li>
+                  <a href="/tag/tldr/">tl;dr</a>
+                </li>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </li>
+</ul>
+
+          </nav>
+          <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+  
+  <header class="m-hero" data-aos="fade">
+  </header>
+  
+  <main>
+    <article>
+      <div class="l-content">
+        <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div class="l-post-content has-subscribe-form js-progress-content">
+            <header class="m-heading">
+              <h1 class="m-heading__title in-post">To Kill -9 a Drone, Part 2</h1>
+              <div class="m-heading__meta">
+                <span class="m-heading__meta__time">July 10, 2015</span>
+              </div>
+            </header>
+            <div class="pos-relative js-post-content">
+              <div class="m-share">
+                <div class="m-share__content js-sticky">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/blog/to-kill-9-a-drone-part-2/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                  <a href="https://twitter.com/intent/tweet?text=To%20Kill%20-9%20a%20Drone%2C%20Part%202&url=https://jonathanleemartin.com/blog/to-kill-9-a-drone-part-2/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                  <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
+                    <span class="icon-arrow-top"></span>
+                    <svg>
+                      <circle class="progress-ring__circle js-progress" stroke="#04aeee" fill="transparent" r="0" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-2/">Big Nerd Ranch blog</a>.</em></small></p>
+<p><em>Last time, <a href="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-1/">we took a tour of TTYs and serial connections</a> to shell into the Linux-powered <a href="http://www.parrot.com/usa/products/rolling-spider/">Parrot Rolling Spider quadcopter</a>. This time, we’ll telnet in over Bluetooth.</em></p>
+<p>Before stumbling upon the USB method for shelling into my drone, I noticed that my drone didn’t shut down after 60 seconds if a Bluetooth device was connected. A fleeting glance at <code>/etc/init.d/rcS</code> revealed calls to <code>telnetd</code> and <code>BLEproxy</code>.</p>
+<p><code>telnet</code> opens a shell session over TCP/IP, usually over a WiFi or Ethernet connection. However, the Rolling Spider is not equipped with WiFi, so why the references to networking? I hypothesized that a lot of the mini-drone's software is based on the WiFi-equipped <a href="http://ardrone2.parrot.com/">AR.Drone</a>, which receives flight commands over UDP/TCP.</p>
+<p>To keep the software reusable on the Rolling Spider, <code>BLEproxy</code> might set up a <a href="https://en.wikipedia.org/wiki/List_of_Bluetooth_protocols#Bluetooth_network_encapsulation_protocol_.28BNEP.29">bnep</a> network interface, which would allow me to control to the Rolling Spider on <code>192.168.1.1</code>, just like the AR.Drone. To that end, I'll establish a <a href="https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles#Personal_Area_Networking_Profile_.28PAN.29">PAN</a> network with the drone so that I can open UDP/TCP connections through the bnep interface. Since <code>telnetd</code> is listening on port 23, I should be able shell to the drone over Bluetooth.</p>
+<p>But first things first: <strong>I need a computer with Bluetooth set up.</strong></p>
+<h2 id="bluetoothonosx">Bluetooth on OS X</h2>
+<p>Like most of my colleagues, I use a Mac. The BSD flavor of UNIX is great for day-to-day development, but the tooling differs drastically from a Linux stack.</p>
+<p>Bluetooth is no exception: on Mac, there are few (i.e., zilch) terminal utilities for working with OS X’s Bluetooth stack. Linux, however, is well-stocked with open-source tools to configure Bluetooth and network interfaces, thanks to the <a href="http://www.bluez.org/">BlueZ</a> stack. The generous assemblage of blog and forum posts is especially crucial for wading through nondescript errors.</p>
+<h2 id="linuxvm1debian">Linux VM #1: Debian</h2>
+<p>Rather than build a Linux computer from scratch, I’ll run a virtual machine with <a href="https://www.virtualbox.org/">Virtual Box</a>. Still, it takes a couple hours to spin up the machine, install the OS and install guest additions. Maybe some scripts could save me some time?</p>
+<p>Enter <a href="https://www.vagrantup.com/">Vagrant</a>: it makes spinning up a VM a snap by downloading and setting up common VM configurations for you. Most folks use it to set up a consistent staging environment, but it also works great for quickly setting up a Linux box with shell access.</p>
+<p>There are plenty of <a href="https://atlas.hashicorp.com/boxes/search">VM templates to choose from</a>; for entirely arbitrary reasons, I decide to spin up a Debian 7.6 machine:</p>
+<pre><code>$ vagrant init chef/debian-7.6
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==&gt; default: Box 'chef/debian-7.6' could not be found. Attempting to find and install...
+    default: Box Provider: virtualbox
+    default: Box Version: &gt;= 0
+==&gt; default: Loading metadata for box 'chef/debian-7.6'
+    default: URL: https://atlas.hashicorp.com/chef/debian-7.6
+==&gt; default: Adding box 'chef/debian-7.6' (v1.0.0) for provider: virtualbox
+    default: Downloading: https://atlas.hashicorp.com/chef/boxes/debian-7.6/versions/1.0.0/providers/virtualbox.box
+==&gt; default: Successfully added box 'chef/debian-7.6' (v1.0.0) for 'virtualbox'!
+==&gt; default: Importing base box 'chef/debian-7.6'...
+==&gt; default: Matching MAC address for NAT networking...
+==&gt; default: Checking if box 'chef/debian-7.6' is up to date...
+==&gt; default: Setting the name of the VM: drone_default_1435939856993_21528
+==&gt; default: Clearing any previously set network interfaces...
+==&gt; default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==&gt; default: Forwarding ports...
+    default: 22 =&gt; 2222 (adapter 1)
+==&gt; default: Booting VM...
+==&gt; default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if its present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==&gt; default: Machine booted and ready!
+==&gt; default: Checking for guest additions in VM...
+==&gt; default: Mounting shared folders...
+
+$ vagrant halt
+==&gt; default: Attempting graceful shutdown of VM...
+</code></pre>
+<p>Three minutes later, I have a ready-to-go Debian instance. Next, I need to give the VM access to my MacBook's internal Bluetooth card. Guest Additions need to be installed for the VM to recognize various hardware devices, but this Debian VM template already has it installed. So I simply need to enable the USB 2.0 controller and add my Bluetooth card:</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/vm-usb-settings.png" alt="VirtualBox USB Settings" title="VirtualBox USB Settings"></p>
+<p>Just to make sure the hardware settings work, I start up the VM directly in VirtualBox rather than using Vagrant's CLI. It boots into a shell, so I log in with username <code>vagrant</code> and password <code>vagrant</code>. Now for the hardware: my Bluetooth card shows up in the list of available USB Devices:</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/vm-device-list.jpg" alt="VirtualBox USB Devices" title="VirtualBox USB Devices"></p>
+<p>Time to mount my Bluetooth USB device to the Debian VM:</p>
+<p><img src="https://jonathanleemartin.com/content/images/2017/12/vm-cannot-attach-bluetooth.png" alt="VirtualBox Cannot Attach Bluetooth" title="VirtualBox Cannot Attach Bluetooth"></p>
+<h2 id="reclaimingbluetooth">Reclaiming Bluetooth</h2>
+<p>Uh oh! For the virtual machine to use Bluetooth, it needs to have the device all to itself, but the host OS is using it. Turning off Bluetooth in OS X won't suffice: I need to <code>kill -9</code> the <code>blued</code> process on my Mac, but it regenerates itself every time. For <code>blued</code> to really die, it needs to be unloaded with <code>launchctl</code>:</p>
+<pre><code>$ sudo launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
+</code></pre>
+<p>That's still not quite enough: some kernel extensions (KEXT) are holding on. Let's search all the loaded KEXTs for those relating to Bluetooth:</p>
+<pre><code>$ kextstat -l | awk '{gsub(/^ +| +$/,&quot;&quot;)}1' |  tr -s ' ' | cut -f6 -d ' ' | grep Bluetooth
+com.apple.iokit.IOBluetoothFamily
+com.apple.iokit.IOBluetoothHostControllerUSBTransport
+com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport
+com.apple.iokit.IOBluetoothSerialManager
+</code></pre>
+<p>The third item <code>BroadcomBluetoothHostControllerUSBTransport</code> looks pertinent, maybe unloading it will free up the Bluetooth device:</p>
+<pre><code>$ sudo kextunload -b com.apple.iokit.BroadcomBluetoothHostControllerUSBTransport
+</code></pre>
+<p>Success! Now when we try to connect the Bluetooth controller to Virtual Box, it doesn't give any errors. Let's shut down the VM and start it up from Vagrant now:</p>
+<pre><code>$ vagrant up
+[ lots of output ]
+$ vagrant ssh
+vagrant@packer-debian-7:~$
+</code></pre>
+<p>Just to make sure, I'll use <code>lsusb</code> to see if the Linux VM recognizes my Bluetooth controller:</p>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install usbutils
+$ lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 002: ID 05ac:8286 Apple, Inc.
+</code></pre>
+<p>The output is stripped of pleasantries, but that last device has Apple's manufacturer ID (05ac), so it must be the Bluetooth controller. I'm ready to install the BlueZ stack:</p>
+<pre><code>$ sudo apt-get install bluez bluez-utils bluez-compat
+</code></pre>
+<p>Next up, I need to tell Linux what Bluetooth device to use.</p>
+<pre><code>$ hciconfig
+Can't open HCI socket.: Address family not supported by protocol
+</code></pre>
+<p>What’s going on? The Linux kernel is super modular and made of many low-level modules. Most device drivers (like USB and Ethernet) are just Linux modules, including Bluetooth. So, does our Linux kernel have a Bluetooth module?</p>
+<pre><code>$ lsmod | grep bluetooth
+[ nothing :-( ]
+</code></pre>
+<p>Nope! Debian 7.6's version of the Linux kernel doesn’t support the Bluetooth module.</p>
+<h2 id="linuxvm2debianagain">Linux VM #2: Debian Again</h2>
+<p>Time for an upgrade: I'll rinse and repeat the setup steps with a more recent Debian:</p>
+<pre><code>$ vagrant init chef/debian-7.8
+$ vagrant up
+$ vagrant halt
+</code></pre>
+<p>After running the rest of the commands, I can double check kernel support:</p>
+<pre><code>$ lsmod | grep bluetooth
+bluetooth             119455  1 btusb
+rfkill                 19012  1 bluetooth
+crc16                  12343  2 ext4,bluetooth
+</code></pre>
+<p>That looks much more promising! This kernel is built with the Bluetooth module. Let's try <code>hcitool</code>:</p>
+<pre><code>$ hcitool dev
+Devices:
+        hci0    28:CF:E9:21:6C:1A
+</code></pre>
+<p>Great! Linux recognizes my Bluetooth device. I need to set up the device on every reboot:</p>
+<pre><code>$ sudo hciconfig hci0 up
+</code></pre>
+<p>Now I should be able to scan for Bluetooth Low Energy devices. Turn my little drone on, and...</p>
+<pre><code>$ sudo hcitool lescan
+LE Scan ...
+9E:08:00:AC:0B:19 RS_R112233
+9E:08:00:AC:0B:19 (unknown)
+</code></pre>
+<p>It's alive, but all is not well. When I try to connect to the drone with <code>sudo hcitool lecc</code> or <code>gatttool</code>, it fails with a <code>Host is down (112)</code> message. Maybe <a href="https://stackoverflow.com/questions/24853597/ble-gatttool-cannot-connect-even-though-device-is-discoverable-with-hcitool-lesc">BLE support in my old version of BlueZ is buggy</a>?</p>
+<p>BlueZ is currently version 5.30, but why is Debian 7.8 bundled with BlueZ 4? The BlueZ 5 API diverges drastically from BlueZ 4, so it takes a fair amount of effort to upgrade apps. Coupled with the shockingly poor documentation, very few Linux distributions have successfully upgraded to BlueZ 5.</p>
+<p>I initially built BlueZ 5.30 from source, but a few binaries are missing, so I'll install BlueZ 5.23 from the <a href="https://wiki.debian.org/InstallFAQ#Q._How_do_I_install_.22unstable.22_.28.22sid.22.29.3F">Debian Unstable package source</a>.</p>
+<p>As part of major refactors, BlueZ 5 directs all commands to the <code>bluetoothd</code> daemon over <a href="https://en.wikipedia.org/wiki/D-Bus">D-Bus</a>. To send commands from the terminal, I can run <code>bluetoothctl</code>:</p>
+<pre><code>$ sudo bluetoothctl
+[bluetooth]#
+</code></pre>
+<p>I get a REPL, but it just hangs. Maybe <code>bluetoothd</code> isn't listening?</p>
+<pre><code>$ ps aux | grep bluetoothd
+[ nothing :( ]
+</code></pre>
+<p>Doh, <code>bluetoothd</code> isn't even running! I'll run it myself in no-detach mode:</p>
+<pre><code>$ sudo bluetoothd -n
+bluetoothd[4440]: Bluetooth daemon 5.14
+bluetoothd[4440]: Failed to access management interface
+bluetoothd[4440]: Adapter handling initialization failed
+
+$ uname -r
+3.2.0-4-amd64
+</code></pre>
+<p>How embarrassing—our Linux kernel is still too old! BlueZ 5 requires a kernel version &gt;= 3.4 to support the new Bluetooth Management kernel interface, and &gt;= 3.5 for BLE support!</p>
+<p>Maybe it's time for a third Linux distribution?</p>
+<h2 id="linuxvm3ubuntu">Linux VM #3: Ubuntu</h2>
+<p>This time, I'll pick a recent distribution: Ubuntu 14.04 LTS. It ships with version 3.13 of the Linux kernel. After repeating all the setup commands I ran on the Debian distros, things seem to be in order:</p>
+<pre><code>$ lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 05ac:8286 Apple, Inc. Bluetooth Host Controller
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+</code></pre>
+<p>The BlueZ version for Ubuntu is still too old, but thankfully <a href="https://launchpad.net/~vidplace7/+archive/ubuntu/bluez5">another package source</a> has the latest builds. I'll add it to my apt-get sources:</p>
+<pre><code>$ echo &quot;deb http://ppa.launchpad.net/vidplace7/bluez5/ubuntu trusty main&quot; &gt;&gt; /etc/apt/sources.list
+$ sudo apt-get install bluez
+$ bluetoothctl -v
+5.30
+</code></pre>
+<p>I'm definitely running BlueZ 5.30, time to see if <code>bluetoothd</code> started up:</p>
+<pre><code>$ sudo bluetoothctl
+[NEW] Controller 28:CF:E9:21:6C:1A vagrant [default]
+[bluetooth]#
+</code></pre>
+<p>Looks like I have working a Bluetooth setup!</p>
+<h2 id="panningfornetworks">PANning for Networks</h2>
+<p>With Bluetooth working correctly on my VM, I am ready to set up a <a href="https://en.wikipedia.org/wiki/Personal_area_network#Bluetooth">PAN</a> with my drone. BlueZ 4 includes a utility called <code>pand</code> that does just this, but in BlueZ 5 I have to code up my own script. Since everything happens over D-Bus, I can write a Python script to initiate a PAN. Thankfully, <a href="https://github.com/mk-fg/fgtk/blob/master/bt-pan">Mike Kazantsev has already written that script</a>.</p>
+<pre><code>$ wget https://github.com/mk-fg/fgtk/raw/master/bt-pan
+$ chmod +x bt-pan
+$ sudo apt-get install python-dbus
+</code></pre>
+<p>The <code>bt-pan</code> script is a modified version of the <code>test-network</code> script bundled with BlueZ 5. It instructs the <code>bluetoothd</code> to create a new network interface called <code>bnep0</code>. I need to grab the MAC address of my drone, then feed that into the script:</p>
+<pre><code>$ sudo hcitool lescan
+LE Scan ...
+9E:08:00:AC:0B:19 RS_R112233
+9E:08:00:AC:0B:19 (unknown)
+
+$ sudo ./bt-pan -u panu client 9E:08:00:AC:0B:19
+Traceback (most recent call last):
+  File &quot;./bt-pan&quot;, line 207, in &lt;module&gt;
+    if __name__ == '__main__': sys.exit(main())
+  File &quot;./bt-pan&quot;, line 180, in main
+    try: iface = net.Connect(opts.uuid)
+  File &quot;/usr/lib/python2.7/dist-packages/dbus/proxies.py&quot;, line 145, in __call__
+    **keywords)
+  File &quot;/usr/lib/python2.7/dist-packages/dbus/connection.py&quot;, line 651, in call_blocking
+    message, timeout)
+dbus.exceptions.DBusException: org.freedesktop.DBus.Error.UnknownMethod: Method &quot;Connect&quot; with signature &quot;s&quot; on interface &quot;org.bluez.Network1&quot; doesn't exist
+</code></pre>
+<p>A D-Bus issue? After all that work, it turns out that the PAN interface <code>Network1</code> is not available. This isn't a spurious failure: Bluetooth Low Energy doesn't support the PAN profile, so <code>Network1</code> is never exposed on the D-Bus interface. Only regular Bluetooth supports PAN!</p>
+<h2 id="nexttime">Next time...</h2>
+<p>To my disappointment, we aren't quite to the point of <code>telnet</code>ing into the drone. But never fear! In Part 3, we will backtrack to another clue in <code>/etc/init.d/rcS</code> to complete our journey of wirelessly shelling into the mini-drone.</p>
+<!--kg-card-end: markdown--><!--kg-card-end: markdown-->
+            </div>
+          </div>
+        </div>
+        <section class="m-subscribe-section">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">Subscribe to our newsletter</h4>
+                <p class="m-subscribe-section__description">
+                  Get the latest posts delivered right to your inbox.
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                
+<form method="post" action="https://jonathanleemartin.us4.list-manage.com/subscribe/post?u=06192382d0d99bb3a3f789d30&amp;id=cb60b1e5bb" id="subscribe-form" class="m-subscribe-section__form">
+  <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+  <fieldset>
+    <label for="EMAIL" class="sr-only">Your email address</label>
+    <input id="EMAIL" name="EMAIL" class="m-input in-subscribe-section" placeholder="Your email address" value="" >
+  </fieldset>
+  <button id="subscribe_button" class="m-button primary block" type="submit">Subscribe</button>
+
+  
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+
+</form>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="m-author">
+          <div class="m-author__content">
+            <div class="m-author__picture">
+              <a href="/author/jonathan/" class="m-author-picture" aria-label="Author picture">
+                <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+              </a>
+            </div>
+            <div class="m-author__info">
+              <h4 class="m-author__name">
+                <a href="/author/jonathan/">Jonathan Lee Martin</a>
+              </h4>
+              <p class="m-author__bio">Jonathan is an educator, writer and international speaker. He guides developers — from career switchers to senior developers at Fortune 100 companies — through their journey into web development.</p>
+              <ul class="m-author-links">
+                <li>
+                  <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon-globe"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</div>
+
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results"></div>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>tl;dr &copy; 2019</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>By <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener">Jonathan Lee Martin</a></span>
+    </p>
+    <nav class="m-footer-social">
+        <a href="https://www.facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+          <span class="icon-facebook"></span>
+        </a>
+        <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+          <span class="icon-twitter"></span>
+        </a>
+    </nav>
+  </div>
+</footer>
+
+    <script defer src="/assets/js/manifest.js"></script>
+    <script defer src="/assets/js/polyfill.js"></script>
+    <script defer src="/assets/js/vendor.js"></script>
+    <script defer src="/assets/js/app.js"></script>
+
+      <script defer src="/assets/js/post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/';</script>
+
+
+    
+  </body>
+</html>

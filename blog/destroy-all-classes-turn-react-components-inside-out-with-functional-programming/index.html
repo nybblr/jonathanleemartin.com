@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,700,700i&display=swap" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" media="screen" />
+
+    
+
+    <meta name="description" content="A real-world example of refactoring a React Native component into stateless functional components and higher-order components, in 5 steps." />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://www.bignerdranch.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/amp/" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming" />
+    <meta property="og:description" content="With React&#x27;s stateless functional components you can create ambitious apps that are 98% plain ol&#x27; JavaScript. In this real-world example, we&#x27;ll use functional programming and higher-order components to turn class-based React Components into stateless functional components." />
+    <meta property="og:url" content="https://www.bignerdranch.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" />
+    <meta property="article:published_time" content="2017-07-19T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-08-09T16:02:54.000Z" />
+    <meta property="article:tag" content="React" />
+    <meta property="article:tag" content="JavaScript" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming" />
+    <meta name="twitter:description" content="With React&#x27;s stateless functional components you can create ambitious apps that are 98% plain ol&#x27; JavaScript. In this real-world example, we&#x27;ll use functional programming and higher-order components to turn class-based React Components into stateless functional components." />
+    <meta name="twitter:url" content="https://www.bignerdranch.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="React, JavaScript" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming",
+    "url": "https://jonathanleemartin.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/",
+    "datePublished": "2017-07-19T12:00:00.000Z",
+    "dateModified": "2019-08-09T16:02:54.000Z",
+    "keywords": "React, JavaScript",
+    "description": "With React&#x27;s stateless functional components you can create ambitious apps that are 98% plain ol&#x27; JavaScript. In this real-world example, we&#x27;ll use functional programming and higher-order components to turn class-based React Components into stateless functional components.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-30173272-1');
+</script>
+
+    <script>
+      const ghostHost = "https://jonathanleemartin.com"
+    </script>
+  </head>
+  <body class="post-template tag-react tag-javascript">
+    
+
+<div class="main-wrap">
+  
+  <header class="m-header js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://jonathanleemartin.com" class="m-logo in-mobile-topbar">
+        <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+              
+<ul role="menu">
+  <li class="only-desktop" role="menuitem">
+    <a href="https://jonathanleemartin.com" class="m-logo">
+      <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+    </a>
+  </li>
+    <li class="nav-blog">
+      <a href="https://jonathanleemartin.com/blog/">Blog</a>
+    </li>
+    <li class="nav-episodes">
+      <a href="https://jonathanleemartin.com/tldr/">Episodes</a>
+    </li>
+    <li class="nav-youtube">
+      <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a>
+    </li>
+    <li class="nav-books">
+      <a href="https://jonathanleemartin.com/books/">Books</a>
+    </li>
+  <li role="menuitem" class="js-submenu-option">
+    <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+      <span class="icon-more"></span>
+    </button>
+    <div class="m-submenu js-submenu">
+      <div class="l-wrapper in-submenu">
+        <section class="m-recent-articles">
+          <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+          <div class="js-recent-articles">
+                <div>
+                  <a href="/tldr/04-expressions/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/04-expressions.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">04. Expressions</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/03-policies/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/03-policies.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">03. Policies</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/02-router-pattern/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/02-router.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">02. Router Pattern</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/01-nested-ternaries/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">01. Nested Ternaries</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+          </div>
+        </section>
+        <section class="m-tags">
+          <h3 class="m-submenu-title">Tags</h3>
+            <ul>
+                <li>
+                  <a href="/tag/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/tag/node/">Node</a>
+                </li>
+                <li>
+                  <a href="/tag/react/">React</a>
+                </li>
+                <li>
+                  <a href="/tag/web/">Web</a>
+                </li>
+                <li>
+                  <a href="/tag/tldr/">tl;dr</a>
+                </li>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </li>
+</ul>
+
+          </nav>
+          <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+  
+  <header class="m-hero" data-aos="fade">
+  </header>
+  
+  <main>
+    <article>
+      <div class="l-content">
+        <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div class="l-post-content has-subscribe-form js-progress-content">
+            <header class="m-heading">
+              <h1 class="m-heading__title in-post">DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming</h1>
+              <div class="m-heading__meta">
+                <a href="/tag/react/" class="m-heading__meta__tag">React</a>
+                <span class="m-heading__meta__divider">&bull;</span>
+                <span class="m-heading__meta__time">July 19, 2017</span>
+              </div>
+            </header>
+            <div class="pos-relative js-post-content">
+              <div class="m-share">
+                <div class="m-share__content js-sticky">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                  <a href="https://twitter.com/intent/tweet?text=DESTROY%20ALL%20CLASSES%3A%20Turn%20React%20Components%20Inside%20Out%20with%20Functional%20Programming&url=https://jonathanleemartin.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                  <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
+                    <span class="icon-arrow-top"></span>
+                    <svg>
+                      <circle class="progress-ring__circle js-progress" stroke="#04aeee" fill="transparent" r="0" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/">Big Nerd Ranch blog</a>.</em></small></p>
+<p><em>A real-world example of refactoring a class-based component from a React Native app into stateless functional components and higher-order components, in 5 steps.</em></p>
+<p><a href="https://facebook.github.io/react/">React</a> is pretty awesome, and with <a href="https://facebook.github.io/react/docs/components-and-props.html#functional-and-class-components">stateless functional components</a> you can create ambitious apps that are 98% plain ol' JavaScript (optionally JSX), and are very <em>lightly</em> coupled to the framework.</p>
+<p>Minimizing the surface area between React and your codebase has amazing benefits:</p>
+<ol>
+<li>Framework updates will have little effect on your code.</li>
+<li>You can easily write isolated unit tests, instead of UI integration tests.</li>
+</ol>
+<p>There's an important catch to stateless functional components: you can't use state or lifecycle hooks. However, this design encourages component purity and makes it trivial to test our components — after all, it's just a function that maps data to virtual DOM!</p>
+<blockquote>
+<p>“Great, but I'm not building a static page — I need state, so I can’t use stateless functional components!”</p>
+</blockquote>
+<p>In a well-written React app, stateless functional components will cover most of your UI code, but an app's complexity typically relates to state management. To help bug-proof the remainder of our codebase, we are going to turn class-based React Components into stateless functional components with <strong>functional programming</strong> and <strong>higher-order components</strong> (HOC) to isolate state from our pure components.</p>
+<p>If you aren't familiar with higher-order components, you may want to check out <a href="https://facebook.github.io/react/docs/higher-order-components.html">the official React guides</a> first.</p>
+<h2 id="whatarethebenefits">What are the benefits?</h2>
+<p>Why will destroying all classes with functional programming and higher-order components improve your codebase?</p>
+<p>Imagine an app where all state is isolated, the rest of your app is a pure function of that state, and each layer of your component tree is trivial to debug directly from the React DevTools. Relish the thought of reliable hot module reloading in your React Native app.</p>
+<p>Higher-order components are the ultimate incarnation of <a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">composition over inheritance</a>, and in the process of turning our class components inside-out, subtle dependencies and nasty bugs pop right to the surface.</p>
+<p>By avoiding classes, we can prevent a super common source of bugs: <strong>hidden state.</strong> We’ll also find testing gets easier as the software boundaries become self-evident.</p>
+<p>Because higher-order components add behavior through composition, you can reuse complex state logic across different UIs and test it in isolation! For example, you can share a data fetching higher-order component between your React web app and React Native app.</p>
+<h2 id="examplerefactoringareactnativecomponent">Example: Refactoring a React Native component</h2>
+<p>Let's look at a real-world example from a React Native project. The <code>VideoPage</code> component is a screen in the mobile app that fetches videos from a backend API and displays them as a list. The component has been tidied up a bit to remove distractions, but is unchanged structurally.</p>
+<pre><code class="language-jsx">import React, { Component } from 'react'
+import { ScrollView, Text, View } from 'react-native'
+
+import Loading from 'components/loading'
+import Video from 'components/video'
+import API from 'services/api'
+
+class VideoPage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { data: null }
+  }
+
+  async fetchData(id) {
+    let res = await API.getVideos(id)
+    let json = await res.json()
+    this.setState({ data: json.videos })
+  }
+
+  componentWillMount() {
+    this.fetchData(this.props.id)
+  }
+
+  renderVideo(video) {
+    return (
+      &lt;Video key={video.id} data={video} /&gt;
+    )
+  }
+
+  renderVideoList() {
+    if (this.state.data.videos.length &gt; 0) {
+      return this.state.data.videos.map(video =&gt;
+        this.renderVideo(video)
+      )
+    } else {
+      return (
+        &lt;View&gt;
+          &lt;Text&gt;No videos found&lt;/Text&gt;
+        &lt;/View&gt;
+      )
+    }
+  }
+
+  buildPage() {
+    if (this.state.data) {
+      return (
+        &lt;ScrollView&gt;
+          &lt;View&gt;
+            &lt;Text&gt;{this.state.data.title}&lt;/Text&gt;
+            { this.state.data.description ? &lt;Text&gt;{this.state.data.description}&lt;/Text&gt; : null }
+          &lt;/View&gt;
+          &lt;View&gt;
+            {this.renderVideoList()}
+          &lt;/View&gt;
+        &lt;/ScrollView&gt;
+      )
+    } else {
+      return &lt;Loading /&gt;
+    }
+  }
+
+  render() {
+    return this.buildPage()
+  }
+}
+
+export default VideoPage
+</code></pre>
+<p>At 65 lines of code, the <code>VideoPage</code> component is pretty simple, but hides a lot of edge cases. Although there's some syntactic noise that could be removed to bring down the line count a bit, the deeper issue is the high branching complexity and conflation of responsibilities. This single component fetches data, branches on load status and video count, and renders the list of videos. It's tricky to test these behaviors and views in isolation, extract behaviors (like data fetching) for reuse or add performance optimizations.</p>
+<p>Rather than jump to the end solution, it's more instructive to see the process. Here's our <em>five-step roadmap</em> to turn <code>VideoPage</code> inside out and <em>destroy all classes!</em></p>
+<ol>
+<li><strong>Turn instance methods into stateless functional components</strong></li>
+<li><strong>Extract remaining instance methods to plain functions</strong></li>
+<li><strong>Extract branching complexity with higher-order components</strong></li>
+<li><strong>Create a data fetching higher-order component</strong></li>
+<li><strong>Compose behaviors into a single <code>enhance()</code> function</strong></li>
+</ol>
+<h3 id="1turninstancemethodsintostatelessfunctionalcomponents">1. Turn instance methods into stateless functional components</h3>
+<p>Our first step is to cut down on instance methods, so let's start by extracting <code>.buildPage()</code>, <code>.renderVideo()</code> and <code>.renderVideoList()</code> from the <code>VideoPage</code> class and make them top-level functions.</p>
+<pre><code class="language-diff"> class VideoPage extends Component {
+   ...
+
+-  renderVideo(video) {
+-    ...
+-  }
+
+-  renderVideoList() {
+-    ...
+-  }
+
+-  buildPage() {
+-    ...
+-  }
+
+   ...
+ }
+
++let renderVideo = video =&gt; {
++  ...
++}
+
++let renderVideoList = () =&gt; {
++  ...
++}
+
++let buildPage = () =&gt; {
++  ...
++}
+</code></pre>
+<p>Hmm, those look like components now! Let's rename <code>renderVideoList()</code> and inline <code>renderVideo()</code>.</p>
+<pre><code class="language-diff">-let renderVideo = video =&gt; { ... }
+
+-let renderVideoList = () =&gt; {
++let VideoList = () =&gt; {
+   if (this.state.data.videos.length &gt; 0) {
+     return this.state.data.videos.map(video =&gt;
+-      this.renderVideo(video)
++      &lt;Video key={video.id} data={video} /&gt;
+     )
+   } else {
+</code></pre>
+<p>Now that the new <code>VideoList</code> component doesn't have access to <code>this</code>, we need to directly pass the data it needs as props. A quick scan through the code shows we just need the list of <code>videos</code>.</p>
+<pre><code class="language-diff">-let VideoList = () =&gt; {
++let VideoList = ({ videos }) =&gt; {
+-  if (this.state.data.videos.length &gt; 0) {
++  if (videos.length &gt; 0) {
+-    return this.state.data.videos.map(video =&gt;
++    return videos.map(video =&gt;
+</code></pre>
+<p>Hey look, we have a pure component now! Let's do the same to <code>buildPage()</code>, which is really the heart of the <code>VideoPage</code> component.</p>
+<pre><code class="language-diff">-let buildPage = () =&gt; {
++let VideoPage = ({ data }) =&gt; {
+-  if (this.state.data) {
++  if (data) {
+     return (
+       &lt;ScrollView&gt;
+         &lt;View&gt;
+-          &lt;Text&gt;{this.state.data.title}&lt;/Text&gt;
++          &lt;Text&gt;{data.title}&lt;/Text&gt;
+-          { this.state.data.description ? &lt;Text&gt;{this.state.data.description}&lt;/Text&gt; : null }
++          { data.description ? &lt;Text&gt;{data.description}&lt;/Text&gt; : null }
+         &lt;/View&gt;
+         &lt;View&gt;
+-          {this.renderVideoList()}
++          &lt;VideoList videos={data.videos} /&gt;
+         &lt;/View&gt;
+       &lt;/ScrollView&gt;
+     )
+</code></pre>
+<p>To finish wiring things up, let's rename the original <code>VideoPage</code> class component to <code>VideoPageContainer</code> and change the <code>render()</code> method to return our new stateless functional <code>VideoPage</code> component.</p>
+<pre><code class="language-diff">-class VideoPage extends Component {
++class VideoPageContainer extends Component {
+
+   ...
+
+   render() {
+-    return this.buildPage()
++    return &lt;VideoPage data={this.state.data} /&gt;
+   }
+ }
+
+-export default VideoPage
++export default VideoPageContainer
+</code></pre>
+<p>So far, here's what we have:</p>
+<pre><code class="language-jsx">import React, { Component } from 'react'
+import { ScrollView, Text, View } from 'react-native'
+
+import Loading from 'components/loading'
+import Video from 'components/video'
+import API from 'services/api'
+
+class VideoPageContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { data: null }
+  }
+
+  async fetchData(id) {
+    let res = await API.getVideos(id)
+    let json = await res.json()
+    this.setState({ data: json.videos })
+  }
+
+  componentWillMount() {
+    this.fetchData(this.props.id)
+  }
+
+  render() {
+    return &lt;VideoPage data={this.state.data} /&gt;
+  }
+}
+
+let VideoList = ({ videos }) =&gt; {
+  if (videos.length &gt; 0) {
+    return videos.map(video =&gt;
+      &lt;Video key={video.id} data={video} /&gt;
+    )
+  } else {
+    return (
+      &lt;View&gt;
+        &lt;Text&gt;No videos found&lt;/Text&gt;
+      &lt;/View&gt;
+    )
+  }
+}
+
+let VideoPage = ({ data }) =&gt; {
+  if (data) {
+    return (
+      &lt;ScrollView&gt;
+        &lt;View&gt;
+          &lt;Text&gt;{data.title}&lt;/Text&gt;
+          { data.description ? &lt;Text&gt;{data.description}&lt;/Text&gt; : null }
+        &lt;/View&gt;
+        &lt;View&gt;
+          &lt;VideoList videos={data.videos} /&gt;
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    )
+  } else {
+    return &lt;Loading /&gt;
+  }
+}
+
+export default VideoPageContainer
+</code></pre>
+<p>We have successfully split the monolithic <code>VideoPage</code> component into several subcomponents, most of which are pure and stateless. This dichotomy of <a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0">smart vs. dumb components</a> will set the stage nicely for further refactoring.</p>
+<h3 id="2extractremaininginstancemethodstoplainfunctions">2. Extract remaining instance methods to plain functions</h3>
+<p>What about the remaining instance methods? Let's move the <code>.fetchData()</code> method outside the class to a top-level function and rewire <code>componentDidMount()</code> to invoke it.</p>
+<pre><code class="language-diff">-  componentWillMount() {
++  async componentWillMount() {
+-    this.fetchData(this.props.id)
++    this.setState({ data: await model(this.props) })
+   }
+ }
+
+ ...
+
+-async fetchData(id) {
++let model = async ({ id }) =&gt; {
+   let res = await API.getVideos(id)
+   let json = await res.json()
+-  this.setState({ data: json.videos })
++  return json.videos
+ }
+</code></pre>
+<p>Since we need the lifecycle hook to instantiate data fetching, we can't pull out the <code>.componentWillMount()</code> method, but at least the logic for how to fetch the data is extracted.</p>
+<h3 id="3extractbranchingcomplexitywithhigherordercomponents">3. Extract branching complexity with higher-order components</h3>
+<p>The <code>VideoList</code> component could stand to be broken down into subcomponents so it's easier to debug the <code>if</code> branches. Let's extract the two cases into their own stateless functional components:</p>
+<pre><code class="language-diff">+let VideoListBase = ({ videos }) =&gt;
++  &lt;View&gt;
++    { videos.map(video =&gt;
++      &lt;Video key={video.id} data={video} /&gt;
++    ) }
++  &lt;/View&gt;
++
++let NoVideosFound = () =&gt;
++  &lt;View&gt;
++    &lt;Text&gt;No videos found&lt;/Text&gt;
++  &lt;/View&gt;
++
+ let VideoList = ({ videos }) =&gt; {
+   if (videos.length &gt; 0) {
+-    return videos.map(video =&gt;
+-      &lt;Video key={video.id} data={video} /&gt;
+-    )
++    return &lt;VideoListBase videos={videos} /&gt;
+   } else {
+-    return (
+-      &lt;View&gt;
+-        &lt;Text&gt;No videos found&lt;/Text&gt;
+-      &lt;/View&gt;
+-    )
++    return &lt;NoVideosFound /&gt;
+   }
+ }
+</code></pre>
+<p>Hmm, the current <code>VideoList</code> component is nothing more than an <code>if</code> statement, which is a common component <em>behavior.</em> And thanks to functional programming, behaviors are easy to reuse through higher-order components.</p>
+<p>There's a great library for reusable behavior like branching: <a href="https://github.com/acdlite/recompose">Recompose</a>. It's a <em>lightly</em> coupled utility library for creating higher-order <em>components</em> (which are really just higher-order <em>functions</em>).</p>
+<p>Let's replace <code>VideoList</code> with the <code>branch</code> higher-order component.</p>
+<pre><code class="language-diff">+import { branch, renderComponent } from 'recompose'
+
+-let VideoList = ({ videos }) =&gt; {
+-  if (videos.length &gt; 0) {
+-    return &lt;VideoListBase videos={videos} /&gt;
+-  } else {
+-    return &lt;NoVideosFound /&gt;
+-  }
+-}
++let VideoList = branch(
++  ({ videos }) =&gt; videos.length === 0,
++  renderComponent(NoVideosFound)
++)(VideoListBase)
+</code></pre>
+<p>When there are no videos, the <code>branch()</code> higher-order component will render the <code>NoVideosFound</code> component. Otherwise, it will render <code>VideoListBase</code>.</p>
+<p>A higher-order component is usually curried. The first invocation accepts any number of configuration arguments — like a test function — and the second invocation accepts only one argument: the base component to wrap. Currying doesn't seem to gain us anything yet, but later when we stack several higher-order components together, the currying convention will save us some boilerplate and make testing really elegant.</p>
+<p>Take a look at some of these <a href="https://github.com/acdlite/recompose/wiki/Recipes">Recompose recipes</a> for more inspiration.</p>
+<h3 id="4createadatafetchinghigherordercomponent">4. Create a data fetching higher-order component</h3>
+<p>We're nearly done! <code>VideoPageContainer</code> is now a generic, reusable &quot;smart component&quot; that fetches data asynchronously and passes it as a prop to another component. Let's turn <code>VideoPageContainer</code> into our own higher-order component, called <code>withModel()</code>:</p>
+<pre><code class="language-diff">+let withModel = (model, initial) =&gt; BaseComponent =&gt;
+-  class VideoPageContainer extends Component {
++  class WithModel extends Component {
+     constructor(props) {
+       super(props)
+-      this.state = { data: null }
++      this.state = { data: initial }
+     }
+
+     ...
+
+     render() {
+-      return &lt;VideoPage data={this.state.data} /&gt;
++      return &lt;BaseComponent data={this.state.data} /&gt;
+     }
+   }
+ }
+</code></pre>
+<p>The function signature of <code>withModel()</code> indicates that the first invocation should provide a function for fetching the necessary data, followed by an initial value for the data while it is loading. The second invocation takes the component to wrap, and returns a brand new component with data fetching behavior.</p>
+<p>To use <code>withModel()</code>, let's invoke it with the <code>VideoPage</code> stateless functional component and export the result.</p>
+<pre><code class="language-diff">-export default VideoPageContainer
++export default withModel(model, null)(VideoPage)
+</code></pre>
+<p>The <code>withModel()</code> higher-order component will definitely be useful for other components in the app, so it should be moved to its own file!</p>
+<h3 id="5composebehaviorsintoasingleenhancefunction">5. Compose behaviors into a single <code>enhance()</code> function</h3>
+<p>Currying the <code>withModel()</code> higher-order component has an elegant benefit: we can stack more &quot;behaviors&quot; with Recompose utilities! Similar to our work with the <code>VideoList</code> and <code>NoVideosFound</code> components, let's extract the <code>if (data)</code> edge cases from <code>VideoPage</code> with the <code>branch()</code> higher-order component to render the <code>Loading</code> component while the data is being fetched:</p>
+<pre><code class="language-diff">-import { branch, renderComponent } from 'recompose'
++import { branch, renderComponent, compose } from 'recompose'
+
+ ...
+
+-let VideoPage = ({ data }) =&gt; {
++let VideoPage = ({ data }) =&gt;
+-  if (data) {
+-    return (
+   &lt;ScrollView&gt;
+     ...
+   &lt;/ScrollView&gt;
+-    )
+-  } else {
+-    return &lt;Loading /&gt;
+-  }
+-}
+
++export let enhance = compose(
++  withModel(model, null),
++  branch(
++    ({ data }) =&gt; !data,
++    renderComponent(Loading)
++  )
++)
+
+-export default withModel(model, null)(VideoPage)
++export default enhance(VideoPage)
+</code></pre>
+<p>The <code>compose()</code> utility saves us from deeply nested parentheses and linearizes stacked behaviors into a single function, conventionally called <code>enhance()</code>. Hurray for clean <code>git diff</code>s!</p>
+<p>And now the <code>VideoPage</code> &quot;dumb component&quot; focuses solely on the happy path: when there is data and at least one video to display. By reading the <code>enhance</code> function from top to bottom, we can quickly parse out other behaviors or even add new ones, e.g. performance optimizations with <a href="https://github.com/acdlite/recompose/blob/master/docs/API.md#onlyupdateforkeys"><code>onlyUpdateForKeys()</code></a>.</p>
+<h2 id="finalresult">Final result</h2>
+<p>After a few more tweaks, here is the <strong>completed <code>VideoPage</code> component</strong> in 52 lines of code (also <a href="https://github.com/nybblr/destroy-all-classes">on Github</a>):</p>
+<pre><code class="language-jsx">import React from 'react'
+import { ScrollView, Text, View } from 'react-native'
+import { compose, branch, renderComponent } from 'recompose'
+
+import Loading from 'components/loading'
+import Video from 'components/video'
+import API from 'services/api'
+import withModel from 'lib/with-model'
+
+let VideoPage = ({ data }) =&gt;
+  &lt;ScrollView&gt;
+    &lt;View&gt;
+      &lt;Text&gt;{data.title}&lt;/Text&gt;
+      { data.description ? &lt;Text&gt;{data.description}&lt;/Text&gt; : null }
+    &lt;/View&gt;
+    &lt;View&gt;
+      &lt;VideoList videos={data.videos} /&gt;
+    &lt;/View&gt;
+  &lt;/ScrollView&gt;
+
+let VideoListBase = ({ videos }) =&gt;
+  &lt;View&gt;
+    { videos.map(video =&gt;
+      &lt;Video key={video.id} data={video} /&gt;
+    ) }
+  &lt;/View&gt;
+
+let NoVideosFound = () =&gt;
+  &lt;View&gt;
+    &lt;Text&gt;No videos found&lt;/Text&gt;
+  &lt;/View&gt;
+
+let VideoList = branch(
+  ({ videos }) =&gt; videos.length === 0,
+  renderComponent(NoVideosFound)
+)(VideoListBase)
+
+let model = async ({ id }) =&gt; {
+  let res = await API.getVideos(id)
+  let json = await res.json()
+  return json.videos
+}
+
+export let enhance = compose(
+  withModel(model, null),
+  branch(
+    ({ data }) =&gt; !data,
+    renderComponent(Loading)
+  )
+)
+
+export default enhance(VideoPage)
+</code></pre>
+<p>Not bad! At a glance, we can see the happy path for rendering <code>VideoPage</code>, how it fetches data, and how it handles the load state. When we add new behaviors in the future, we will only <em>add</em> new code instead of <em>modifying</em> existing code. So in a way, <em>functional programming helps you write immutable code!</em></p>
+<p>Interestingly, every component and function (except <code>model()</code>) is an arrow function with an implied return. This isn't just about syntactic noise: the implied return makes it harder to sneak in side effects! The code looks like a strict &quot;data in, data out&quot; pipeline. The implied return also discourages you from assigning to local variables, so it is hard for ugly interfaces to hide when all destructuring must happen in the parameter list. And to add impure behaviors like performance optimization or handlers, you are naturally forced to use higher-order components.</p>
+<p>We can even test the component's <code>enhance</code>r in isolation by stubbing out the <code>VideoPage</code> component:</p>
+<pre><code class="language-jsx">import { enhance } from 'components/video-page'
+
+it('renders when there is data', () =&gt; {
+  let Stub = () =&gt; &lt;a&gt;TDD FTW&lt;/a&gt;
+
+  let Enhanced = enhance(Stub)
+
+  /* Perform assertions! */
+})
+</code></pre>
+<p>Back when rendering was tangled up in instance methods, our only hope of extracting behaviors was through inheritance, e.g. mixins. But now we can reuse behaviors through straightforward function composition. The inside-out transformation also highlights that <code>VideoList</code> should be extracted to its own module, <code>video-list.js</code>.</p>
+<h2 id="itsawraperrsandwich">It's a wrap, err, sandwich</h2>
+<p>Functional programming recipes and patterns go a long way to creating elegant, resilient and test-friendly code by minimizing the surface area between our code and the framework. Whether you are creating a React web app or React Native app, higher-order components are a particularly powerful technique because they encourage <em>composition over inheritance.</em></p>
+<p>With functional programming, we can build React components that resemble a tasty sandwich, where we can peel back each ingredient and debug layer-by-layer.</p>
+<p>By contrast, class-based components are a burrito wrap with potato salad.</p>
+<!--kg-card-end: markdown--><!--kg-card-end: markdown-->
+            </div>
+          </div>
+        </div>
+        <section class="m-subscribe-section">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">Subscribe to our newsletter</h4>
+                <p class="m-subscribe-section__description">
+                  Get the latest posts delivered right to your inbox.
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                
+<form method="post" action="https://jonathanleemartin.us4.list-manage.com/subscribe/post?u=06192382d0d99bb3a3f789d30&amp;id=cb60b1e5bb" id="subscribe-form" class="m-subscribe-section__form">
+  <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+  <fieldset>
+    <label for="EMAIL" class="sr-only">Your email address</label>
+    <input id="EMAIL" name="EMAIL" class="m-input in-subscribe-section" placeholder="Your email address" value="" >
+  </fieldset>
+  <button id="subscribe_button" class="m-button primary block" type="submit">Subscribe</button>
+
+  
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+
+</form>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="m-author">
+          <div class="m-author__content">
+            <div class="m-author__picture">
+              <a href="/author/jonathan/" class="m-author-picture" aria-label="Author picture">
+                <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+              </a>
+            </div>
+            <div class="m-author__info">
+              <h4 class="m-author__name">
+                <a href="/author/jonathan/">Jonathan Lee Martin</a>
+              </h4>
+              <p class="m-author__bio">Jonathan is an educator, writer and international speaker. He guides developers — from career switchers to senior developers at Fortune 100 companies — through their journey into web development.</p>
+              <ul class="m-author-links">
+                <li>
+                  <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon-globe"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="m-recommended">
+          <div class="l-wrapper in-recommended">
+            <h3 class="m-section-title in-recommended">Recommended for you</h3>
+            <div class="m-recommended-articles">
+              <div class="m-recommended-slider js-recommended-articles">
+                
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript featured">
+      <div class="m-article-card__picture">
+      <a href="/blog/dont-over-react/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+        <a href="/blog/dont-over-react/" class="m-article-card__featured js-tooltip" data-tippy-content="Featured" aria-label="Article">
+          <span class="icon-star"></span>
+        </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/dont-over-react/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Don’t Over React! Render Binary Data with Class.</h2>
+          <p class="m-article-card__description">Eventually, your React web app will accept file uploads. JavaScript has exceptional APIs for handling chunks of binary data, but the interaction with React can cause some major performance hiccups. Discover the performance implications of 5 different ways to work with user-submitted binary data!</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>December 5, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-javascript tag-node">
+      <div class="m-article-card__picture">
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/javascript/" class="m-article-card__tag">JavaScript</a>
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Hi, I’m Node.js and I’ll be your server today.</h2>
+          <p class="m-article-card__description">Tech stack decisions can be hard. Is Node.js the right choice for your service? Have a seat and your server will be right with you.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>April 12, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-javascript featured">
+      <div class="m-article-card__picture">
+      <a href="/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+        <a href="/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" class="m-article-card__featured js-tooltip" data-tippy-content="Featured" aria-label="Article">
+          <span class="icon-star"></span>
+        </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/javascript/" class="m-article-card__tag">JavaScript</a>
+      <a href="/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Cross Stitching: Elegant Concurrency Patterns for JavaScript</h2>
+          <p class="m-article-card__description">You've probably heard statements like "JavaScript is a toy language, it doesn't support multithreading!" But in fact, JavaScript is tailor-made for concurrency. You'll need some patterns to write concurrent code that is performant and readable. Enter the Async IIFE.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>June 1, 2017</span>
+          <span>&bull;</span>
+          <span>9 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</div>
+
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results"></div>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>tl;dr &copy; 2019</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>By <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener">Jonathan Lee Martin</a></span>
+    </p>
+    <nav class="m-footer-social">
+        <a href="https://www.facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+          <span class="icon-facebook"></span>
+        </a>
+        <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+          <span class="icon-twitter"></span>
+        </a>
+    </nav>
+  </div>
+</footer>
+
+    <script defer src="/assets/js/manifest.js"></script>
+    <script defer src="/assets/js/polyfill.js"></script>
+    <script defer src="/assets/js/vendor.js"></script>
+    <script defer src="/assets/js/app.js"></script>
+
+      <script defer src="/assets/js/post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/';</script>
+
+
+    
+  </body>
+</html>

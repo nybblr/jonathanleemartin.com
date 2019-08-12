@@ -1,0 +1,4 @@
+User-agent: *
+Sitemap: https://jonathanleemartin.com/sitemap.xml
+Disallow: /ghost/
+Disallow: /p/

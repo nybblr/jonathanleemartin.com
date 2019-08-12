@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>01. Nested Ternaries</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,700,700i&display=swap" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" media="screen" />
+
+      <style>
+    .m-hero__picture {
+      background-image: url(/content/images/size/w2000/2019/08/01-nested-ternaries.png);
+    }
+  
+    @media(max-width: 1000px) {
+      .m-hero__picture {
+        background-image: url(/content/images/size/w1000/2019/08/01-nested-ternaries.png);
+      }
+    }
+  
+    @media(max-width: 600px) {
+      .m-hero__picture {
+        background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);
+      }
+    }
+  </style>
+
+
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://jonathanleemartin.com/tldr/01-nested-ternaries/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/01-nested-ternaries/amp/" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="01. Nested Ternaries" />
+    <meta property="og:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam
+nec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit
+vel elit tristique tincidunt.
+
+Vivamus quam augue, tristique in rutrum id, hendrerit et dolor. Duis pharetra
+facilisis ex vitae rutrum. Donec iaculis posuere risus, a elementum ante
+porttitor quis. Nunc cursus, mi nec pharetra tristique, nunc ipsum suscipit
+dolor, a porttitor turpis turpis et mi. Donec pellentesque ex lacus, eget varius
+mi " />
+    <meta property="og:url" content="https://jonathanleemartin.com/tldr/01-nested-ternaries/" />
+    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/08/01-nested-ternaries.png" />
+    <meta property="article:published_time" content="2019-08-05T19:51:53.000Z" />
+    <meta property="article:modified_time" content="2019-08-12T19:05:13.000Z" />
+    <meta property="article:tag" content="tl;dr" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="01. Nested Ternaries" />
+    <meta name="twitter:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam
+nec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit
+vel elit tristique tincidunt.
+
+Vivamus quam augue, tristique in rutrum id, hendrerit et dolor. Duis pharetra
+facilisis ex vitae rutrum. Donec iaculis posuere risus, a elementum ante
+porttitor quis. Nunc cursus, mi nec pharetra tristique, nunc ipsum suscipit
+dolor, a porttitor turpis turpis et mi. Donec pellentesque ex lacus, eget varius
+mi " />
+    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/01-nested-ternaries/" />
+    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/08/01-nested-ternaries.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="tl;dr" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "01. Nested Ternaries",
+    "url": "https://jonathanleemartin.com/tldr/01-nested-ternaries/",
+    "datePublished": "2019-08-05T19:51:53.000Z",
+    "dateModified": "2019-08-12T19:05:13.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://jonathanleemartin.com/content/images/2019/08/01-nested-ternaries.png",
+        "width": 1920,
+        "height": 1080
+    },
+    "keywords": "tl;dr",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam\nnec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit\nvel elit tristique tincidunt.\n\nVivamus quam augue, tristique in rutrum id, hendrerit et dolor. Duis pharetra\nfacilisis ex vitae rutrum. Donec iaculis posuere risus, a elementum ante\nporttitor quis. Nunc cursus, mi nec pharetra tristique, nunc ipsum suscipit\ndolor, a porttitor turpis turpis et mi. Donec pellentesque ex lacus, eget varius\nmi ",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-30173272-1');
+</script>
+
+    <script>
+      const ghostHost = "https://jonathanleemartin.com"
+    </script>
+  </head>
+  <body class="post-template tag-tldr">
+    
+
+<div class="main-wrap">
+  
+  <header class="m-header with-picture js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://jonathanleemartin.com" class="m-logo in-mobile-topbar">
+        <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+              
+<ul role="menu">
+  <li class="only-desktop" role="menuitem">
+    <a href="https://jonathanleemartin.com" class="m-logo">
+      <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+    </a>
+  </li>
+    <li class="nav-blog">
+      <a href="https://jonathanleemartin.com/blog/">Blog</a>
+    </li>
+    <li class="nav-episodes">
+      <a href="https://jonathanleemartin.com/tldr/">Episodes</a>
+    </li>
+    <li class="nav-youtube">
+      <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a>
+    </li>
+    <li class="nav-books">
+      <a href="https://jonathanleemartin.com/books/">Books</a>
+    </li>
+  <li role="menuitem" class="js-submenu-option">
+    <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+      <span class="icon-more"></span>
+    </button>
+    <div class="m-submenu js-submenu">
+      <div class="l-wrapper in-submenu">
+        <section class="m-recent-articles">
+          <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+          <div class="js-recent-articles">
+                <div>
+                  <a href="/tldr/04-expressions/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/04-expressions.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">04. Expressions</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/03-policies/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/03-policies.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">03. Policies</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/02-router-pattern/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/02-router.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">02. Router Pattern</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/01-nested-ternaries/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">01. Nested Ternaries</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+          </div>
+        </section>
+        <section class="m-tags">
+          <h3 class="m-submenu-title">Tags</h3>
+            <ul>
+                <li>
+                  <a href="/tag/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/tag/node/">Node</a>
+                </li>
+                <li>
+                  <a href="/tag/react/">React</a>
+                </li>
+                <li>
+                  <a href="/tag/web/">Web</a>
+                </li>
+                <li>
+                  <a href="/tag/tldr/">tl;dr</a>
+                </li>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </li>
+</ul>
+
+          </nav>
+          <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+  
+
+  <header class="m-hero with-picture" data-aos="fade">
+      <div class="m-hero__picture in-post"></div>
+  </header>
+  
+  <main>
+    <article>
+      <div class="l-content">
+        <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div class="l-post-content has-subscribe-form js-progress-content">
+            <header class="m-heading">
+              <h1 class="m-heading__title in-post">01. Nested Ternaries</h1>
+              <div class="m-heading__meta">
+                <a href="/tag/tldr/" class="m-heading__meta__tag">tl;dr</a>
+                <span class="m-heading__meta__divider">&bull;</span>
+                <span class="m-heading__meta__time">August 5, 2019</span>
+              </div>
+            </header>
+            <div class="pos-relative js-post-content">
+              <div class="m-share">
+                <div class="m-share__content js-sticky">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/01-nested-ternaries/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                  <a href="https://twitter.com/intent/tweet?text=01.%20Nested%20Ternaries&url=https://jonathanleemartin.com/tldr/01-nested-ternaries/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                  <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
+                    <span class="icon-arrow-top"></span>
+                    <svg>
+                      <circle class="progress-ring__circle js-progress" stroke="#04aeee" fill="transparent" r="0" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!--kg-card-begin: markdown--><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam nec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit vel elit tristique tincidunt.</p>
+<p>Vivamus quam augue, tristique in rutrum id, hendrerit et dolor. Duis pharetra facilisis ex vitae rutrum. Donec iaculis posuere risus, a elementum ante porttitor quis. Nunc cursus, mi nec pharetra tristique, nunc ipsum suscipit dolor, a porttitor turpis turpis et mi. Donec pellentesque ex lacus, eget varius mi tincidunt eu.</p>
+<p>Quisque non felis sagittis, pellentesque nibh vel, mollis dolor. Vestibulum lobortis porttitor magna a efficitur. Praesent lorem lorem, eleifend et enim in, porta hendrerit mauris. Ut id enim nisi.</p>
+<!--kg-card-end: markdown--><!--kg-card-begin: embed--><figure class="kg-card kg-embed-card"><iframe width="480" height="270" src="https://www.youtube.com/embed/HcOITHvdndQ?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure><!--kg-card-end: embed-->
+            </div>
+          </div>
+        </div>
+        <section class="m-subscribe-section">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">Subscribe to our newsletter</h4>
+                <p class="m-subscribe-section__description">
+                  Get the latest posts delivered right to your inbox.
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                
+<form method="post" action="https://jonathanleemartin.us4.list-manage.com/subscribe/post?u=06192382d0d99bb3a3f789d30&amp;id=cb60b1e5bb" id="subscribe-form" class="m-subscribe-section__form">
+  <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+  <fieldset>
+    <label for="EMAIL" class="sr-only">Your email address</label>
+    <input id="EMAIL" name="EMAIL" class="m-input in-subscribe-section" placeholder="Your email address" value="" >
+  </fieldset>
+  <button id="subscribe_button" class="m-button primary block" type="submit">Subscribe</button>
+
+  
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+
+</form>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="m-author">
+          <div class="m-author__content">
+            <div class="m-author__picture">
+              <a href="/author/jonathan/" class="m-author-picture" aria-label="Author picture">
+                <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+              </a>
+            </div>
+            <div class="m-author__info">
+              <h4 class="m-author__name">
+                <a href="/author/jonathan/">Jonathan Lee Martin</a>
+              </h4>
+              <p class="m-author__bio">Jonathan is an educator, writer and international speaker. He guides developers — from career switchers to senior developers at Fortune 100 companies — through their journey into web development.</p>
+              <ul class="m-author-links">
+                <li>
+                  <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon-globe"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="m-recommended">
+          <div class="l-wrapper in-recommended">
+            <h3 class="m-section-title in-recommended">Recommended for you</h3>
+            <div class="m-recommended-articles">
+              <div class="m-recommended-slider js-recommended-articles">
+                
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card post tag-tldr">
+      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/08/04-expressions.png);">
+      <a href="/tldr/04-expressions/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/tldr/" class="m-article-card__tag">tl;dr</a>
+      <a href="/tldr/04-expressions/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">04. Expressions</h2>
+          <p class="m-article-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam nec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit vel elit tristique tincidunt.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>August 5, 2019</span>
+          <span>&bull;</span>
+          <span>1 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card post tag-tldr">
+      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/08/03-policies.png);">
+      <a href="/tldr/03-policies/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/tldr/" class="m-article-card__tag">tl;dr</a>
+      <a href="/tldr/03-policies/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">03. Policies</h2>
+          <p class="m-article-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam nec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit vel elit tristique tincidunt.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>August 5, 2019</span>
+          <span>&bull;</span>
+          <span>1 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card post tag-tldr">
+      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/08/02-router.png);">
+      <a href="/tldr/02-router-pattern/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/tldr/" class="m-article-card__tag">tl;dr</a>
+      <a href="/tldr/02-router-pattern/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">02. Router Pattern</h2>
+          <p class="m-article-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a lacinia eros. Nam nec ante fringilla ligula lacinia feugiat sit amet vitae mi. Aenean non velit vel elit tristique tincidunt.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>August 5, 2019</span>
+          <span>&bull;</span>
+          <span>1 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</div>
+
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results"></div>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>tl;dr &copy; 2019</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>By <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener">Jonathan Lee Martin</a></span>
+    </p>
+    <nav class="m-footer-social">
+        <a href="https://www.facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+          <span class="icon-facebook"></span>
+        </a>
+        <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+          <span class="icon-twitter"></span>
+        </a>
+    </nav>
+  </div>
+</footer>
+
+    <script defer src="/assets/js/manifest.js"></script>
+    <script defer src="/assets/js/polyfill.js"></script>
+    <script defer src="/assets/js/vendor.js"></script>
+    <script defer src="/assets/js/app.js"></script>
+
+      <script defer src="/assets/js/post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/';</script>
+
+
+    
+  </body>
+</html>

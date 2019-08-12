@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+
+    <title>To Kill -9 a Drone, Part 1</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <meta name="description" content="Jonathan Martin used serial TTY and Linux history to hack his Parrot Rolling Spider Mini-drone to run his own software." />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-1/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="To Kill -9 a Drone, Part 1" />
+    <meta property="og:description" content="This year marks my second visit to JSConf’s paradisiacal backdrop on Amelia Island, and is particularly memorable—the talks demoed unusual applications and dazzled the imagination. But the swag item this year blows all the branded beach balls out of the beach water.
+" />
+    <meta property="og:url" content="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-1/" />
+    <meta property="article:published_time" content="2015-06-16T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-08-09T18:17:41.000Z" />
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="To Kill -9 a Drone, Part 1" />
+    <meta name="twitter:description" content="This year marks my second visit to JSConf’s paradisiacal backdrop on Amelia Island, and is particularly memorable—the talks demoed unusual applications and dazzled the imagination. But the swag item this year blows all the branded beach balls out of the beach water.
+" />
+    <meta name="twitter:url" content="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-1/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "To Kill -9 a Drone, Part 1",
+    "url": "https://jonathanleemartin.com/blog/to-kill-9-a-drone-part-1/",
+    "datePublished": "2015-06-16T12:00:00.000Z",
+    "dateModified": "2019-08-09T18:17:41.000Z",
+    "description": "This year marks my second visit to JSConf’s paradisiacal backdrop on Amelia Island, and is particularly memorable—the talks demoed unusual applications and dazzled the imagination. But the swag item this year blows all the branded beach balls out of the beach water.\n",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,600,400" />
+    <style amp-custom>html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{margin:0.67em 0;font-size:2em}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{position:relative;vertical-align:baseline;font-size:75%;line-height:0}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}amp-img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace, monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;color:inherit;font:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{margin:0 2px;padding:0.35em 0.625em 0.75em;border:1px solid #c0c0c0}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:bold}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}html{max-height:100%;height:100%;font-size:62.5%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0)}body{max-height:100%;height:100%;color:#3a4145;background:#f4f8fb;letter-spacing:0.01rem;font-family:"Merriweather", serif;font-size:1.8rem;line-height:1.75em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"kern" 1;-moz-font-feature-settings:"kern" 1;-o-font-feature-settings:"kern" 1}::-moz-selection{background:#d6edff}::selection{background:#d6edff}h1,h2,h3,h4,h5,h6{margin:0 0 0.3em 0;color:#2e2e2e;font-family:"Open Sans", sans-serif;line-height:1.15em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-moz-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-o-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1}h1{text-indent:-2px;letter-spacing:-1px;font-size:2.6rem}h2{letter-spacing:0;font-size:2.4rem}h3{letter-spacing:-0.6px;font-size:2.1rem}h4{font-size:1.9rem}h5{font-size:1.8rem}h6{font-size:1.8rem}a{color:#4a4a4a}a:hover{color:#111}p,ul,ol,dl{margin:0 0 2.5rem 0;font-size:1.5rem;text-rendering:geometricPrecision;-webkit-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-moz-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-o-font-feature-settings:"liga" 1, "onum" 1, "kern" 1}ol,ul{padding-left:2em}ol ol,ul ul,ul ol,ol ul{margin:0 0 0.4em 0;padding-left:2em}dl dt{float:left;clear:left;overflow:hidden;margin-bottom:1em;width:180px;text-align:right;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-bottom:1em;margin-left:200px}li{margin:0.4em 0}li li{margin:0}hr{display:block;margin:1.75em 0;padding:0;height:1px;border:0;border-top:#efefef 1px solid}blockquote{box-sizing:border-box;margin:1.75em 0 1.75em 0;padding:0 0 0 1.75em;border-left:#4a4a4a 0.4em solid;-moz-box-sizing:border-box}blockquote p{margin:0.8em 0;font-style:italic}blockquote small{display:inline-block;margin:0.8em 0 0.8em 1.5em;color:#ccc;font-size:0.9em}blockquote small:before{content:"\2014 \00A0"}blockquote cite{font-weight:700}blockquote cite a{font-weight:normal}mark{background-color:#fdffb6}code,tt{padding:1px 3px;border:#e3edf3 1px solid;background:#f7fafb;border-radius:2px;white-space:pre-wrap;font-family:Inconsolata, monospace, sans-serif;font-size:0.85em;font-feature-settings:"liga" 0;-webkit-font-feature-settings:"liga" 0;-moz-font-feature-settings:"liga" 0}pre{overflow:auto;box-sizing:border-box;margin:0 0 1.75em 0;padding:10px;width:100%;border:#e3edf3 1px solid;background:#f7fafb;border-radius:3px;white-space:pre;font-family:Inconsolata, monospace, sans-serif;font-size:0.9em;-moz-box-sizing:border-box}pre code,pre tt{padding:0;border:none;background:transparent;white-space:pre-wrap;font-size:inherit}kbd{display:inline-block;margin-bottom:0.4em;padding:1px 8px;border:#ccc 1px solid;background:#f4f4f4;border-radius:4px;box-shadow:0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 #fff inset;color:#666;text-shadow:#fff 0 1px 0;font-size:0.9em;font-weight:700}table{box-sizing:border-box;margin:1.75em 0;max-width:100%;width:100%;background-color:transparent;-moz-box-sizing:border-box}table th,table td{padding:8px;border-top:#efefef 1px solid;vertical-align:top;text-align:left;line-height:20px}table th{color:#000}table caption + thead tr:first-child th,table caption + thead tr:first-child td,table colgroup + thead tr:first-child th,table colgroup + thead tr:first-child td,table thead:first-child tr:first-child th,table thead:first-child tr:first-child td{border-top:0}table tbody + tbody{border-top:#efefef 2px solid}table table table{background-color:#fff}table tbody > tr:nth-child(odd) > td,table tbody > tr:nth-child(odd) > th{background-color:#f6f6f6}table.plain tbody > tr:nth-child(odd) > td,table.plain tbody > tr:nth-child(odd) > th{background:transparent}iframe,amp-iframe,.fluid-width-video-wrapper{display:block;margin:1.75em 0}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper amp-iframe{margin:0}textarea,select,input{margin:0 0 5px 0;padding:6px 9px;width:260px;outline:0;border:#e7eef2 1px solid;background:#fff;border-radius:4px;box-shadow:none;font-family:"Open Sans", sans-serif;font-size:1.6rem;line-height:1.4em;font-weight:100;-webkit-appearance:none}textarea{min-width:250px;min-height:80px;max-width:340px;width:100%;height:auto}input[type="text"]:focus,input[type="email"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="number"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,textarea:focus{outline:none;outline-width:0;border:#bbc7cc 1px solid;background:#fff}select{width:270px;height:30px;line-height:30px}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.clearfix{zoom:1}.main-header{position:relative;display:table;overflow:hidden;box-sizing:border-box;width:100%;height:50px;background:#5ba4e5 no-repeat center center;background-size:cover;text-align:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.content{background:#fff;padding-top:15px}.blog-title,.content{margin:auto;max-width:600px}.blog-title a{display:block;padding-right:16px;padding-left:16px;height:50px;color:#fff;text-decoration:none;font-family:"Open Sans", sans-serif;font-size:16px;line-height:50px;font-weight:600}.post{position:relative;margin-top:0;margin-right:16px;margin-left:16px;padding-bottom:0;max-width:100%;border-bottom:#ebf2f6 1px solid;word-wrap:break-word;font-size:0.95em;line-height:1.65em}.post-header{margin-bottom:1rem}.post-title{margin-bottom:0}.post-title a{text-decoration:none}.post-meta{display:block;margin:3px 0 0 0;color:#9eabb3;font-family:"Open Sans", sans-serif;font-size:1.3rem;line-height:2.2rem}.post-meta a{color:#9eabb3;text-decoration:none}.post-meta a:hover{text-decoration:underline}.post-meta .author{margin:0;font-size:1.3rem;line-height:1.3em}.post-date{display:inline-block;text-transform:uppercase;white-space:nowrap;font-size:1.2rem;line-height:1.2em}.post-image{margin:0;padding-top:3rem;padding-bottom:30px;border-top:1px #E8E8E8 solid}.post-content amp-img,.post-content amp-anim{position:relative;left:50%;display:block;padding:0;min-width:0;max-width:112%;width:calc(100% + 32px);height:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%)}.footnotes{font-size:1.3rem;line-height:1.6em;font-style:italic}.footnotes li{margin:0.6rem 0}.footnotes p{margin:0}.footnotes p a:last-child{text-decoration:none}.site-footer{position:relative;margin:0 auto 20px auto;padding:1rem 15px;max-width:600px;color:rgba(0,0,0,0.5);font-family:"Open Sans", sans-serif;font-size:1.1rem;line-height:1.75em}.site-footer a{color:rgba(0,0,0,0.5);text-decoration:none;font-weight:bold}.site-footer a:hover{border-bottom:#bbc7cc 1px solid}.poweredby{display:block;float:right;width:45%;text-align:right}.copyright{display:block;float:left;width:45%}</style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="main-header">
+        <nav class="blog-title">
+            <a href="https://jonathanleemartin.com">tl;dr</a>
+        </nav>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">To Kill -9 a Drone, Part 1</h1>
+                <section class="post-meta">
+                    <p class="author">by <a href="/author/jonathan/">Jonathan Lee Martin</a></p>
+                    <time class="post-date" datetime="2015-06-16">2015-06-16</time>
+                </section>
+            </header>
+            <section class="post-content">
+
+                <p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-1/">Big Nerd Ranch blog</a>.</em></small></p>
+<p><em>TL;DR: JSConf 2015 was awesome, and you can open a shell to the Parrot Rolling Spider’s Linux innards with screen /dev/tty.usbmodem…</em></p>
+<p>May is beach month. Every year, I head to the Sunshine State for a fair dose of UV rays to counteract an epidemic skin disease (the treatment usually involves sunburn). Afternoon swims are among the most palatable treatment options, although poolside activities often interrupt it. It takes a certain amount of agility to dodge incoming gulls, beach balls and Node.js-controlled boats.</p>
+<p>But contrary to my family’s opinion, I’m not out on vacation. This, in a nutshell, is <a href="http://jsconf.com/">JSConf</a>: the premier JavaScript conference for nerds in search of web expertise, hardware hackery and East Coast sunlight.</p>
+<p></p>
+<p>This year marks my second visit to JSConf’s paradisiacal backdrop on Amelia Island, and is particularly memorable—the talks demoed <a href="https://www.youtube.com/watch?v=nydh_2NRn-c">unusual applications</a> and <a href="https://simonswain.com/coldwar">dazzled the imagination</a>. I also gave my first JSConf talk on <a href="https://www.youtube.com/watch?v=O7vOxYoswKY">replacing native local variables with prototypes</a>.</p>
+<p>But I think everyone would agree: the swag item this year blows all the t-shirts and branded beach balls out of the [beach] water.</p>
+<h2 id="somanydrones">So. Many. Drones.</h2>
+<p>I thought the twenty or so AR.Drone quadcopters at last year’s NodeCopter event was unnerving. This year, the conference was swarmed by <strong>700</strong> <a href="http://www.parrot.com/usa/products/rolling-spider/">Parrot Rolling Spider</a> quadcopters.</p>
+<p></p>
+<p>Despite the drone’s apocalyptic appearance, the human finger inflicts more damage on the tiny plastic props than it does in return. But at 1400 LED eyes and 2800 props strong, the same cannot be said for terrorized house pets and seagulls.</p>
+<p>Unlike their bigger brothers, the mini-drones are remote-controlled over Bluetooth Low Energy. So anywhere else, I’d pilot my drone from the <a href="http://www.parrot.com/usa/apps/">FreeFlight mobile app</a>. But JSConf is not just anywhere else. At JSConf, anything that can be, must be controlled by JavaScript.</p>
+<p>Thanks to <a href="https://github.com/voodootikigod/node-rolling-spider">Chris Williams’s pre-conference homework</a>, I was able to pilot my drone from my laptop with vim-style controls and an <a href="https://twitter.com/nybblr/status/609481347338403840">Xbox 360 controller</a>. That’s pretty awesome, but a little boring, considering we did that last year.</p>
+<p>I think my four-winged friend can do so much more: I want to run my own software <em>directly</em> on the drone to make something truly autonomous! I figured there would be docs and posts detailing how this could be done. However.</p>
+<p><em>Eerie silence…</em></p>
+<h2 id="serialobsessions">Serial Obsessions</h2>
+<p>At Georgia Tech, the CS program had a minor obsession with the original AR.Drone, so I've worked with it on a few occasions. Interestingly, it ran Linux, so I suspected that the Rolling Spider also runs Linux. If that was the case, I might be able to open a terminal and peek into the drone’s guts!</p>
+<p>With the guidance of my <a href="https://vimeo.com/68340179">proc killin’</a> colleague <a href="https://www.bignerdranch.com/about/the-team/steve-sparks/">Steve Sparks</a>, we took a historical detour to reminisce about the days of 56k dial-up modems. Coincidentally, <a href="http://slides.com/samccone/jsconf-uy#/">modems made an appearance at JSConf</a>, so I had some background.</p>
+<p>In the distant past, operators would relay text over telephone lines with keyboards. Similar to dial-up modems, different keys would be converted to a <a href="https://en.wikipedia.org/wiki/Baudot_code">5-bit code called Baudot code</a> and transmitted over wire. Baudot code was later standardized as ITA2, the predecessor to 7-bit ASCII. The <a href="https://en.wikipedia.org/wiki/Teleprinter">Teletype Writer</a>, as it was called, was later modified for communicating with computer terminals. Nowadays, most Linux devices listen for serial connections (directly through COM, or emulated over USB) and communicate to TTY (Teletype) sockets.</p>
+<p>On UNIX machines, TTY devices mount under <code>/dev/tty*</code>. Plugging in my drone over USB, two new entries show up:</p>
+<pre><code class="language-bash">$ ls -1 /dev
+...
+/dev/cu.usbmodem1d113
+...
+/dev/tty.usbmodem1d113
+...
+</code></pre>
+<p>The drone exposes a TTY socket over USB. This is thanks to the <code>getty</code> utility running on the drone, which listens for incoming connections and forwards traffic to the machine’s virtual console.</p>
+<p>If the drone is listening, my laptop needs to request and display the login shell. Like yesteryear’s kitchen appliances, the venerable <code>screen</code> terminal emulator can do anything: it even knows how to communicate with a TTY device over serial ports:</p>
+<pre><code>$ screen /dev/tty.usbmodem1d113
+</code></pre>
+<p>And I’m in!</p>
+<pre><code>BusyBox v1.20.2 (2015-03-06 17:53:39 CET) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+#
+</code></pre>
+<p>It doesn’t require a username and password, so it’s probably running root in single-user mode:</p>
+<pre><code># whoami
+/bin/sh: whoami: not found
+</code></pre>
+<p>Wow, seems a bit short on conveniences. Let’s try:</p>
+<pre><code># echo $USER
+root
+</code></pre>
+<p>That's it! One slight problem though: <strong>the drone disconnects after 60 seconds.</strong> It’s exasperating to explore the drone’s filesystem one minute at a time, so maybe it’s time for a different approach.</p>
+<h2 id="lookingforclues">Looking for Clues</h2>
+<p>While upgrading my drone, I peruse the mysterious <code>rollingspider_update.plf</code> file, which presumably wraps the core firmware update. Since the drone is Linux based, there should be several shell scripts scattered in the update file that could hint at turning off the auto-sleep. Unfortunately, none of the open source AR.Drone PLF extractors work with the Rolling Spider variant.</p>
+<p>Time to analyze the update myself. Maybe the update is just a <code>.tar.gz</code> with a different file extension:</p>
+<pre><code>$ file rollingspider_update.plf
+rollingspider_update.plf: data
+</code></pre>
+<p>Nope. Let’s try <code>strings rollingspider_update.plf</code>, which finds plain text sequences terminated by the NUL character (typical in binaries).</p>
+<pre><code>$ strings rollingspider_update.plf
+[gobbledygook and  ༼ ༎ຶ ෴ ༎ຶ༽]
+</code></pre>
+<p>Sigh; a few readable bits turn up, but most of the file looks like compressed gobbledygook. <code>strings</code> doesn’t know how to extract compressed strings, but <a href="https://github.com/devttys0/binwalk">Binwalk</a> does. Binwalk analyzes binary files and extracts resources, like images and text, into their respective files by searching for tell-tale signatures.</p>
+<pre><code>$ binwalk --extract rollingspider_update.plf
+</code></pre>
+<p>Binwalk spits out a directory of arbitrarily named files, most of which are binaries.</p>
+<pre><code>$ ls -1 _rollingspider_update.plf.extracted
+105F5E.zlib
+107CC1.zlib
+10865F.zlib
+10D400.zlib
+1134B1.zlib
+114918.zlib
+...
+525E34
+529C28
+52A63B.zlib
+52A761.zlib
+52ACE.zlib
+...
+</code></pre>
+<p>However, a fair number of files without the <code>.zlib</code> extension are scripts, so I explore all the files starting with the <code>#!/bin/sh</code> shebang. One in particular stands out:</p>
+<pre><code>$ cat 43DDA4
+etc/init.d/rcS[gobbledygook]#!/bin/sh
+
+# IP_ADDR - this target IP address using CIDR notation:
+# &lt;target-ip&gt;/&lt;target-bitmask&gt;
+#
+# For example:
+
+echo init started...
+
+source /bin/delos_shell.sh
+
+...
+
+echo "Launching Dragon" | logger -s -t "rcS" -p user.info
+DragonStarter.sh -out2null &amp;
+
+# Start the FSM managing USB Modes
+(delos_monitor_vbus_script.sh)&amp;
+
+echo end init...
+</code></pre>
+<p>Looks like the <code>/etc/init.d/rcS</code> script. On a Linux system, <code>rcS</code> is run after the kernel has booted into single-user mode: it typically initializes some services and mounts the filesystem before kicking off the main program (e.g., the piloting software). The Rolling Spider happens to start up the <code>getty</code> program (which allows us to shell in), <code>telnetd</code> and <code>BLEproxy</code> in <code>rcS</code>. More on the <code>BLEproxy</code> later…</p>
+<h2 id="wakeywakeyspidey">Wakey Wakey, Spidey</h2>
+<p>After digging through the update file, I’m ready to double down on the 60-second time limit. On a Linux device, “sleeping” likely means the system is shutting down entirely. So if it shuts down, maybe we can search the extracted files for scripts that have the shebang and mention <code>shutdown</code>:</p>
+<pre><code>$ comm -12 &lt;(ag -l --search-binary shutdown) &lt;(ag -l --search-binary '#!/bin/sh')
+...
+7B6170
+...
+
+$ head -n1 7B6170
+bin/device_monitoring.sh[gobbledygook]#!/bin/sh
+</code></pre>
+<p>Sure enough, one of the scripts, <code>/bin/device_monitoring.sh</code>, appears to track device state (flying, connected over USB, etc.) and notes when 60 seconds of inactivity have passed. The bottom of the script is especially pertinent:</p>
+<pre><code class="language-bash">if [ ! -f /tmp/.bleproxy.ftpinprogress -a ! -f /tmp/.shell.userconnected ]; then
+  /bin/delos_shutdown.sh
+fi
+
+if [ -f /tmp/.bleproxy.ftpinprogress ]; then
+  (/bin/device_monitoring.sh)&amp;
+fi
+</code></pre>
+<p>It looks like <code>shutdown</code> gets called after 60 seconds, unless <code>/tmp/.bleproxy.ftpinprogress</code> or <code>/tmp/.shell.userconnected</code> exist on the filesystem. So, let’s try logging back into the drone and run:</p>
+<pre><code># touch /tmp/.shell.userconnected
+</code></pre>
+<p>Success! Now the drone will stay on so we can explore indefinitely. It’s a bit inconvenient to run this every time we connect to our drone. It’s also irritating to run <code>screen</code> in the terminal since we lose our nice scrollback, but we can remedy both issues.</p>
+<p>Most terminal emulators let you specify “Profiles,” so let’s make one for the drone. I use <a href="https://www.iterm2.com/">iTerm2</a>, but the standard terminal bundled with OS X supports profiles as well.</p>
+<p>In your preferences, create a new Profile (I named mine “Drone”) and override the login shell. By default, this will be your system’s default shell (like Bash or ZSH), but you can specify <code>screen</code> instead. <code>screen</code> normally connects to the computer’s virtual terminal, but we can pass in our drone’s TTY instead.</p>
+<p></p>
+<p>To connect to the drone now, I can open the “Drone” profile and enjoy native scrollback controls. Finally, I want to run <code>touch /tmp/.shell.userconnected</code> as soon as the shell is up, so add that to “Send text at start.”</p>
+<p>Now it couldn’t be more convenient to turn those fearsome red eyes to a more interesting orange:</p>
+<pre><code># /bin/set_led_orange_both.sh
+</code></pre>
+<h2 id="nexttime">Next time…</h2>
+<p>This isn’t the <em>entire</em> story. In reality, I didn’t figure out the easy-peasy USB method until after trying to connect via Bluetooth. In my next post, we’ll take a detour into virtual machines and the Linux Bluetooth stack for more interesting ways to connect to and control embedded Linux devices.</p>
+
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="https://jonathanleemartin.com">tl;dr</a> &copy; 2019</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+</body>
+</html>

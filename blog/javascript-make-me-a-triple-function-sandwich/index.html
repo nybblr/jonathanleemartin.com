@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>JavaScript, make me a Triple Function Sandwich</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/highlight.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,700,700i&display=swap" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" media="screen" />
+
+    
+
+    <meta name="description" content="Learn about two JaveScript design patterns to solve common object-oriented programming-like problems." />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://www.bignerdranch.com/blog/javascript-make-me-a-triple-function-sandwich/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/blog/javascript-make-me-a-triple-function-sandwich/amp/" />
+    
+    <meta property="og:site_name" content="tl;dr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="JavaScript, make me a Triple Function Sandwich" />
+    <meta property="og:description" content="Since JavaScript is unrelated to Java, many OOP patterns are not idiomatic to JavaScript. So how do you solve common OOP-like problems? It might be time to invite Functional Programming for lunch!" />
+    <meta property="og:url" content="https://www.bignerdranch.com/blog/javascript-make-me-a-triple-function-sandwich/" />
+    <meta property="article:published_time" content="2016-12-05T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-08-09T16:05:43.000Z" />
+    <meta property="article:tag" content="JavaScript" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
+    <meta property="article:author" content="https://www.facebook.com/yellowscale" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="JavaScript, make me a Triple Function Sandwich" />
+    <meta name="twitter:description" content="Since JavaScript is unrelated to Java, many OOP patterns are not idiomatic to JavaScript. So how do you solve common OOP-like problems? It might be time to invite Functional Programming for lunch!" />
+    <meta name="twitter:url" content="https://www.bignerdranch.com/blog/javascript-make-me-a-triple-function-sandwich/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Jonathan Lee Martin" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="JavaScript" />
+    <meta name="twitter:site" content="@nybblr" />
+    <meta name="twitter:creator" content="@nybblr" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tl;dr",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://jonathanleemartin.com/content/images/2019/08/logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jonathan Lee Martin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://jonathanleemartin.com/author/jonathan/",
+        "sameAs": [
+            "https://jonathanleemartin.com/",
+            "https://www.facebook.com/yellowscale",
+            "https://twitter.com/nybblr"
+        ]
+    },
+    "headline": "JavaScript, make me a Triple Function Sandwich",
+    "url": "https://jonathanleemartin.com/blog/javascript-make-me-a-triple-function-sandwich/",
+    "datePublished": "2016-12-05T12:00:00.000Z",
+    "dateModified": "2019-08-09T16:05:43.000Z",
+    "keywords": "JavaScript",
+    "description": "Since JavaScript is unrelated to Java, many OOP patterns are not idiomatic to JavaScript. So how do you solve common OOP-like problems? It might be time to invite Functional Programming for lunch!",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jonathanleemartin.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.27" />
+    <link rel="alternate" type="application/rss+xml" title="tl;dr" href="" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-30173272-1');
+</script>
+
+    <script>
+      const ghostHost = "https://jonathanleemartin.com"
+    </script>
+  </head>
+  <body class="post-template tag-javascript">
+    
+
+<div class="main-wrap">
+  
+  <header class="m-header js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://jonathanleemartin.com" class="m-logo in-mobile-topbar">
+        <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+              
+<ul role="menu">
+  <li class="only-desktop" role="menuitem">
+    <a href="https://jonathanleemartin.com" class="m-logo">
+      <img src="/content/images/2019/08/logo.png" alt="tl;dr">
+    </a>
+  </li>
+    <li class="nav-blog">
+      <a href="https://jonathanleemartin.com/blog/">Blog</a>
+    </li>
+    <li class="nav-episodes">
+      <a href="https://jonathanleemartin.com/tldr/">Episodes</a>
+    </li>
+    <li class="nav-youtube">
+      <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a>
+    </li>
+    <li class="nav-books">
+      <a href="https://jonathanleemartin.com/books/">Books</a>
+    </li>
+  <li role="menuitem" class="js-submenu-option">
+    <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+      <span class="icon-more"></span>
+    </button>
+    <div class="m-submenu js-submenu">
+      <div class="l-wrapper in-submenu">
+        <section class="m-recent-articles">
+          <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+          <div class="js-recent-articles">
+                <div>
+                  <a href="/tldr/04-expressions/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/04-expressions.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">04. Expressions</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/03-policies/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/03-policies.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">03. Policies</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/02-router-pattern/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/02-router.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">02. Router Pattern</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="/tldr/01-nested-ternaries/" class="m-recent-article">
+                    <div class="m-recent-article__picture">
+                      <div style="background-image: url(/content/images/size/w600/2019/08/01-nested-ternaries.png);"></div>
+                    </div>
+                    <h3 class="m-recent-article__title">01. Nested Ternaries</h3>
+                    <span class="m-recent-article__date">August 5, 2019</span>
+                  </a>
+                </div>
+          </div>
+        </section>
+        <section class="m-tags">
+          <h3 class="m-submenu-title">Tags</h3>
+            <ul>
+                <li>
+                  <a href="/tag/javascript/">JavaScript</a>
+                </li>
+                <li>
+                  <a href="/tag/node/">Node</a>
+                </li>
+                <li>
+                  <a href="/tag/react/">React</a>
+                </li>
+                <li>
+                  <a href="/tag/web/">Web</a>
+                </li>
+                <li>
+                  <a href="/tag/tldr/">tl;dr</a>
+                </li>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </li>
+</ul>
+
+          </nav>
+          <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+  
+  <header class="m-hero" data-aos="fade">
+  </header>
+  
+  <main>
+    <article>
+      <div class="l-content">
+        <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div class="l-post-content has-subscribe-form js-progress-content">
+            <header class="m-heading">
+              <h1 class="m-heading__title in-post">JavaScript, make me a Triple Function Sandwich</h1>
+              <div class="m-heading__meta">
+                <a href="/tag/javascript/" class="m-heading__meta__tag">JavaScript</a>
+                <span class="m-heading__meta__divider">&bull;</span>
+                <span class="m-heading__meta__time">December 5, 2016</span>
+              </div>
+            </header>
+            <div class="pos-relative js-post-content">
+              <div class="m-share">
+                <div class="m-share__content js-sticky">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/blog/javascript-make-me-a-triple-function-sandwich/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                  <a href="https://twitter.com/intent/tweet?text=JavaScript%2C%20make%20me%20a%20Triple%20Function%20Sandwich&url=https://jonathanleemartin.com/blog/javascript-make-me-a-triple-function-sandwich/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                  <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
+                    <span class="icon-arrow-top"></span>
+                    <svg>
+                      <circle class="progress-ring__circle js-progress" stroke="#04aeee" fill="transparent" r="0" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/javascript-make-me-a-triple-function-sandwich/">Big Nerd Ranch blog</a>.</em></small></p>
+<p>You probably knew that despite the name and superficially similar syntax, <strong>JavaScript is unrelated to Java.</strong> The unfortunate name “JavaScript” originated when the company responsible for creating JavaScript—Netscape Communications—<a href="https://en.wikipedia.org/wiki/JavaScript#History">entered into a license agreement with Sun</a> in 1995. Thus, many of the design patterns you might know from Java, Ruby or other class-oriented programming languages are not idiomatic to JavaScript.</p>
+<p>So what design patterns <em>are</em> idiomatic to JavaScript?</p>
+<p>JavaScript’s object-oriented behavior imitates <a href="https://en.wikipedia.org/wiki/Self_(programming_language)">Self</a> (a dialect of <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a>), but the overall programming paradigm is heavily influenced by its functional programming heritage. Moreover, JavaScript has some unique functional patterns of its own hiding in plain sight throughout popular libraries and Web APIs.</p>
+<p>Let’s dissect two in-the-wild patterns from the JavaScript ecosystem—we’ll call them the <strong>Function Factory Function</strong> and <strong>Triple Function Sandwich.</strong></p>
+<h2 id="functionfactoryfunction">Function Factory Function</h2>
+<p>The <strong>Function Factory Function</strong> is a function that follows the <a href="https://en.wikipedia.org/wiki/Factory_method_pattern">Factory method pattern</a>, but returns a new function. Most Factories return objects, but thanks to first-class functions in JavaScript, it’s common for the Factory to build a function. In functional terminology, FFFs are often an example of a <a href="https://en.wikipedia.org/wiki/Higher-order_function">Higher-order Function</a>.</p>
+<p>If you’ve used the <code>Array.prototype.sort</code> function, you probably used a higher-order function to generate another function that can sort a list of objects by a particular property:</p>
+<pre><code class="language-javascript">var Sorter = extract =&gt; {
+  return (a, b) =&gt; {
+    var av = extract(a),
+        bv = extract(b);
+
+    return av &lt; bv ? -1 : (av &gt; bv ? 1 : 0);
+  };
+};
+
+var people = [
+  { name: 'Alex', age: 36 },
+  { name: 'Beth', age: 30 },
+  { name: 'Chris', age: 27 }
+];
+
+var sortByAge = Sorter(p =&gt; p.age);
+
+people.sort(sortByAge).map(p =&gt; p.name);
+// =&gt; [&quot;Chris&quot;, &quot;Beth&quot;, &quot;Alex&quot;]
+</code></pre>
+<p>The Function Factory Function follows a similar structure, but unlike a higher-order function, it doesn't require a function as an argument. Here's an example of an FFF used to generate middleware in <a href="http://koajs.com/">Koa</a> (a Node.js web framework):</p>
+<pre><code class="language-javascript">var Koa = require('koa');
+var compress = require('koa-compress');
+var serve = require('koa-static');
+
+var app = new Koa();
+
+app.use(compress());
+app.use(serve('./app'));
+</code></pre>
+<p>If Koa was more OOPsy, calling <code>compress()</code> and <code>serve()</code> would probably generate objects, but in functional programming we can <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">capture local variables</a> as state and return a function with access to those variables. This way, we are still applying the principle of <a href="https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)">Encapsulation</a>, but without objects!</p>
+<p>How would we use the Function Factory Function pattern in our own code? Suppose we are building a Single Page App (SPA) for the next version of Google Docs, and we want to prevent the user from navigating to another document if there are unsaved changes. If the router fired a <code>beforetransition</code> event, it would be nice if we could “lock” the page and make sure the user really wants to navigate away before allowing the transition. We could write a <code>lock()</code> Function Factory Function to tidy this up; here’s how we might use it:</p>
+<pre><code class="language-javascript">var unlock = lock(ask =&gt; {
+  if (checkUnsavedChanges() &amp;&amp;
+      ask('You will lose changes!')) {
+    discardEdits();
+  }
+});
+
+// ...once this page is no longer around
+// and we need to clean up after ourselves:
+unlock();
+</code></pre>
+<p>The <code>lock()</code> function generates a new function called <code>unlock()</code> that can be invoked to stop watching for page transitions. This will be useful if the user navigates away from this document and this page needs to be deactivated.</p>
+<p>Using <code>lock()</code> can tidy things up nicely: if the user attempts to navigate away from the document, we can check if there are any edits, and if there are we can <code>ask()</code> the user if they are okay with losing changes. If they are, we can discard those edits and move on.</p>
+<p>We could implement the <code>lock()</code> function like this:</p>
+<pre><code class="language-javascript">var $window = $(window);
+var lock = cb =&gt; {
+  var handler = event =&gt; {
+    var abort = () =&gt; {
+      event.preventDefault();
+    };
+
+    var ask = message =&gt; {
+      var okay = window.confirm(message);
+      if (!okay) { abort(); }
+      return okay;
+    };
+
+    cb(ask);
+  };
+
+  $window.on('beforetransition', handler);
+  return () =&gt; {
+    $window.off('beforetransition', handler);
+  };
+}
+</code></pre>
+<p>Whenever the user attempts to transition away from the document, we execute the callback and pass in a helper function called <code>ask()</code> to prompt the user. If the user cancels, we <code>.preventDefault()</code> on the event to cancel the transition.</p>
+<p>It’s a nice micro API that can tidy up gnarly code elsewhere! This pattern is an elegant alternative to a class-oriented approach where we would attach state and the unlock method to an object. Incidentally, the <code>lock()</code> function is also an example of the next design pattern: the Triple Function Sandwich.</p>
+<h2 id="triplefunctionsandwich">Triple Function Sandwich</h2>
+<p>Used Promises lately? You’re writing a <strong>Triple Function Sandwich!</strong></p>
+<pre><code class="language-javascript">var promise = new Promise(function(resolve, reject) {
+  setTimeout(resolve, 1000);
+});
+
+promise.then(() =&gt; {
+  console.log(&quot;It's been a second.&quot;);
+});
+</code></pre>
+<p>Take a look at all the nested functions: we are invoking the <code>Promise()</code> function by passing it a function that will be invoked and passed yet another function <code>resolve()</code> as an argument. Usually you see this kind of code when a callback needs to be executed asynchronously, but that's not the case for the <code>Promise()</code> function—it will immediately run the given callback:</p>
+<pre><code class="language-javascript">console.log('1');
+var promise = new Promise(function(resolve, reject) {
+  console.log('2');
+});
+console.log('3');
+
+// =&gt; 1
+// =&gt; 2
+// =&gt; 3
+</code></pre>
+<p>So if the callback isn’t being run asynchronously, why the sandwich? Function sandwiches are a form of cooperative programming: they allow one function to cede control to another function (your callback), but provide a public API for modifying the calling function’s behavior.</p>
+<p>We can use this pattern ourselves to create an async-friendly for-loop! Suppose we want to iterate over a list of numbers and print each one-by-one after waiting for a few seconds. Standard loops in JavaScript run as fast as they can, so to wait between iterations we will need to write our own <code>iterate()</code> function. Here’s how we would use it:</p>
+<pre><code class="language-javascript">var list = [1,2,3,4,5,6,7,8,9];
+var promise = iterate(list, (curr, next, quit) =&gt; {
+  console.log(curr);
+  if (curr &lt; 3) {
+    setTimeout(next, curr * 1000);
+  } else {
+    quit();
+  }
+});
+
+promise.then(finished =&gt; {
+  if (finished) {
+    console.log('All done!');
+  } else {
+    console.log('Done, but exited early.');
+  }
+});
+
+// =&gt; 1
+// =&gt; 2
+// =&gt; 3
+// =&gt; Done, but exited early.
+</code></pre>
+<p>This example will immediately print <code>1</code>, then 1 second later it will print <code>2</code>, 2 seconds later it will print <code>3</code> and <code>quit()</code> the loop, and <code>'Done, but exited early.</code> will be printed. Our callback function receives three arguments to control the loop: <code>curr</code> which contains the current element of the list, <code>next()</code> which advances to the next iteration of the loop, and <code>quit()</code> which exits the loop prematurely.</p>
+<p>The <code>iterate()</code> function itself returns a Promise that will resolve once it finishes iterating over the list. This Promise will resolve to <code>true</code> if the loop finished iterating over all the elements, or <code>false</code> if the <code>quit()</code> function was invoked to exit the loop early. Notice the Triple Function Sandwich is not as obvious: the sandwich starts with <code>iterate()</code>, the second argument is a function, and the second parameter of that function, <code>next()</code>, is also a function.</p>
+<p>Despite this complex behavior, <code>iterate()</code> only takes a few lines of code to implement!</p>
+<pre><code class="language-javascript">var iterate = (list, cb) =&gt; {
+  return new Promise(resolve =&gt; {
+    var counter = 0;
+    var length = list.length;
+
+    var quit = () =&gt; {
+      resolve(false);
+    }
+
+    var next = () =&gt; {
+      if (counter &lt; length) {
+        cb(list[counter++], next, quit);
+      } else {
+        resolve(true);
+      }
+    }
+
+    next();
+  });
+};
+</code></pre>
+<p><code>iterate()</code> initializes a counter variable, defines a few functions, then kicks off iteration by calling <code>next()</code>. Every time <code>next()</code> is invoked, it executes <code>cb()</code> and passes in the current element, <code>next()</code> itself, and the <code>quit()</code> function. If it has finished iterating, it resolves the overall Promise to <code>true</code>.</p>
+<p>If we had written this same code in a more OOPsy style, it might look like:</p>
+<pre><code class="language-javascript">var Iterator = function(list, cb) {
+  this.list = list;
+  this.cb = cb;
+  this.counter = 0;
+  this.length = list.length;
+  this.promise = new Promise(
+    resolve =&gt; { this.resolve = resolve; }
+  );
+};
+Iterator.prototype.quit = function() {
+  this.resolve(false);
+};
+Iterator.prototype.next = function() {
+  if (this.counter &lt; this.length) {
+    this.cb(this.list[this.counter++]);
+  } else {
+    this.resolve(true);
+  }
+};
+Iterator.prototype.start = Iterator.prototype.next;
+
+var list = [1,2,3,4,5,6,7,8,9];
+var iterator = new Iterator(list, (curr) =&gt; {
+  console.log(curr);
+  if (curr &lt; 3) {
+    setTimeout(() =&gt; iterator.next(), curr * 1000);
+  } else {
+    iterator.quit();
+  }
+});
+iterator.start();
+
+iterator.promise.then(finished =&gt; {
+  if (finished) {
+    console.log('All done!');
+  } else {
+    console.log('Done, but exited early.');
+  }
+});
+</code></pre>
+<p>Looks a little clumsy in comparison. Both versions solve the same problem with a form of cooperative programming: the former by encoding state in local variables and “pushing” in a public API to the callback, and the latter by creating a special object with state and methods. Interestingly, this example shows that Encapsulation is not just an OOP principle—the functional approach also hides its state (local variables) and provides a public API for modifying that state.</p>
+<p>The Triple Function Sandwich is not just for async programming! If you find yourself resorting to an object-oriented approach when you need to break down a function into several steps while preserving state, you might just try a bite of the Triple Function Sandwich. Both approaches provide encapsulation and solve cooperative programming problems, but the functional approach is a thing of beauty that does credit to JavaScript’s hidden elegance.</p>
+<!--kg-card-end: markdown--><!--kg-card-end: markdown-->
+            </div>
+          </div>
+        </div>
+        <section class="m-subscribe-section">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">Subscribe to our newsletter</h4>
+                <p class="m-subscribe-section__description">
+                  Get the latest posts delivered right to your inbox.
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                
+<form method="post" action="https://jonathanleemartin.us4.list-manage.com/subscribe/post?u=06192382d0d99bb3a3f789d30&amp;id=cb60b1e5bb" id="subscribe-form" class="m-subscribe-section__form">
+  <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+  <fieldset>
+    <label for="EMAIL" class="sr-only">Your email address</label>
+    <input id="EMAIL" name="EMAIL" class="m-input in-subscribe-section" placeholder="Your email address" value="" >
+  </fieldset>
+  <button id="subscribe_button" class="m-button primary block" type="submit">Subscribe</button>
+
+  
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+
+</form>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="m-author">
+          <div class="m-author__content">
+            <div class="m-author__picture">
+              <a href="/author/jonathan/" class="m-author-picture" aria-label="Author picture">
+                <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+              </a>
+            </div>
+            <div class="m-author__info">
+              <h4 class="m-author__name">
+                <a href="/author/jonathan/">Jonathan Lee Martin</a>
+              </h4>
+              <p class="m-author__bio">Jonathan is an educator, writer and international speaker. He guides developers — from career switchers to senior developers at Fortune 100 companies — through their journey into web development.</p>
+              <ul class="m-author-links">
+                <li>
+                  <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener" aria-label="Website">
+                    <span class="icon-globe"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+                    <span class="icon-facebook"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+                    <span class="icon-twitter"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="m-recommended">
+          <div class="l-wrapper in-recommended">
+            <h3 class="m-section-title in-recommended">Recommended for you</h3>
+            <div class="m-recommended-articles">
+              <div class="m-recommended-slider js-recommended-articles">
+                
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript featured">
+      <div class="m-article-card__picture">
+      <a href="/blog/dont-over-react/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+        <a href="/blog/dont-over-react/" class="m-article-card__featured js-tooltip" data-tippy-content="Featured" aria-label="Article">
+          <span class="icon-star"></span>
+        </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/dont-over-react/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Don’t Over React! Render Binary Data with Class.</h2>
+          <p class="m-article-card__description">Eventually, your React web app will accept file uploads. JavaScript has exceptional APIs for handling chunks of binary data, but the interaction with React can cause some major performance hiccups. Discover the performance implications of 5 different ways to work with user-submitted binary data!</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>December 5, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-react tag-javascript">
+      <div class="m-article-card__picture">
+      <a href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/react/" class="m-article-card__tag">React</a>
+      <a href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">DESTROY ALL CLASSES: Turn React Components Inside Out with Functional Programming</h2>
+          <p class="m-article-card__description">With React's stateless functional components you can create ambitious apps that are 98% plain ol' JavaScript. In this real-world example, we'll use functional programming and higher-order components to turn class-based React Components into stateless functional components.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>July 19, 2017</span>
+          <span>&bull;</span>
+          <span>10 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+    <div class="m-recommended-slider__item">
+    <article class="m-article-card no-picture post tag-javascript tag-node">
+      <div class="m-article-card__picture">
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
+          <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="/tag/javascript/" class="m-article-card__tag">JavaScript</a>
+      <a href="/blog/hi-im-node-js-and-ill-be-your-server-today/" class="m-article-card__info-link">
+        <div class="m-article-card__excerpt">
+          <h2 class="m-article-card__title">Hi, I’m Node.js and I’ll be your server today.</h2>
+          <p class="m-article-card__description">Tech stack decisions can be hard. Is Node.js the right choice for your service? Have a seat and your server will be right with you.</p>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>April 12, 2017</span>
+          <span>&bull;</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+</div>
+
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results"></div>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>tl;dr &copy; 2019</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>By <a href="https://jonathanleemartin.com/" target="_blank" rel="noopener">Jonathan Lee Martin</a></span>
+    </p>
+    <nav class="m-footer-social">
+        <a href="https://www.facebook.com/yellowscale" target="_blank" rel="noopener" aria-label="Facebook">
+          <span class="icon-facebook"></span>
+        </a>
+        <a href="https://twitter.com/nybblr" target="_blank" rel="noopener" aria-label="Twitter">
+          <span class="icon-twitter"></span>
+        </a>
+    </nav>
+  </div>
+</footer>
+
+    <script defer src="/assets/js/manifest.js"></script>
+    <script defer src="/assets/js/polyfill.js"></script>
+    <script defer src="/assets/js/vendor.js"></script>
+    <script defer src="/assets/js/app.js"></script>
+
+      <script defer src="/assets/js/post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.16.0/components/';</script>
+
+
+    
+  </body>
+</html>
