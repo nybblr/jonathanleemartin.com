@@ -48,6 +48,7 @@
   border-radius: .3em;
   white-space: normal;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   display: inline;
 }
 
