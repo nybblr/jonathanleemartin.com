@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>01. Nested Ternaries</title>
+    <title>02. Router Pattern</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -16,45 +16,45 @@
 
       <style>
     .m-hero__picture {
-      background-image: url(/content/images/size/w2000/2019/09/01-nested-ternaries.png);
+      background-image: url(/content/images/size/w2000/2019/09/02-router-pattern-1.png);
     }
   
     @media(max-width: 1000px) {
       .m-hero__picture {
-        background-image: url(/content/images/size/w1000/2019/09/01-nested-ternaries.png);
+        background-image: url(/content/images/size/w1000/2019/09/02-router-pattern-1.png);
       }
     }
   
     @media(max-width: 600px) {
       .m-hero__picture {
-        background-image: url(/content/images/size/w600/2019/09/01-nested-ternaries.png);
+        background-image: url(/content/images/size/w600/2019/09/02-router-pattern-1.png);
       }
     }
   </style>
 
 
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://jonathanleemartin.com/tldr/01-nested-ternaries/" />
+    <link rel="canonical" href="https://jonathanleemartin.com/tldr/02-router-pattern/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/01-nested-ternaries/amp/" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/02-router-pattern/amp/" />
     
     <meta property="og:site_name" content="tl;dr" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="01. Nested Ternaries" />
-    <meta property="og:description" content="🎬 How many times does “else if” appear in your codebase? 😬 Here’s one way you can cut down on if-else statements: nested ternary expressions!" />
-    <meta property="og:url" content="https://jonathanleemartin.com/tldr/01-nested-ternaries/" />
-    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/09/01-nested-ternaries.png" />
-    <meta property="article:published_time" content="2019-09-11T16:00:00.000Z" />
-    <meta property="article:modified_time" content="2019-09-11T20:13:39.000Z" />
+    <meta property="og:title" content="02. Router Pattern" />
+    <meta property="og:description" content="🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!" />
+    <meta property="og:url" content="https://jonathanleemartin.com/tldr/02-router-pattern/" />
+    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/09/02-router-pattern-1.png" />
+    <meta property="article:published_time" content="2019-09-18T16:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-09-19T03:00:57.000Z" />
     <meta property="article:tag" content="tl;dr" />
     
     <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
     <meta property="article:author" content="https://www.facebook.com/yellowscale" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="01. Nested Ternaries" />
-    <meta name="twitter:description" content="🎬 How many times does “else if” appear in your codebase? 😬 Here’s one way you can cut down on if-else statements: nested ternary expressions!" />
-    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/01-nested-ternaries/" />
-    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/09/01-nested-ternaries.png" />
+    <meta name="twitter:title" content="02. Router Pattern" />
+    <meta name="twitter:description" content="🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!" />
+    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/02-router-pattern/" />
+    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/09/02-router-pattern-1.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Jonathan Lee Martin" />
     <meta name="twitter:label2" content="Filed under" />
@@ -94,18 +94,18 @@
             "https://twitter.com/nybblr"
         ]
     },
-    "headline": "01. Nested Ternaries",
-    "url": "https://jonathanleemartin.com/tldr/01-nested-ternaries/",
-    "datePublished": "2019-09-11T16:00:00.000Z",
-    "dateModified": "2019-09-11T20:13:39.000Z",
+    "headline": "02. Router Pattern",
+    "url": "https://jonathanleemartin.com/tldr/02-router-pattern/",
+    "datePublished": "2019-09-18T16:00:00.000Z",
+    "dateModified": "2019-09-19T03:00:57.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://jonathanleemartin.com/content/images/2019/09/01-nested-ternaries.png",
+        "url": "https://jonathanleemartin.com/content/images/2019/09/02-router-pattern-1.png",
         "width": 1920,
         "height": 1080
     },
     "keywords": "tl;dr",
-    "description": "🎬 How many times does “else if” appear in your codebase? 😬 Here’s one way you can cut down on if-else statements: nested ternary expressions!",
+    "description": "🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://jonathanleemartin.com/"
@@ -266,20 +266,20 @@
         <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
           <div class="l-post-content has-subscribe-form js-progress-content">
             <header class="m-heading">
-              <h1 class="m-heading__title in-post">01. Nested Ternaries</h1>
+              <h1 class="m-heading__title in-post">02. Router Pattern</h1>
               <div class="m-heading__meta">
                 <a href="/tag/tldr/" class="m-heading__meta__tag">tl;dr</a>
                 <span class="m-heading__meta__divider">&bull;</span>
-                <span class="m-heading__meta__time">September 11, 2019</span>
+                <span class="m-heading__meta__time">September 18, 2019</span>
               </div>
             </header>
             <div class="pos-relative js-post-content">
               <div class="m-share">
                 <div class="m-share__content js-sticky">
-                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/01-nested-ternaries/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/02-router-pattern/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
                     <span class="icon-facebook"></span>
                   </a>
-                  <a href="https://twitter.com/intent/tweet?text=01.%20Nested%20Ternaries&url=https://jonathanleemartin.com/tldr/01-nested-ternaries/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                  <a href="https://twitter.com/intent/tweet?text=02.%20Router%20Pattern&url=https://jonathanleemartin.com/tldr/02-router-pattern/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
                     <span class="icon-twitter"></span>
                   </a>
                   <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
@@ -290,111 +290,194 @@
                   </button>
                 </div>
               </div>
-              <!--kg-card-begin: markdown--><p>How many times does “else if” appear in your codebase? Let’s examine one way you can cut down on if-else statements in today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
-<iframe src="https://www.youtube.com/embed/oAEfKLI8iKk" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
+              <!--kg-card-begin: markdown--><p>How do you tame a group of if-else or switch statements that grows with every feature request? Let’s continue obliterating if-else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<iframe src="https://www.youtube.com/embed/wjzl3M7-Wpw" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
 <h3 id="transcript">Transcript</h3>
-<p>The if-else statement is probably the first control flow construct you learned as a programmer. And yet few things are as terrifying as diving into a legacy codebase swimming in nested, cascading if-else statements.</p>
-<p>Code with fewer if-else statements is generally less complex because it has fewer edge cases that need to be tested, and code with fewer statements tends to have a more predictable program flow. A program without any if-else statements or other conditional constructs is incredibly straightforward to reason about, because data will always flow through the program in the same way, even when the inputs and output change.</p>
-<p>Now it’s unlikely you could eliminate all if-else statements from a program without making readability worse off. But a lot of if-else statements is a code smell, because they unnecessarily increase the complexity and surface area for bugs.</p>
-<p>So in the next few episodes of TL;DR we’ll cover some design patterns to cut down on if-else statements.</p>
-<p>Today we’re examining some recursive code with several cascading if-else statements.</p>
-<pre><code class="language-javascript">resolve({
-  user: {
-    firstName: 'Jonathan',
-    lastName: 'Martin',
-    favoritePlaces: () =&gt; [
-      'Alps',
-      'PNW'
-    ]
-  }
-});
+<p>Last episode we covered nested ternaries. Nested ternaries are a great replacement for if-else statements when we need the power of a conditional, but can afford to replace statements with expressions. But sometimes the number of cases just gets longer and longer.</p>
+<p>Even if you extracted each case to a separate function, the function wrapping around the if-else or switch statement will continue to grow unbounded.</p>
+<p>Especially in codebases that change hands often, this promotes a sloppy, inconsistent boundary between the individual cases and the mapping logic that decides which case to run.</p>
+<p>Today we’re refactoring some code for a chatbot that helps outdoor enthusiasts find great trails to hike.</p>
+<pre><code class="language-javascript">console.log( responder('list hikes') );
+// =&gt; Lost Lake
+// =&gt; Canyon Creek Meadows
+console.log( responder('recommend hike') );
+// =&gt; I recommend Mirror Lake.
+console.log( responder('add hike Mirror Lake') );
+// =&gt; Added Mirror Lake!
+console.log( responder('where is Mirror Lake') );
+// =&gt; Sorry, I don’t understand that.
+</code></pre>
+<p>So far this chatbot can respond to a few basic commands, like “list hikes”, “recommend hike”, and “add hike”. If you ask the chatbot something it doesn’t understand — like “where is Mirror Lake” — it responds with a fallback message.</p>
+<p>At the moment, all of this logic lives in the responder function. Our chatbot currently has 4 behaviors, so there are 3 if-else cases and one fallback return statement.</p>
+<pre><code class="language-javascript">let hikes = [
+  'Lost Lake',
+  'Canyon Creek Meadows',
+];
 
-/*
- * Spits out:
- */
-{
-  user: {
-    firstName: 'Jonathan',
-      lastName: 'Martin',
-      favoritePlaces: [
-        'Alps',
-        'PNW'
-      ]
+let randomHike = () =&gt;
+  hikes[Math.floor(Math.random() * hikes.length)];
+
+let responder = (message) =&gt; {
+  if (message === 'list hikes') {
+    return hikes.join('\n');
+  } else if (message === 'recommend hike') {
+    return `I recommend ${randomHike()}`;
+  } else if (message.startsWith('add hike')) {
+    let hike = message.slice(9);
+    hikes.push(hike);
+    return `Added ${hike}!`;
   }
+
+  return &quot;Sorry, I don't understand that.&quot;;
 };
 </code></pre>
-<p>This resolve function walks through an object with nested objects, arrays and functions. Given a deeply nested structure like this, it returns a similar structure, but where the functions — like this one for the property favoritePlaces, which was originally a function — have been invoked and replaced with their return value.</p>
-<p>Now the logic for the resolve function is pretty terse: if the current structure is an array or object, it recurses over the children. If it’s a function, it invokes it and recurses over the return value. Otherwise, it will just return the structure as-is.</p>
-<pre><code class="language-javascript">let resolve = (node) =&gt; {
-  if (isFunction(node)) {
-    return resolve(node());
-  } else if (isArray(node)) {
-    return node.map(resolve);
-  } else if (isObject(node)) {
-    return mapValues(node, resolve);
+<p>This code is short right now, but that’s because our chatbot only supports 3 commands so far. It will need to understand many more commands, and each new command will add another if-else case.</p>
+<p>Ballooning if-else or switch statements are a code smell that suggest the responder function might have too many responsibilities.</p>
+<p>So how could we eliminate these cascading if-else statements before they grow to hundreds of cases?</p>
+<p>Enter the Router. The Router is a design pattern that helps us turn a giant if-else or switch statement inside out by decoupling the responsibility of routing logic from the business logic of the individual cases.</p>
+<p>The Router pattern is particularly nice because we can follow a step-by-step procedure to refactor the code, and at each step the code should still run.</p>
+<p>The first step is to extract each case into a separate function and list them in a data structure, like a plain ol’ JavaScript object. Let’s move the code for the 3 chatbot commands into an object called “responses”, using the command as the key.</p>
+<pre><code class="language-javascript">let responses = {
+  'list hikes': () =&gt;
+    hikes.join('\n'),
+  'recommend hike': () =&gt;
+    `I recommend ${randomHike()}`,
+  'add hike': (message) =&gt; {
+    let hike = message.slice(9);
+    hikes.push(hike);
+    return `Added ${hike}!`;
+  },
+};
+</code></pre>
+<p>Now that we’ve moved each command into responses, we can replace the cases by looking up the appropriate response function and invoking it. At this point, our code should still work exactly as before.</p>
+<pre><code class="language-javascript">let responder = (message) =&gt; {
+  if (message === 'list hikes') {
+    return responses['list hikes']();
+  } else if (message === 'recommend hike') {
+    return responses['recommend hike']();
+  } else if (message.startsWith('add hike')) {
+    return responses['add hike'](message);
   }
-  return node;
+
+  return &quot;Sorry, I don't understand that.&quot;;
 };
 </code></pre>
-<p>Now these if-else statements aren’t complex per se, in fact it almost looks like it could be a switch statement instead. The problem is the testing conditions — that is, whether the data is a function, array or object — can’t be described with strict equality, which we would need to use a switch statement. Hence, we had to stick with if-else statements instead.</p>
-<p>So if the test condition is too complex for a switch statement, is there an alternative that might at least move us away from if-else statements?</p>
-<p>Well, the ternary operator is essentially an if-else expression. While an if-else statement runs statements but doesn’t return anything, a ternary expression evaluates and returns the value of one of the two expressions. Let’s write a new version of the resolve function and convert the first if-else case to a ternary: if the node is a function, the ternary evaluates to this case on the left, but otherwise it will evaluate to the case on the right, that is, the node. Like an if-else statement, only code in the matching case is evaluated — the other is completely ignored.</p>
-<p>Because JavaScript developers don’t often see ternaries used in production codebases, there is a stigma that ternaries are brittle and have finicky syntax rules. But ternaries are actually more robust than an equivalent if-else statement because you can only embed expressions, and not statements. That makes it harder to sneak a side effect in, like setting a variable or forcing an early return.</p>
-<p>The main frustration for many developers is reading another developer’s one-liner ternary, so it’s essential to space them out just like you would an if-else statement.</p>
-<pre><code class="language-javascript">let resolve = (node) =&gt; {
-  return isFunction(node)
-    ? resolve(node())
-    : node;
+<p>We’ve finished the first step — it’s usually pretty mechanical, but it often spawns other refactors as you discover subtle side effects and hidden dependencies that need to be passed as an argument. For example, we quickly realized that the “add hike” command needs the rest of the chat message so it can extract the name of the hike.</p>
+<p>Now for step 2: let’s collapse the cascading if-else statements. Since each response is listed with its corresponding command in the responses object, we can use the message to directly look up the appropriate response function.</p>
+<pre><code class="language-javascript">let responder = (message) =&gt; {
+  let response = responses[message];
+  if (response) {
+    return response(message);
+  }
+
+  return &quot;Sorry, I don't understand that.&quot;;
 };
 </code></pre>
-<p>So instead of putting all this on one line, you should indent each case like this. You’ll find this convention popular in the React community for switching between components. With a little practice, a ternary becomes easier to read than the equivalent if-else statement.</p>
-<p>But what about those cascading else-ifs we had before? Well since ternaries are just expressions, we can nest else-ifs in the last part of the ternary!</p>
-<pre><code class="language-javascript">let resolve = (node) =&gt; {
-  return isFunction(node)
-    ? resolve(node())
-    : (isArray(node) ? node.map(resolve) : node);
+<p>If a matching response function is found, we’ll invoke it. Also, since one of our chatbot commands needs the message, we’ll pass it as an argument. You’ll need to find a parameter signature that works for any of your response functions, so this may take some additional refactoring. But it’s okay if a response function ignores those arguments, as the “list hikes” and “recommend hike” commands do.</p>
+<p>Nice, we collapsed a 3 case if-else statement into one! In step 3 we’ll eliminate the if-else statement altogether by extracting the fallback behavior into a function of its own. If no response function matched, we’ll use the double pipe operator to insert the fallback response. Now that we know the response variable will always contain a function, we can invoke it unconditionally.</p>
+<pre><code class="language-javascript">let fallback = () =&gt;
+  &quot;Sorry, I don't understand that.&quot;;
+
+let responder = (message) =&gt; {
+  let response = responses[message] || fallback;
+  return response(message);
 };
 </code></pre>
-<p>Well this is pretty awful to read, let’s fix that with some indentation. Ternaries are designed to cascade, so the parentheses are actually unnecessary. Next, let’s insert a new line after the question marks instead of before. Then unindent each line that starts with a colon so it lines up with the first line.</p>
-<p>And for the final else case, the colon will be on a line by itself.</p>
-<pre><code class="language-javascript">let resolve = (node) =&gt; {
-  return isFunction(node) ?
-    resolve(node())
-  : isArray(node) ?
-    node.map(resolve)
-  :
-    node;
+<p>And that’s it! The Router pattern helped us turn an if-else statement with several cases inside out. And now the responder function, which was destined to grow without bound, is a simple shell that just dispatches the message to the appropriate response function. In backend terminology, we call the responder function a “router,” and the commands are called “routes.”</p>
+<p>Unfortunately, we broke the “add hike” command that expects the message to include the name of the hike after the command, so our simple property lookup isn’t flexible enough.</p>
+<p>To fix this, we’ll convert responses to a list and use the <code>find</code> Array method to see which command the message starts with.</p>
+<pre><code class="language-javascript">let responder = (message) =&gt; {
+  let [command, response] = Object.entries(responses)
+    .find(([command, response]) =&gt;
+      message.startsWith(command)
+    );
+  return response(message);
 };
 </code></pre>
-<p>Let’s practice reading this: if the node is a function, it returns the result of this line, otherwise if node is an array, it returns the result of this line, and finally if the node is neither a function nor an array, node is returned.</p>
-<p>Wait a minute, we forgot to add a case for when the node is an object! Well to add it, we can just insert it before the final else.</p>
-<pre><code class="language-javascript">let resolve = (node) =&gt; {
-  return isFunction(node) ?
-    resolve(node())
-  : isArray(node) ?
-    node.map(resolve)
-  : isObject(node) ?
-    mapValues(node, resolve)
-  :
-    node;
+<p>Now that we’ve switched to <code>startsWith</code>, we can move the fallback code to the responses object, and use an empty string as the key! We just need to make sure it comes last. Now we’ve eliminated conditionals from the responder function entirely!</p>
+<pre><code class="language-javascript">let responses = {
+  'list hikes': ... ,
+  'recommend hike': ... ,
+  'add hike': ... ,
+  '': () =&gt;
+    &quot;Sorry, I don't understand that.&quot;
 };
 </code></pre>
-<p>By formatting our ternaries like this, we can easily add and rearrange cases without changing other lines or fretting about nested parentheses!</p>
-<p>And now that resolve is only one statement, we can drop the curlies and return keyword to make resolve an implicit returning arrow function. In this style, I like to unindent the testing conditions one more level. Now all of the test cases line up in one column, and all of the possible return values line up in another.</p>
-<pre><code class="language-javascript">let resolve = (node) =&gt;
-  isFunction(node) ?
-    resolve(node())
-: isArray(node) ?
-    node.map(resolve)
-: isObject(node) ?
-    mapValues(node, resolve)
-:
-    node;
+<p>See how control flow got replaced by a data structure? That’s a recurring theme in software design: many problems that are traditionally solved with algorithmic code can be described much more elegantly with a data structure, which is easier to debug, extend and reason about.</p>
+<p>In the Router pattern, the mapping data structure doesn’t even have to be an object. We could turn the responses object into an array of objects, with one object per command!</p>
+<pre><code class="language-javascript">let responses = [
+  {
+    command: 'list hikes',
+    response: () =&gt; hikes.join('\n')
+  },
+  {
+    command: 'recommend hike',
+    response: () =&gt; `I recommend ${randomHike()}`
+  },
+  {
+    command: 'add hike',
+    response: (message) =&gt; {
+      let hike = message.slice(9);
+      hikes.push(hike);
+      return `Added ${hike}!`;
+    }
+  },
+  {
+    command: '',
+    response: () =&gt;
+      &quot;Sorry, I don't understand that.&quot;
+  }
+];
 </code></pre>
-<p>From a control flow perspective, we’ve achieved the holy grail: the resolve function has no variables, no early returns and no statements.</p>
-<p>Now you might feel that this exercise of switching from if-else statements to ternary expressions was purely aesthetic, but syntax is just a nice side benefit of the real benefits:</p>
-<p>Whereas if-else statements are popular in imperative programming, which is built on control flow, ternary expressions help us think about data flow and produce more declarative code. Functions with a lot of statements tend to have several entry and exit points that new team members need to parse through to keep from introducing a bug. But functions composed of expressions tend to flow in the same way for any inputs.</p>
-<p>Today, look through your codebase for cascading if-else statements where each case is roughly the same, like returning a value or setting a variable, and try swapping the if-else for nested ternaries. And in the future, I would encourage you to default to nested ternaries, and make if-else statements the exception. You’ll find they force you to design your code better to begin with.</p>
+<p>This format gives us flexibility: to define more complex commands, we can easily switch from strings to regular expressions, and even define capture groups for the response function to receive as an argument!</p>
+<pre><code class="language-javascript">let responses = [
+  {
+    command: /^list hikes$/,
+    response: () =&gt; hikes.join('\n')
+  },
+  {
+    command: /^recommend hike$/,
+    response: () =&gt; `I recommend ${randomHike()}`
+  },
+  {
+    command: /^add hike (.+)$/,
+    response: ([hike]) =&gt; {
+      hikes.push(hike);
+      return `Added ${hike}!`;
+    }
+  },
+  {
+    command: /^(.*)$/,
+    response: ([message]) =&gt;
+      `Sorry, I don't understand &quot;${message}&quot;.`
+  }
+];
+
+let responder = (message) =&gt; {
+  let { command, response } = responses
+    .find(({ command, response }) =&gt;
+      command.test(message)
+    );
+  return response(
+    command.exec(message).slice(1)
+  );
+};
+</code></pre>
+<p>Not only did that simplify the code for “add hike”, but it provides new team members with a template for adding new commands. It’s pretty straightforward to add “where is” by using “add hike” as a starting point.</p>
+<pre><code class="language-javascript">let responses = [
+  ...
+  {
+    command: /^where is (.+)$/,
+    response: ([hike]) =&gt;
+      `${hike}? Do I look like a GPS receiver?`
+  },
+  ...
+];
+</code></pre>
+<p>The Router pattern helps us discover common needs across if-else cases and provide a flexible interface to DRY them up. Because the routing logic is backed by a data structure, we can do things that were previously impossible with hard-wired if-else or switch statements, like dynamically enabling particular commands at runtime.</p>
+<p>And with each case extracted into a function, we can unit test each response without going through the routing logic first!</p>
+<p>The Router pattern helps solve the same problems in Functional Programming that polymorphism does in Object Oriented Programming. And it pops up everywhere: in React you might use this pattern to select which component to render, on the backend you could decide which handler function to invoke for a webhook, in a Redux reducer you can delegate state updates to smaller reducers, and of course on the backend you can define routes for a particular URL.</p>
+<p>Today, scan through your codebase for switch and if-else statements that tend to grow with each feature request, and use the Router pattern to turn it inside out.</p>
 <p>That’s it for today. Want to keep leveling up your craft? Don’t forget to <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">subscribe to the channel</a> for more rapid codecasts on design patterns, refactoring and development approaches.</p>
 <!--kg-card-end: markdown-->
             </div>
@@ -480,23 +563,23 @@
                 
     <div class="m-recommended-slider__item">
     <article class="m-article-card post tag-tldr">
-      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/09/02-router-pattern-1.png);">
-      <a href="/tldr/02-router-pattern/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/09/01-nested-ternaries.png);">
+      <a href="/tldr/01-nested-ternaries/" class="m-article-card__picture-link" aria-label="Article"></a>
       <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
           <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
       </a>
     </div>
       <div class="m-article-card__info">
         <a href="/tag/tldr/" class="m-article-card__tag">tl;dr</a>
-      <a href="/tldr/02-router-pattern/" class="m-article-card__info-link">
+      <a href="/tldr/01-nested-ternaries/" class="m-article-card__info-link">
         <div class="m-article-card__excerpt">
-          <h2 class="m-article-card__title">02. Router Pattern</h2>
-          <p class="m-article-card__description">🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!</p>
+          <h2 class="m-article-card__title">01. Nested Ternaries</h2>
+          <p class="m-article-card__description">🎬 How many times does “else if” appear in your codebase? 😬 Here’s one way you can cut down on if-else statements: nested ternary expressions!</p>
         </div>
         <div class="m-article-card__timestamp">
-          <span>September 18, 2019</span>
+          <span>September 11, 2019</span>
           <span>&bull;</span>
-          <span>6 min read</span>
+          <span>5 min read</span>
         </div>
       </a>
     </div>
