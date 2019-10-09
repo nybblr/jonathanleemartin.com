@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>02. Router Pattern</title>
+    <title>03. Enforcer Pattern</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -16,46 +16,46 @@
 
       <style>
     .m-hero__picture {
-      background-image: url(/content/images/size/w2000/2019/09/02-router-pattern-1.png);
+      background-image: url(/content/images/size/w2000/2019/10/03-enforcers.png);
     }
   
     @media(max-width: 1000px) {
       .m-hero__picture {
-        background-image: url(/content/images/size/w1000/2019/09/02-router-pattern-1.png);
+        background-image: url(/content/images/size/w1000/2019/10/03-enforcers.png);
       }
     }
   
     @media(max-width: 600px) {
       .m-hero__picture {
-        background-image: url(/content/images/size/w600/2019/09/02-router-pattern-1.png);
+        background-image: url(/content/images/size/w600/2019/10/03-enforcers.png);
       }
     }
   </style>
 
 
-    <meta name="description" content="🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!" />
+    <meta name="description" content="🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!" />
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://jonathanleemartin.com/tldr/02-router-pattern/" />
+    <link rel="canonical" href="https://jonathanleemartin.com/tldr/03-enforcer-pattern/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/02-router-pattern/amp/" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/03-enforcer-pattern/amp/" />
     
     <meta property="og:site_name" content="tl;dr" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="02. Router Pattern" />
-    <meta property="og:description" content="🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!" />
-    <meta property="og:url" content="https://jonathanleemartin.com/tldr/02-router-pattern/" />
-    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/09/02-router-pattern-1.png" />
-    <meta property="article:published_time" content="2019-09-18T16:00:00.000Z" />
-    <meta property="article:modified_time" content="2019-10-09T17:59:13.000Z" />
+    <meta property="og:title" content="03. Enforcer Pattern" />
+    <meta property="og:description" content="🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!" />
+    <meta property="og:url" content="https://jonathanleemartin.com/tldr/03-enforcer-pattern/" />
+    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" />
+    <meta property="article:published_time" content="2019-10-09T17:49:05.000Z" />
+    <meta property="article:modified_time" content="2019-10-09T17:59:42.000Z" />
     <meta property="article:tag" content="tl;dr" />
     
     <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
     <meta property="article:author" content="https://www.facebook.com/yellowscale" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="02. Router Pattern" />
-    <meta name="twitter:description" content="🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!" />
-    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/02-router-pattern/" />
-    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/09/02-router-pattern-1.png" />
+    <meta name="twitter:title" content="03. Enforcer Pattern" />
+    <meta name="twitter:description" content="🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!" />
+    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/03-enforcer-pattern/" />
+    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Jonathan Lee Martin" />
     <meta name="twitter:label2" content="Filed under" />
@@ -95,18 +95,18 @@
             "https://twitter.com/nybblr"
         ]
     },
-    "headline": "02. Router Pattern",
-    "url": "https://jonathanleemartin.com/tldr/02-router-pattern/",
-    "datePublished": "2019-09-18T16:00:00.000Z",
-    "dateModified": "2019-10-09T17:59:13.000Z",
+    "headline": "03. Enforcer Pattern",
+    "url": "https://jonathanleemartin.com/tldr/03-enforcer-pattern/",
+    "datePublished": "2019-10-09T17:49:05.000Z",
+    "dateModified": "2019-10-09T17:59:42.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://jonathanleemartin.com/content/images/2019/09/02-router-pattern-1.png",
+        "url": "https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png",
         "width": 1920,
         "height": 1080
     },
     "keywords": "tl;dr",
-    "description": "🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!",
+    "description": "🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://jonathanleemartin.com/"
@@ -267,20 +267,20 @@
         <div class="l-wrapper in-post js-aos-wrapper" data-aos="fade-up" data-aos-delay="300">
           <div class="l-post-content has-subscribe-form js-progress-content">
             <header class="m-heading">
-              <h1 class="m-heading__title in-post">02. Router Pattern</h1>
+              <h1 class="m-heading__title in-post">03. Enforcer Pattern</h1>
               <div class="m-heading__meta">
                 <a href="/tag/tldr/" class="m-heading__meta__tag">tl;dr</a>
                 <span class="m-heading__meta__divider">&bull;</span>
-                <span class="m-heading__meta__time">September 18, 2019</span>
+                <span class="m-heading__meta__time">October 9, 2019</span>
               </div>
             </header>
             <div class="pos-relative js-post-content">
               <div class="m-share">
                 <div class="m-share__content js-sticky">
-                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/02-router-pattern/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/03-enforcer-pattern/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
                     <span class="icon-facebook"></span>
                   </a>
-                  <a href="https://twitter.com/intent/tweet?text=02.%20Router%20Pattern&url=https://jonathanleemartin.com/tldr/02-router-pattern/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                  <a href="https://twitter.com/intent/tweet?text=03.%20Enforcer%20Pattern&url=https://jonathanleemartin.com/tldr/03-enforcer-pattern/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
                     <span class="icon-twitter"></span>
                   </a>
                   <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
@@ -291,167 +291,52 @@
                   </button>
                 </div>
               </div>
-              <!--kg-card-begin: markdown--><p>How do you tame a group of if-else or switch statements that grows with every feature request? Let’s continue obliterating if-else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
-<iframe src="https://www.youtube.com/embed/wjzl3M7-Wpw" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
+              <!--kg-card-begin: markdown--><p>How can you cut down small if-else statements that recur across several functions? Let’s cover another pattern for nuking if-else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<iframe src="https://www.youtube.com/embed/H-L6BMD4hN8" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
 <h3 id="transcript">Transcript</h3>
-<p>Last episode we covered nested ternaries. Nested ternaries are a great replacement for if-else statements when we need the power of a conditional, but can afford to replace statements with expressions. But sometimes the number of cases just gets longer and longer.</p>
-<p>Even if you extracted each case to a separate function, the function wrapping around the if-else or switch statement will continue to grow unbounded.</p>
-<p>Especially in codebases that change hands often, this promotes a sloppy, inconsistent boundary between the individual cases and the mapping logic that decides which case to run.</p>
-<p>Today we’re refactoring some code for a chatbot that helps outdoor enthusiasts find great trails to hike.</p>
-<pre><code class="language-javascript">console.log( responder('list hikes') );
-// =&gt; Lost Lake
-// =&gt; Canyon Creek Meadows
-console.log( responder('recommend hike') );
-// =&gt; I recommend Mirror Lake.
-console.log( responder('add hike Mirror Lake') );
-// =&gt; Added Mirror Lake!
-console.log( responder('where is Mirror Lake') );
-// =&gt; Sorry, I don’t understand that.
+<p>Over the past few episodes, we’ve been covering design patterns to help cut down the size and depth of if-else statements. If you’re new to this vendetta against if-else statements, hop back to the episode on <a href="/tldr/01-nested-ternaries/">nested ternaries</a> to get up to speed.</p>
+<p>Nested ternaries and the <a href="/tldr/02-router-pattern/">Router design pattern</a> have helped us reduce the size and depth of cascading if-else statements, but we haven’t dealt with terse, non-cascading if-else statements that get copy-pasted across functions. These if-else statements often appear at the beginning of the function as a guard clause. They’re innocent and short, but like a weed they reproduce with each new feature, and the duplication is tricky to eradicate.</p>
+<p>Today we’re continuing to work on a chatbot that helps outdoor enthusiasts find great trails to hike. This chatbot can respond to simple text commands, like <code>list hikes</code>, <code>add hike</code> and <code>delete hike</code>. If it doesn’t understand the command, it replies with a fallback message.</p>
+<pre><code class="language-javascript">responder('list hikes');
+// =&gt; 'Lost Lake, Canyon Creek Meadows'
+responder('add hike Mirror Lake');
+// =&gt; 'Added Mirror Lake!'
+responder('delete hike Mirror Lake');
+// =&gt; 'Removed Mirror Lake!'
+responder('where is Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
 </code></pre>
-<p>So far this chatbot can respond to a few basic commands, like “list hikes”, “recommend hike”, and “add hike”. If you ask the chatbot something it doesn’t understand — like “where is Mirror Lake” — it responds with a fallback message.</p>
-<p>At the moment, all of this logic lives in the responder function. Our chatbot currently has 4 behaviors, so there are 3 if-else cases and one fallback return statement.</p>
+<p>The code is a few steps forward from what we had last time: the responder function still follows the Router pattern, but we lifted the individual routes into functions to make the list of responses easier to read.</p>
 <pre><code class="language-javascript">let hikes = [
   'Lost Lake',
   'Canyon Creek Meadows',
 ];
 
-let randomHike = () =&gt;
-  hikes[Math.floor(Math.random() * hikes.length)];
+let listHikes = () =&gt;
+  hikes.join(', ');
 
-let responder = (message) =&gt; {
-  if (message === 'list hikes') {
-    return hikes.join('\n');
-  } else if (message === 'recommend hike') {
-    return `I recommend ${randomHike()}`;
-  } else if (message.startsWith('add hike')) {
-    let hike = message.slice(9);
-    hikes.push(hike);
-    return `Added ${hike}!`;
-  }
+let addHike = ([hike]) =&gt; {
+  hikes.push(hike);
+  return `Added ${hike}!`;
+};
 
-  return &quot;Sorry, I don't understand that.&quot;;
+let deleteHike = ([hike]) =&gt; {
+  hikes.splice(hikes.indexOf(hike), 1);
+  return `Removed ${hike}!`;
 };
-</code></pre>
-<p>This code is short right now, but that’s because our chatbot only supports 3 commands so far. It will need to understand many more commands, and each new command will add another if-else case.</p>
-<p>Ballooning if-else or switch statements are a code smell that suggest the responder function might have too many responsibilities.</p>
-<p>So how could we eliminate these cascading if-else statements before they grow to hundreds of cases?</p>
-<p>Enter the Router. The Router is a design pattern that helps us turn a giant if-else or switch statement inside out by decoupling the responsibility of routing logic from the business logic of the individual cases.</p>
-<p>The Router pattern is particularly nice because we can follow a step-by-step procedure to refactor the code, and at each step the code should still run.</p>
-<p>The first step is to extract each case into a separate function and list them in a data structure, like a plain ol’ JavaScript object. Let’s move the code for the 3 chatbot commands into an object called “responses”, using the command as the key.</p>
-<pre><code class="language-javascript">let responses = {
-  'list hikes': () =&gt;
-    hikes.join('\n'),
-  'recommend hike': () =&gt;
-    `I recommend ${randomHike()}`,
-  'add hike': (message) =&gt; {
-    let hike = message.slice(9);
-    hikes.push(hike);
-    return `Added ${hike}!`;
-  },
-};
-</code></pre>
-<p>Now that we’ve moved each command into responses, we can replace the cases by looking up the appropriate response function and invoking it. At this point, our code should still work exactly as before.</p>
-<pre><code class="language-javascript">let responder = (message) =&gt; {
-  if (message === 'list hikes') {
-    return responses['list hikes']();
-  } else if (message === 'recommend hike') {
-    return responses['recommend hike']();
-  } else if (message.startsWith('add hike')) {
-    return responses['add hike'](message);
-  }
 
-  return &quot;Sorry, I don't understand that.&quot;;
-};
-</code></pre>
-<p>We’ve finished the first step — it’s usually pretty mechanical, but it often spawns other refactors as you discover subtle side effects and hidden dependencies that need to be passed as an argument. For example, we quickly realized that the “add hike” command needs the rest of the chat message so it can extract the name of the hike.</p>
-<p>Now for step 2: let’s collapse the cascading if-else statements. Since each response is listed with its corresponding command in the responses object, we can use the message to directly look up the appropriate response function.</p>
-<pre><code class="language-javascript">let responder = (message) =&gt; {
-  let response = responses[message];
-  if (response) {
-    return response(message);
-  }
+let fallback = () =&gt;
+  `Sorry, I don't understand.`;
 
-  return &quot;Sorry, I don't understand that.&quot;;
-};
-</code></pre>
-<p>If a matching response function is found, we’ll invoke it. Also, since one of our chatbot commands needs the message, we’ll pass it as an argument. You’ll need to find a parameter signature that works for any of your response functions, so this may take some additional refactoring. But it’s okay if a response function ignores those arguments, as the “list hikes” and “recommend hike” commands do.</p>
-<p>Nice, we collapsed a 3 case if-else statement into one! In step 3 we’ll eliminate the if-else statement altogether by extracting the fallback behavior into a function of its own. If no response function matched, we’ll use the double pipe operator to insert the fallback response. Now that we know the response variable will always contain a function, we can invoke it unconditionally.</p>
-<pre><code class="language-javascript">let fallback = () =&gt;
-  &quot;Sorry, I don't understand that.&quot;;
-
-let responder = (message) =&gt; {
-  let response = responses[message] || fallback;
-  return response(message);
-};
-</code></pre>
-<p>And that’s it! The Router pattern helped us turn an if-else statement with several cases inside out. And now the responder function, which was destined to grow without bound, is a simple shell that just dispatches the message to the appropriate response function. In backend terminology, we call the responder function a “router,” and the commands are called “routes.”</p>
-<p>Unfortunately, we broke the “add hike” command that expects the message to include the name of the hike after the command, so our simple property lookup isn’t flexible enough.</p>
-<p>To fix this, we’ll convert responses to a list and use the <code>find</code> Array method to see which command the message starts with.</p>
-<pre><code class="language-javascript">let responder = (message) =&gt; {
-  let [command, response] = Object.entries(responses)
-    .find(([command, response]) =&gt;
-      message.startsWith(command)
-    );
-  return response(message);
-};
-</code></pre>
-<p>Now that we’ve switched to <code>startsWith</code>, we can move the fallback code to the responses object, and use an empty string as the key! We just need to make sure it comes last. Now we’ve eliminated conditionals from the responder function entirely!</p>
-<pre><code class="language-javascript">let responses = {
-  'list hikes': ... ,
-  'recommend hike': ... ,
-  'add hike': ... ,
-  '': () =&gt;
-    &quot;Sorry, I don't understand that.&quot;
-};
-</code></pre>
-<p>See how control flow got replaced by a data structure? That’s a recurring theme in software design: many problems that are traditionally solved with algorithmic code can be described much more elegantly with a data structure, which is easier to debug, extend and reason about.</p>
-<p>In the Router pattern, the mapping data structure doesn’t even have to be an object. We could turn the responses object into an array of objects, with one object per command!</p>
-<pre><code class="language-javascript">let responses = [
-  {
-    command: 'list hikes',
-    response: () =&gt; hikes.join('\n')
-  },
-  {
-    command: 'recommend hike',
-    response: () =&gt; `I recommend ${randomHike()}`
-  },
-  {
-    command: 'add hike',
-    response: (message) =&gt; {
-      let hike = message.slice(9);
-      hikes.push(hike);
-      return `Added ${hike}!`;
-    }
-  },
-  {
-    command: '',
-    response: () =&gt;
-      &quot;Sorry, I don't understand that.&quot;
-  }
-];
-</code></pre>
-<p>This format gives us flexibility: to define more complex commands, we can easily switch from strings to regular expressions, and even define capture groups for the response function to receive as an argument!</p>
-<pre><code class="language-javascript">let responses = [
-  {
-    command: /^list hikes$/,
-    response: () =&gt; hikes.join('\n')
-  },
-  {
-    command: /^recommend hike$/,
-    response: () =&gt; `I recommend ${randomHike()}`
-  },
-  {
-    command: /^add hike (.+)$/,
-    response: ([hike]) =&gt; {
-      hikes.push(hike);
-      return `Added ${hike}!`;
-    }
-  },
-  {
-    command: /^(.*)$/,
-    response: ([message]) =&gt;
-      `Sorry, I don't understand &quot;${message}&quot;.`
-  }
+let responses = [
+  { command: /^list hikes$/,
+    response: listHikes },
+  { command: /^add hike (.+)$/,
+    response: addHike },
+  { command: /^delete hike (.+)$/,
+    response: deleteHike },
+  { command: /^(.*)$/,
+    response: fallback },
 ];
 
 let responder = (message) =&gt; {
@@ -464,21 +349,219 @@ let responder = (message) =&gt; {
   );
 };
 </code></pre>
-<p>Not only did that simplify the code for “add hike”, but it provides new team members with a template for adding new commands. It’s pretty straightforward to add “where is” by using “add hike” as a starting point.</p>
-<pre><code class="language-javascript">let responses = [
-  ...
-  {
-    command: /^where is (.+)$/,
-    response: ([hike]) =&gt;
-      `${hike}? Do I look like a GPS receiver?`
-  },
+<p>The responder function searches through the list of responses for a command that matches the chat message, then invokes the corresponding response function.</p>
+<pre><code class="language-javascript">let responder = (message) =&gt; {
+  let { command, response } = responses
+    .find(({ command, response }) =&gt;
+      command.test(message)
+    );
+  return response(
+    command.exec(message).slice(1)
+  );
+};
+</code></pre>
+<p>Today, we want to enforce that the <code>add hike</code> and <code>delete hike</code> commands are executed with the word “sudo” to prevent any accidental changes. Only some commands need sudo, and if the user forgets sudo, we want to provide feedback. So we can’t just add the word “sudo” directly to the regular expressions.</p>
+<pre><code class="language-javascript">responder('list hikes');
+// =&gt; 'Lost Lake, Canyon Creek Meadows'
+responder('sudo add hike Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+responder('sudo delete hike Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+responder('where is Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+</code></pre>
+<p>We can make the regular expressions a little more lenient so the command is at least recognized:</p>
+<pre><code class="language-diff"> let responses = [
+-  { command: /^list hikes$/,
++  { command: /list hikes$/,
+   ...
+-  { command: /^add hike (.+)$/,
++  { command: /add hike (.+)$/,
+   ...
+-  { command: /^delete hike (.+)$/,
++  { command: /delete hike (.+)$/,
+   ...
+ ];
+</code></pre>
+<p>But how should we enforce the use of sudo for these admin commands?</p>
+<p>One tempting way to support a new, shared behavior like this is to add a new property to each response object: we’ll call it <code>adminOnly</code>.</p>
+<pre><code class="language-diff"> let responses = [
+   ...
+   { command: /add hike (.+)$/,
++    adminOnly: true,
+     response: addHike },
+   { command: /delete hike (.+)$/,
++    adminOnly: true,
+     response: deleteHike },
+   ...
+ ];
+</code></pre>
+<p>Then in the responder, we’ll add a guard clause that checks if the route requires “sudo”, and if the word is missing, we’ll respond with “Not allowed.”</p>
+<pre><code class="language-diff"> let responder = (message) =&gt; {
+-  let { command, response } = responses
++  let { command, adminOnly, response } = responses
+     .find(({ command, response }) =&gt;
+       command.test(message)
+     );
++  if (adminOnly &amp;&amp; !message.startsWith('sudo')) {
++    return 'Not allowed!';
++  }
+   return response(
+     command.exec(message).slice(1)
+   );
+ };
+</code></pre>
+<p>When faced with this kind of feature request — that is, supporting a new behavior that can be generalized for related functions — many developers would probably do what we did and insert that behavior logic into the responder function. It’s quick, keeps the code <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>, and it just feels nice. But it’s also a premature abstraction that conflates responsibilities: the responder function has become responsible for routing and authorization logic.</p>
+<p>Every time a feature requires a new qualifier, the responder will be edited. It won’t be long before there are several short if-else statements in the responder — which is precisely what the Router pattern was intended to help us demolish.</p>
+<p>From a testing perspective, we can’t unit test the authorization logic for individual chat commands without going through the responder. We can only write integration tests for authorization.</p>
+<p>Whenever you’re tempted to alter terse, single responsibility functions to incorporate a new behavior, take a step back and identify the most naive solution that still satisfies the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a>.</p>
+<p>For example, what if we added this admin enforcement logic directly to the <code>addHike()</code> and <code>deleteHike()</code> response functions instead of the responder?</p>
+<p>Let’s undo our changes. For the response functions to determine if sudo was used, we need to pass the full chat message:</p>
+<pre><code class="language-diff"> let responder = (message) =&gt; {
+   ...
+   return response(
+-    command.exec(message).slice(1)
++    { message,
++      match: command.exec(message).slice(1) }
+   );
+ };
+</code></pre>
+<p>In <code>addHike()</code>, we can add a guard clause that checks if the message starts with “sudo” and returns “Not allowed” if it doesn’t. We can copy-paste this guard clause to <code>deleteHike()</code>.</p>
+<pre><code class="language-javascript">let addHike = ({ match: [hike], message }) =&gt; {
+  if (!message.startsWith('sudo')) {
+    return 'Not allowed!';
+  }
+  hikes.push(hike);
+  return `Added ${hike}!`;
+};
+
+let deleteHike = ({ match: [hike], message }) =&gt; {
+  if (!message.startsWith('sudo')) {
+    return 'Not allowed!';
+  }
+  hikes.splice(hikes.indexOf(hike), 1);
+  return `Removed ${hike}!`;
+};
+</code></pre>
+<p>This naive solution is feature complete and leaves the responder function focused on one responsibility. But now one if-else statement has multiplied into two in our response functions. So how are we any better off? Well, by letting the naive solution play out, we’re equipped to build an abstraction that solves a concrete problem: the duplicated guard clause.</p>
+<p>This guard clause represents a behavior, which we could call <code>adminOnly</code>. When you hear the word “behavior” or “trait”, we’re referring to a cross-cutting concern that can be shared across several functions, even if they do completely different things. The <code>addHike()</code> and <code>deleteHike()</code> response functions have different jobs, but they share a similar behavior.</p>
+<p>A great way to share behavior in a language that supports functional programming is through function composition.</p>
+<p>Suppose we had a function, called <code>adminOnly()</code>, that receives an unprotected function like <code>addHike()</code>, and returns a new version of <code>addHike()</code> that enforces the use of the “sudo” keyword:</p>
+<pre><code class="language-diff"> let responses = [
+   ...
+   { command: /add hike (.+)$/,
+-    response: addHike },
++    response: adminOnly(addHike) },
+   { command: /delete hike (.+)$/,
+-    response: deleteHike },
++    response: adminOnly(deleteHike) },
+   ...
+ ];
+</code></pre>
+<p><code>adminOnly()</code> is easy to code up once you get the parameter signature right. If the message contains the word “sudo”, it invokes the route it received as an argument. Otherwise, it returns the failure message.</p>
+<pre><code class="language-javascript">let adminOnly = (route) =&gt; (request) =&gt;
+  request.message.split(' ').includes('sudo')
+    ? route(request)
+    : 'Not allowed!'
+;
+</code></pre>
+<p>I like to call this kind of behavior function an <strong>Enforcer</strong>: it’s a <a href="https://medium.com/javascript-scene/higher-order-functions-composing-software-5365cf2cbe99">Higher-Order Function</a> with a guard clause that enforces some authorization rule, like requiring the word “sudo” or checking if the current user is an admin.</p>
+<p>The <code>add hike</code> and <code>delete hike</code> commands behave exactly as they did in our first solution. But this time, we didn’t have to edit existing functions to support the new behavior: we only added new functions and composed them. It’s as though we’re writing immutable code, and like immutable data structures, this style of coding has great design benefits and prevents regressions. None of our existing unit tests will change, and the new code already follows the single responsibility principle.</p>
+<p>We can even add new enforcement behaviors.</p>
+<p>Suppose we want to enforce that the <code>list hikes</code> command include the word “please” with a new behavior called <code>askNicely()</code>. All we need to do is duplicate the <code>adminOnly()</code> behavior, then change the keyword and failure message:</p>
+<pre><code class="language-javascript">let askNicely = (route) =&gt; (request) =&gt;
+  request.message.split(' ').includes('please')
+    ? route(request)
+    : 'You should ask nicely.'
+;
+
+let responses = [
+  { command: /list hikes$/,
+    response: askNicely(listHikes) },
   ...
 ];
 </code></pre>
-<p>The Router pattern helps us discover common needs across if-else cases and provide a flexible interface to DRY them up. Because the routing logic is backed by a data structure, we can do things that were previously impossible with hard-wired if-else or switch statements, like dynamically enabling particular commands at runtime.</p>
-<p>And with each case extracted into a function, we can unit test each response without going through the routing logic first!</p>
-<p>The Router pattern helps solve the same problems in Functional Programming that polymorphism does in Object Oriented Programming. And it pops up everywhere: in React you might use this pattern to select which component to render, on the backend you could decide which handler function to invoke for a webhook, in a Redux reducer you can delegate state updates to smaller reducers, and of course on the backend you can define routes for a particular URL.</p>
-<p>Today, scan through your codebase for switch and if-else statements that tend to grow with each feature request, and use the Router pattern to turn it inside out.</p>
+<p>And because these enforcers are built through function composition, they layer without additional work. To make the <code>delete hike</code> command require “sudo” and “please”, we just compose the behaviors.</p>
+<pre><code class="language-diff"> let responses = [
+   ...
+   { command: /delete hike (.+)$/,
+-    response: adminOnly(deleteHike) },
++    response: adminOnly(askNicely(deleteHike)) },
+   ...
+ ];
+</code></pre>
+<p>But what about the duplication between these behaviors? Other than a different keyword and failure message, they look exactly the same. We can DRY them up into an enforcer factory called <code>requireKeyword()</code> that returns a new behavior based on a customizable keyword and failure message.</p>
+<pre><code class="language-javascript">let requireKeyword = (word, fail) =&gt; (route) =&gt; (request) =&gt;
+  request.message.split(' ').includes(word)
+    ? route(request)
+    : fail
+;
+</code></pre>
+<p>Now the <code>adminOnly()</code> and <code>askNicely()</code> behaviors can be replaced with partial invocations of the <code>requireKeyword()</code> enforcer factory!</p>
+<pre><code class="language-javascript">let adminOnly = requireKeyword('sudo', 'Not allowed!');
+let askNicely = requireKeyword('please', 'You should ask nicely.');
+</code></pre>
+<p>We’ve landed on a solution that satisfies the single responsibility principle, didn’t change existing functions, and produces descriptive code.</p>
+<pre><code class="language-javascript">responder('list hikes');
+// =&gt; 'You should ask nicely.'
+responder('please list hikes');
+// =&gt; 'Lost Lake, Canyon Creek Meadows'
+responder('add hike Mirror Lake');
+// =&gt; 'Not allowed!'
+responder('sudo add hike Mirror Lake');
+// =&gt; 'Added Mirror Lake!'
+responder('sudo please delete hike Mirror Lake');
+// =&gt; 'Removed Mirror Lake!'
+</code></pre>
+<p>The enforcer pattern pops up in other places, like guarding authenticated pages in a React web app:</p>
+<pre><code class="language-javascript">let requireLogin = (Component) =&gt; (props) =&gt;
+  props.currentUser
+    ? &lt;Component {...props} /&gt;
+    : &lt;Redirect to=&quot;/login&quot; /&gt;
+
+let ActivityPage = ({ notifications }) =&gt;
+  &lt;section&gt;
+    &lt;h2&gt;Recent Activity&lt;/h2&gt;
+    &lt;Notifications notifications={notifications} /&gt;
+  &lt;/section&gt;
+
+export default requireLogin(ActivityPage);
+
+</code></pre>
+<p>Or rendering a loading indicator while an API request finishes:</p>
+<pre><code class="language-javascript">let withLoader = (msg) =&gt; (Component) =&gt; (props) =&gt;
+  props.loading
+    ? &lt;LoadingIndicator message={message} /&gt;
+    : &lt;Component {...props} /&gt;
+
+let ProfileScreen = ({ stories, user }) =&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Stories from {user.name}&lt;/h2&gt;
+    &lt;StoryList stories={stories} /&gt;
+  &lt;/div&gt;
+
+export default withLoader('Wait…')(ProfileScreen);
+
+</code></pre>
+<p>Or protecting backend routes based on the current user:</p>
+<pre><code class="language-javascript">let listAllUsers = (req, res) =&gt; {
+  res.send(users);
+};
+
+let adminOnly = (req, res, next) =&gt;
+  req.user &amp;&amp; req.user.isAdmin
+    ? next()
+    : res.sendStatus(401);
+
+app.get(
+  adminOnly,
+  listAllUsers,
+);
+
+</code></pre>
+<p>But we wouldn’t have discovered this pattern without writing the naive copy-paste solution first and letting the repetition guide the refactor.</p>
+<p>So don’t try to prevent copy-paste prematurely: instead, let the code be duplicated, then DRY up the duplication through function composition. The naive copy-paste solution will lead you to a resilient abstraction that won’t be outgrown by the next feature.</p>
+<p>Today, look for short, repeated if-else statements near the beginning of the function that guard the rest of the function, and try extracting them into an enforcer function.</p>
 <p>That’s it for today. Want to keep leveling up your craft? Don’t forget to <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">subscribe to the channel</a> for more rapid codecasts on design patterns, refactoring and development approaches.</p>
 <!--kg-card-end: markdown-->
             </div>
@@ -564,23 +647,23 @@ let responder = (message) =&gt; {
                 
     <div class="m-recommended-slider__item">
     <article class="m-article-card post tag-tldr">
-      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/10/03-enforcers.png);">
-      <a href="/tldr/03-enforcer-pattern/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/09/02-router-pattern-1.png);">
+      <a href="/tldr/02-router-pattern/" class="m-article-card__picture-link" aria-label="Article"></a>
       <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
           <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
       </a>
     </div>
       <div class="m-article-card__info">
         <a href="/tag/tldr/" class="m-article-card__tag">tl;dr</a>
-      <a href="/tldr/03-enforcer-pattern/" class="m-article-card__info-link">
+      <a href="/tldr/02-router-pattern/" class="m-article-card__info-link">
         <div class="m-article-card__excerpt">
-          <h2 class="m-article-card__title">03. Enforcer Pattern</h2>
-          <p class="m-article-card__description">🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!</p>
+          <h2 class="m-article-card__title">02. Router Pattern</h2>
+          <p class="m-article-card__description">🎬 How do you tame if-else or switch statements that grow with every feature request? 😬 Let the Router design pattern turn your code inside out!</p>
         </div>
         <div class="m-article-card__timestamp">
-          <span>October 9, 2019</span>
+          <span>September 18, 2019</span>
           <span>&bull;</span>
-          <span>7 min read</span>
+          <span>6 min read</span>
         </div>
       </a>
     </div>

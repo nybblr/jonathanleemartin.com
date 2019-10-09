@@ -1,4 +1,276 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[tl;dr]]></title><description><![CDATA[Software design. Craftsmanship. And lots of JavaScript. 🙌]]></description><link>https://jonathanleemartin.com/</link><image><url>https://jonathanleemartin.com/favicon.png</url><title>tl;dr</title><link>https://jonathanleemartin.com/</link></image><generator>Ghost 2.27</generator><lastBuildDate>Mon, 07 Oct 2019 19:36:25 GMT</lastBuildDate><atom:link href="https://jonathanleemartin.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[5 JavaScript Books You Should Add to Your Reading List]]></title><description><![CDATA[🤔 How can you keep growing as a developer? Why, a good book of course! Books often provide perspectives you’d be hard pressed to find in an online course. 📖 Here are my top 5 reads for JavaScript.]]></description><link>https://jonathanleemartin.com/blog/javascript-books-you-should-read/</link><guid isPermaLink="false">5d8cfaa7eeb0921572d7fc81</guid><category><![CDATA[JavaScript]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Thu, 26 Sep 2019 17:57:02 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/09/javascripts-books-you-should-read.jpg" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/09/javascripts-books-you-should-read.jpg" alt="5 JavaScript Books You Should Add to Your Reading List"><p><small><em>This post originally appeared as a guest blog on <a href="https://www.coursereport.com/blog/5-javascript-books-you-should-add-to-your-reading-list">Course Report</a>.</em></small></p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[tl;dr]]></title><description><![CDATA[Software design. Craftsmanship. And lots of JavaScript. 🙌]]></description><link>https://jonathanleemartin.com/</link><image><url>https://jonathanleemartin.com/favicon.png</url><title>tl;dr</title><link>https://jonathanleemartin.com/</link></image><generator>Ghost 2.27</generator><lastBuildDate>Wed, 09 Oct 2019 18:00:13 GMT</lastBuildDate><atom:link href="https://jonathanleemartin.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[03. Enforcer Pattern]]></title><description><![CDATA[🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!]]></description><link>https://jonathanleemartin.com/tldr/03-enforcer-pattern/</link><guid isPermaLink="false">5d9e1d61ed2f711a7b1a0136</guid><category><![CDATA[tl;dr]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 09 Oct 2019 17:49:05 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" alt="03. Enforcer Pattern"><p>How can you cut down small if-else statements that recur across several functions? Let’s cover another pattern for nuking if-else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<iframe src="https://www.youtube.com/embed/H-L6BMD4hN8" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
+<h3 id="transcript">Transcript</h3>
+<p>Over the past few episodes, we’ve been covering design patterns to help cut down the size and depth of if-else statements. If you’re new to this vendetta against if-else statements, hop back to the episode on <a href="https://jonathanleemartin.com/tldr/01-nested-ternaries/">nested ternaries</a> to get up to speed.</p>
+<p>Nested ternaries and the <a href="https://jonathanleemartin.com/tldr/02-router-pattern/">Router design pattern</a> have helped us reduce the size and depth of cascading if-else statements, but we haven’t dealt with terse, non-cascading if-else statements that get copy-pasted across functions. These if-else statements often appear at the beginning of the function as a guard clause. They’re innocent and short, but like a weed they reproduce with each new feature, and the duplication is tricky to eradicate.</p>
+<p>Today we’re continuing to work on a chatbot that helps outdoor enthusiasts find great trails to hike. This chatbot can respond to simple text commands, like <code>list hikes</code>, <code>add hike</code> and <code>delete hike</code>. If it doesn’t understand the command, it replies with a fallback message.</p>
+<pre><code class="language-javascript">responder('list hikes');
+// =&gt; 'Lost Lake, Canyon Creek Meadows'
+responder('add hike Mirror Lake');
+// =&gt; 'Added Mirror Lake!'
+responder('delete hike Mirror Lake');
+// =&gt; 'Removed Mirror Lake!'
+responder('where is Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+</code></pre>
+<p>The code is a few steps forward from what we had last time: the responder function still follows the Router pattern, but we lifted the individual routes into functions to make the list of responses easier to read.</p>
+<pre><code class="language-javascript">let hikes = [
+  'Lost Lake',
+  'Canyon Creek Meadows',
+];
+
+let listHikes = () =&gt;
+  hikes.join(', ');
+
+let addHike = ([hike]) =&gt; {
+  hikes.push(hike);
+  return `Added ${hike}!`;
+};
+
+let deleteHike = ([hike]) =&gt; {
+  hikes.splice(hikes.indexOf(hike), 1);
+  return `Removed ${hike}!`;
+};
+
+let fallback = () =&gt;
+  `Sorry, I don't understand.`;
+
+let responses = [
+  { command: /^list hikes$/,
+    response: listHikes },
+  { command: /^add hike (.+)$/,
+    response: addHike },
+  { command: /^delete hike (.+)$/,
+    response: deleteHike },
+  { command: /^(.*)$/,
+    response: fallback },
+];
+
+let responder = (message) =&gt; {
+  let { command, response } = responses
+    .find(({ command, response }) =&gt;
+      command.test(message)
+    );
+  return response(
+    command.exec(message).slice(1)
+  );
+};
+</code></pre>
+<p>The responder function searches through the list of responses for a command that matches the chat message, then invokes the corresponding response function.</p>
+<pre><code class="language-javascript">let responder = (message) =&gt; {
+  let { command, response } = responses
+    .find(({ command, response }) =&gt;
+      command.test(message)
+    );
+  return response(
+    command.exec(message).slice(1)
+  );
+};
+</code></pre>
+<p>Today, we want to enforce that the <code>add hike</code> and <code>delete hike</code> commands are executed with the word “sudo” to prevent any accidental changes. Only some commands need sudo, and if the user forgets sudo, we want to provide feedback. So we can’t just add the word “sudo” directly to the regular expressions.</p>
+<pre><code class="language-javascript">responder('list hikes');
+// =&gt; 'Lost Lake, Canyon Creek Meadows'
+responder('sudo add hike Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+responder('sudo delete hike Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+responder('where is Mirror Lake');
+// =&gt; &quot;Sorry, I don't understand.&quot;
+</code></pre>
+<p>We can make the regular expressions a little more lenient so the command is at least recognized:</p>
+<pre><code class="language-diff"> let responses = [
+-  { command: /^list hikes$/,
++  { command: /list hikes$/,
+   ...
+-  { command: /^add hike (.+)$/,
++  { command: /add hike (.+)$/,
+   ...
+-  { command: /^delete hike (.+)$/,
++  { command: /delete hike (.+)$/,
+   ...
+ ];
+</code></pre>
+<p>But how should we enforce the use of sudo for these admin commands?</p>
+<p>One tempting way to support a new, shared behavior like this is to add a new property to each response object: we’ll call it <code>adminOnly</code>.</p>
+<pre><code class="language-diff"> let responses = [
+   ...
+   { command: /add hike (.+)$/,
++    adminOnly: true,
+     response: addHike },
+   { command: /delete hike (.+)$/,
++    adminOnly: true,
+     response: deleteHike },
+   ...
+ ];
+</code></pre>
+<p>Then in the responder, we’ll add a guard clause that checks if the route requires “sudo”, and if the word is missing, we’ll respond with “Not allowed.”</p>
+<pre><code class="language-diff"> let responder = (message) =&gt; {
+-  let { command, response } = responses
++  let { command, adminOnly, response } = responses
+     .find(({ command, response }) =&gt;
+       command.test(message)
+     );
++  if (adminOnly &amp;&amp; !message.startsWith('sudo')) {
++    return 'Not allowed!';
++  }
+   return response(
+     command.exec(message).slice(1)
+   );
+ };
+</code></pre>
+<p>When faced with this kind of feature request — that is, supporting a new behavior that can be generalized for related functions — many developers would probably do what we did and insert that behavior logic into the responder function. It’s quick, keeps the code <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>, and it just feels nice. But it’s also a premature abstraction that conflates responsibilities: the responder function has become responsible for routing and authorization logic.</p>
+<p>Every time a feature requires a new qualifier, the responder will be edited. It won’t be long before there are several short if-else statements in the responder — which is precisely what the Router pattern was intended to help us demolish.</p>
+<p>From a testing perspective, we can’t unit test the authorization logic for individual chat commands without going through the responder. We can only write integration tests for authorization.</p>
+<p>Whenever you’re tempted to alter terse, single responsibility functions to incorporate a new behavior, take a step back and identify the most naive solution that still satisfies the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">single responsibility principle</a>.</p>
+<p>For example, what if we added this admin enforcement logic directly to the <code>addHike()</code> and <code>deleteHike()</code> response functions instead of the responder?</p>
+<p>Let’s undo our changes. For the response functions to determine if sudo was used, we need to pass the full chat message:</p>
+<pre><code class="language-diff"> let responder = (message) =&gt; {
+   ...
+   return response(
+-    command.exec(message).slice(1)
++    { message,
++      match: command.exec(message).slice(1) }
+   );
+ };
+</code></pre>
+<p>In <code>addHike()</code>, we can add a guard clause that checks if the message starts with “sudo” and returns “Not allowed” if it doesn’t. We can copy-paste this guard clause to <code>deleteHike()</code>.</p>
+<pre><code class="language-javascript">let addHike = ({ match: [hike], message }) =&gt; {
+  if (!message.startsWith('sudo')) {
+    return 'Not allowed!';
+  }
+  hikes.push(hike);
+  return `Added ${hike}!`;
+};
+
+let deleteHike = ({ match: [hike], message }) =&gt; {
+  if (!message.startsWith('sudo')) {
+    return 'Not allowed!';
+  }
+  hikes.splice(hikes.indexOf(hike), 1);
+  return `Removed ${hike}!`;
+};
+</code></pre>
+<p>This naive solution is feature complete and leaves the responder function focused on one responsibility. But now one if-else statement has multiplied into two in our response functions. So how are we any better off? Well, by letting the naive solution play out, we’re equipped to build an abstraction that solves a concrete problem: the duplicated guard clause.</p>
+<p>This guard clause represents a behavior, which we could call <code>adminOnly</code>. When you hear the word “behavior” or “trait”, we’re referring to a cross-cutting concern that can be shared across several functions, even if they do completely different things. The <code>addHike()</code> and <code>deleteHike()</code> response functions have different jobs, but they share a similar behavior.</p>
+<p>A great way to share behavior in a language that supports functional programming is through function composition.</p>
+<p>Suppose we had a function, called <code>adminOnly()</code>, that receives an unprotected function like <code>addHike()</code>, and returns a new version of <code>addHike()</code> that enforces the use of the “sudo” keyword:</p>
+<pre><code class="language-diff"> let responses = [
+   ...
+   { command: /add hike (.+)$/,
+-    response: addHike },
++    response: adminOnly(addHike) },
+   { command: /delete hike (.+)$/,
+-    response: deleteHike },
++    response: adminOnly(deleteHike) },
+   ...
+ ];
+</code></pre>
+<p><code>adminOnly()</code> is easy to code up once you get the parameter signature right. If the message contains the word “sudo”, it invokes the route it received as an argument. Otherwise, it returns the failure message.</p>
+<pre><code class="language-javascript">let adminOnly = (route) =&gt; (request) =&gt;
+  request.message.split(' ').includes('sudo')
+    ? route(request)
+    : 'Not allowed!'
+;
+</code></pre>
+<p>I like to call this kind of behavior function an <strong>Enforcer</strong>: it’s a <a href="https://medium.com/javascript-scene/higher-order-functions-composing-software-5365cf2cbe99">Higher-Order Function</a> with a guard clause that enforces some authorization rule, like requiring the word “sudo” or checking if the current user is an admin.</p>
+<p>The <code>add hike</code> and <code>delete hike</code> commands behave exactly as they did in our first solution. But this time, we didn’t have to edit existing functions to support the new behavior: we only added new functions and composed them. It’s as though we’re writing immutable code, and like immutable data structures, this style of coding has great design benefits and prevents regressions. None of our existing unit tests will change, and the new code already follows the single responsibility principle.</p>
+<p>We can even add new enforcement behaviors.</p>
+<p>Suppose we want to enforce that the <code>list hikes</code> command include the word “please” with a new behavior called <code>askNicely()</code>. All we need to do is duplicate the <code>adminOnly()</code> behavior, then change the keyword and failure message:</p>
+<pre><code class="language-javascript">let askNicely = (route) =&gt; (request) =&gt;
+  request.message.split(' ').includes('please')
+    ? route(request)
+    : 'You should ask nicely.'
+;
+
+let responses = [
+  { command: /list hikes$/,
+    response: askNicely(listHikes) },
+  ...
+];
+</code></pre>
+<p>And because these enforcers are built through function composition, they layer without additional work. To make the <code>delete hike</code> command require “sudo” and “please”, we just compose the behaviors.</p>
+<pre><code class="language-diff"> let responses = [
+   ...
+   { command: /delete hike (.+)$/,
+-    response: adminOnly(deleteHike) },
++    response: adminOnly(askNicely(deleteHike)) },
+   ...
+ ];
+</code></pre>
+<p>But what about the duplication between these behaviors? Other than a different keyword and failure message, they look exactly the same. We can DRY them up into an enforcer factory called <code>requireKeyword()</code> that returns a new behavior based on a customizable keyword and failure message.</p>
+<pre><code class="language-javascript">let requireKeyword = (word, fail) =&gt; (route) =&gt; (request) =&gt;
+  request.message.split(' ').includes(word)
+    ? route(request)
+    : fail
+;
+</code></pre>
+<p>Now the <code>adminOnly()</code> and <code>askNicely()</code> behaviors can be replaced with partial invocations of the <code>requireKeyword()</code> enforcer factory!</p>
+<pre><code class="language-javascript">let adminOnly = requireKeyword('sudo', 'Not allowed!');
+let askNicely = requireKeyword('please', 'You should ask nicely.');
+</code></pre>
+<p>We’ve landed on a solution that satisfies the single responsibility principle, didn’t change existing functions, and produces descriptive code.</p>
+<pre><code class="language-javascript">responder('list hikes');
+// =&gt; 'You should ask nicely.'
+responder('please list hikes');
+// =&gt; 'Lost Lake, Canyon Creek Meadows'
+responder('add hike Mirror Lake');
+// =&gt; 'Not allowed!'
+responder('sudo add hike Mirror Lake');
+// =&gt; 'Added Mirror Lake!'
+responder('sudo please delete hike Mirror Lake');
+// =&gt; 'Removed Mirror Lake!'
+</code></pre>
+<p>The enforcer pattern pops up in other places, like guarding authenticated pages in a React web app:</p>
+<pre><code class="language-javascript">let requireLogin = (Component) =&gt; (props) =&gt;
+  props.currentUser
+    ? &lt;Component {...props} /&gt;
+    : &lt;Redirect to=&quot;/login&quot; /&gt;
+
+let ActivityPage = ({ notifications }) =&gt;
+  &lt;section&gt;
+    &lt;h2&gt;Recent Activity&lt;/h2&gt;
+    &lt;Notifications notifications={notifications} /&gt;
+  &lt;/section&gt;
+
+export default requireLogin(ActivityPage);
+
+</code></pre>
+<p>Or rendering a loading indicator while an API request finishes:</p>
+<pre><code class="language-javascript">let withLoader = (msg) =&gt; (Component) =&gt; (props) =&gt;
+  props.loading
+    ? &lt;LoadingIndicator message={message} /&gt;
+    : &lt;Component {...props} /&gt;
+
+let ProfileScreen = ({ stories, user }) =&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Stories from {user.name}&lt;/h2&gt;
+    &lt;StoryList stories={stories} /&gt;
+  &lt;/div&gt;
+
+export default withLoader('Wait…')(ProfileScreen);
+
+</code></pre>
+<p>Or protecting backend routes based on the current user:</p>
+<pre><code class="language-javascript">let listAllUsers = (req, res) =&gt; {
+  res.send(users);
+};
+
+let adminOnly = (req, res, next) =&gt;
+  req.user &amp;&amp; req.user.isAdmin
+    ? next()
+    : res.sendStatus(401);
+
+app.get(
+  adminOnly,
+  listAllUsers,
+);
+
+</code></pre>
+<p>But we wouldn’t have discovered this pattern without writing the naive copy-paste solution first and letting the repetition guide the refactor.</p>
+<p>So don’t try to prevent copy-paste prematurely: instead, let the code be duplicated, then DRY up the duplication through function composition. The naive copy-paste solution will lead you to a resilient abstraction that won’t be outgrown by the next feature.</p>
+<p>Today, look for short, repeated if-else statements near the beginning of the function that guard the rest of the function, and try extracting them into an enforcer function.</p>
+<p>That’s it for today. Want to keep leveling up your craft? Don’t forget to <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">subscribe to the channel</a> for more rapid codecasts on design patterns, refactoring and development approaches.</p>
+<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[5 JavaScript Books You Should Add to Your Reading List]]></title><description><![CDATA[🤔 How can you keep growing as a developer? Why, a good book of course! Books often provide perspectives you’d be hard pressed to find in an online course. 📖 Here are my top 5 reads for JavaScript.]]></description><link>https://jonathanleemartin.com/blog/javascript-books-you-should-read/</link><guid isPermaLink="false">5d8cfaa7eeb0921572d7fc81</guid><category><![CDATA[JavaScript]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Thu, 26 Sep 2019 17:57:02 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/09/javascripts-books-you-should-read.jpg" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/09/javascripts-books-you-should-read.jpg" alt="5 JavaScript Books You Should Add to Your Reading List"><p><small><em>This post originally appeared as a guest blog on <a href="https://www.coursereport.com/blog/5-javascript-books-you-should-add-to-your-reading-list">Course Report</a>.</em></small></p>
 <p>Ah, books—the time-tested technique for ingesting knowledge. Programming literature may not be as engaging as Codecademy or <a href="https://codecombat.com/">CodeCombat</a>, but it will help reinforce concepts and provide perspectives you’d be hard pressed to find in an online course.</p>
 <p>Here are five books you should read as you begin your journey as a web developer. Keep in mind that these books won’t teach you to code, so they’re not substitutes for an online course or a coding bootcamp—but they are excellent supplements!</p>
 <h2 id="1javascriptallong">1.  <a href="https://www.amazon.com/Javascript-Allong%C3%A9-Reginald-Braithwaite-ebook/dp/B00FLKRCVO?tag=nybblr08-20">JavaScript Allongé</a></h2>
