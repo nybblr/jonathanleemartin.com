@@ -1,4 +1,173 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[tl;dr]]></title><description><![CDATA[Software design. Craftsmanship. And lots of JavaScript. 🙌]]></description><link>https://jonathanleemartin.com/</link><image><url>https://jonathanleemartin.com/favicon.png</url><title>tl;dr</title><link>https://jonathanleemartin.com/</link></image><generator>Ghost 2.27</generator><lastBuildDate>Wed, 09 Oct 2019 18:05:20 GMT</lastBuildDate><atom:link href="https://jonathanleemartin.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[03. Enforcer Pattern]]></title><description><![CDATA[🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!]]></description><link>https://jonathanleemartin.com/tldr/03-enforcer-pattern/</link><guid isPermaLink="false">5d9e1d61ed2f711a7b1a0136</guid><category><![CDATA[tl;dr]]></category><category><![CDATA[JavaScript]]></category><category><![CDATA[Design Pattern]]></category><category><![CDATA[Web]]></category><category><![CDATA[React]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 09 Oct 2019 17:49:05 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" alt="03. Enforcer Pattern"><p>How can you cut down small if-else statements that recur across several functions? Let’s cover another pattern for nuking if-else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[tl;dr]]></title><description><![CDATA[Software design. Craftsmanship. And lots of JavaScript. 🙌]]></description><link>https://jonathanleemartin.com/</link><image><url>https://jonathanleemartin.com/favicon.png</url><title>tl;dr</title><link>https://jonathanleemartin.com/</link></image><generator>Ghost 2.27</generator><lastBuildDate>Wed, 16 Oct 2019 16:59:37 GMT</lastBuildDate><atom:link href="https://jonathanleemartin.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[04. Custom Exceptions]]></title><description><![CDATA[🎬 Spooked out by errors and stack traces? 😱 With solid error handling patterns, Custom Exceptions can help us eliminate if…else statements!]]></description><link>https://jonathanleemartin.com/tldr/04-custom-exceptions/</link><guid isPermaLink="false">5da744d92aa23c2d8579b64d</guid><category><![CDATA[tl;dr]]></category><category><![CDATA[JavaScript]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 16 Oct 2019 16:28:24 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/04-custom-exceptions.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/04-custom-exceptions.png" alt="04. Custom Exceptions"><p>Do you get spooked by runtime errors? They can be a pain to deal with, but we’ll see just how much solid error handling strategies can help in our crusade against if…else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<iframe src="https://www.youtube.com/embed/d5eyTy0QOgg" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
+<h3 id="transcript">Transcript</h3>
+<p>When you invoke a function, what might happen? Most of the time we get back a simple return value, but there’s another kind of result a function can produce: an <code>Error</code>.</p>
+<p>An <code>Error</code> typically makes us think we did something wrong, but errors are just another feedback mechanism for a program, and unlike returning a value, throwing an <code>Error</code> has a peculiar superpower: it automatically propagates up the caller stack — interrupting the caller functions as it propagates — until it’s caught. This propagation behavior makes <code>throw</code> and try…catch statements a powerful control flow construct.</p>
+<p>But handling errors correctly can quickly turn elegant functions into a hot mess of try…catch statements and nested if…else statements — exactly <a href="https://jonathanleemartin.com/tldr/01-nested-ternaries/">the sort of thing</a> we’ve <a href="https://jonathanleemartin.com/tldr/02-router-pattern/">been obliterating</a> in the <a href="https://jonathanleemartin.com/tldr/03-enforcer-pattern/">last few episodes</a>.</p>
+<p>Today we’re working on a tiny version of the chatbot we started a couple episodes back that helps outdoor enthusiasts find great trails to hike.</p>
+<pre><code class="language-javascript">let chatbot = (message) =&gt; {
+  return viewHike(message);
+};
+
+chatbot('view hike mirror lake');
+// =&gt; 'Details about &lt;mirror lake&gt;'
+chatbot('view hike lost lake');
+// =&gt; 💥 NotFound: lost lake
+chatbot('show hike blue ridge');
+// =&gt; 💥 ValidationError: show hike blue ridge
+</code></pre>
+<p>We’ve cut down the chatbot code from the last couple episodes: it only understands one command, <code>view hike</code>, which shows details about a hike. But sometimes users ask for a hike that isn’t in the database or their syntax is a bit off. To simulate these edge cases, the <code>viewHike()</code> function uses a few custom error types:</p>
+<pre><code class="language-javascript">class NotFound extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'NotFound';
+  }
+}
+
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+</code></pre>
+<p><code>viewHike()</code> throws a <code>NotFound</code> error if the hike has the word “lost”, and a <code>ValidationError</code> if the format of the message is off.</p>
+<pre><code class="language-javascript">let viewHike = (message) =&gt; {
+  let match = /^view hike (.+)$/.exec(message);
+  let hike = match &amp;&amp; match[1];
+
+  return (
+    !hike ?
+      raise(new ValidationError(message))
+  : hike.includes('lost') ?
+      raise(new NotFound(hike))
+  :
+      `Details about &lt;${hike}&gt;`
+  );
+};
+</code></pre>
+<p>Like <code>return</code> and <code>continue</code>, <code>throw</code> is a statement, so to use it in a <a href="https://jonathanleemartin.com/tldr/01-nested-ternaries/">nested ternary</a>, we wrote a simple helper called <code>raise()</code>.</p>
+<pre><code class="language-javascript">let raise = (error) =&gt; { throw error; };
+</code></pre>
+<p>There’s a <a href="https://github.com/tc39/proposal-throw-expressions">stage 2 proposal</a> for an expression-friendly version of <code>throw</code> in the works, but until it lands it’s easy enough to make our own. So all told, the <code>viewHike()</code> function can result in one of two things: a return value, or a thrown <code>Error</code>.</p>
+<p>Our chatbot is terse, but it already has some issues. We definitely don’t want the chatbot to blow up and stop running if a <code>NotFound</code> error is thrown, so let’s wrap the call with a try…catch statement to instead return a safe fallback message:</p>
+<pre><code class="language-javascript">let chatbot = (message) =&gt; {
+  try {
+    return viewHIke(message);
+  } catch (error) {
+    return `No such hike.`;
+  }
+};
+
+chatbot('view hike mirror lake');
+// =&gt; 'No such hike.'
+chatbot('view hike lost lake');
+// =&gt; 'No such hike.'
+chatbot('show hike blue ridge');
+// =&gt; 'No such hike.'
+</code></pre>
+<p>Wait, why is our chatbot always responding with “No such hike” now? That first command definitely worked before. Let’s comment out the try…catch statement to see what’s happening.</p>
+<pre><code class="language-javascript">let chatbot = (message) =&gt; {
+  // try {
+    return viewHIke(message);
+  // } catch (error) {
+  //   return `No such hike.`;
+  // }
+};
+
+chatbot('view hike mirror lake');
+// =&gt; 💥 ReferenceError: viewHIke is not defined
+chatbot('view hike lost lake');
+// =&gt;
+chatbot('show hike blue ridge');
+// =&gt;
+</code></pre>
+<p>It looks like we were swallowing a <code>ReferenceError</code>. Well that would be a horrible bug to deploy to production!</p>
+<p>We just made the cardinal mistake of error handling: <strong>a catch all.</strong> The try…catch statement will swallow any error — including errors we didn’t mean to catch.</p>
+<p>It may sound obvious now, but just about any open source framework you’ve used probably has a catch-all bug in the codebase, from frontend frameworks like Ember.js to backend libraries like Passport and Jekyll. A catch-all ranks in the top 5 most frustrating bugs a library can make because it suppresses important errors unrelated to the library that the developer would otherwise see in the logs.</p>
+<p>So it’s up to us to whitelist the type of error we want to handle, and otherwise rethrow it. Since we made custom error subclasses, we can use the <code>instanceof</code> operator to guarantee we’re catching an error we can handle. Otherwise, we’ll rethrow it.</p>
+<pre><code class="language-javascript">let chatbot = (message) =&gt; {
+  try {
+    return viewHike(message);
+  } catch (error) {
+    if (error instanceof NotFound) {
+      return `No such hike.`;
+    } else {
+      throw error;
+    }
+  }
+};
+
+chatbot('view hike mirror lake');
+// =&gt; 'Details about &lt;mirror lake&gt;'
+chatbot('view hike lost lake');
+// =&gt; 'No such hike.'
+chatbot('show hike blue ridge');
+// =&gt; 💥 ValidationError: show hike blue ridge
+</code></pre>
+<p>To rescue a <code>ValidationError</code>, we add another else-if case.</p>
+<pre><code class="language-diff"> let chatbot = (message) =&gt; {
+   try {
+     return viewHike(message);
+   } catch (error) {
+     if (error instanceof NotFound) {
+       return `No such hike.`;
++    } else if (error instanceof ValidationError) {
++      return `Invalid format.`;
+     } else {
+       throw error;
+     }
+   }
+ };
+ 
+ chatbot('show hike blue ridge');
+ // =&gt; 'Invalid format.'
+</code></pre>
+<p>The chatbot is behaving well and not blowing up, but handling an error correctly looks awful. We definitely can’t leave these checks out, but a try…catch is a branching construct just like an if…else, so these are essentially nested, cascading if…else statements all over again. And we’ll have to repeat this boilerplate each time we need to handle an error correctly.</p>
+<p>It really doesn’t seem like custom errors are making our code any better — in fact, it seems to be getting much worse!</p>
+<p>That’s why you should never be too quick to sprinkle custom errors throughout your codebase. Because throw statements are fundamentally a control flow construct, they can often fight against everything we’ve been working towards in the previous episodes.</p>
+<p>So when, if ever, should you use custom errors? Well, I prefer the alternative name <strong>“Custom Exceptions”</strong> because it tells us exactly when to use them: for unusual, exceptional cases that most of our codebase shouldn’t care about, like a <code>NetworkError</code>. These are cases that one or two functions in the codebase will handle with the same response: on the backend, a <code>NotFound</code> error thrown from any route should just generate a 404 response.</p>
+<p>Used sparingly, custom exceptions can actually eliminate branching logic: since the rest of our functions can assume the happy path, they don’t need an if…else statement to check for an unusual return value, like a null check.</p>
+<p>So a custom exception is worthwhile when it eliminates edge cases and if…else statements from calling functions, and throwing custom exceptions makes sense when the function would blow up anyway with a useless generic runtime error, like a <code>TypeError</code>.</p>
+<p>Let’s see if we can find an error handling solution that cuts down if…else statements and common typos. Throwing an error triggers an early exit, even from a catch clause. Let’s shuffle the error checking code so it looks more like a <a href="https://jonathanleemartin.com/tldr/03-enforcer-pattern/">guard clause</a>:</p>
+<pre><code class="language-javascript">let chatbot = (message) =&gt; {
+  try {
+    return viewHike(message);
+  } catch (error) {
+    if (error instanceof NotFound) {
+      throw error;
+    }
+    return `No such hike.`;
+  }
+};
+</code></pre>
+<p>Now there’s nothing stopping us from extracting this entire guard clause into a function! Let’s call it <code>rescue()</code>.</p>
+<pre><code class="language-javascript">let rescue = (error, type) =&gt;
+  error instanceof type
+    ? error
+    : raise(error)
+;
+</code></pre>
+<p>Now when using a try…catch, we just need to make sure we precede the catch code with <code>rescue()</code>. This behaves much better than what we started with, and it only added one line to our naive catch-all version.</p>
+<pre><code class="language-javascript">let chatbot = (message) =&gt; {
+  try {
+    return viewHike(message);
+  } catch (error) {
+    rescue(error, NotFound);
+    return `No such hike.`;
+  }
+};
+
+chatbot('view hike mirror lake');
+// =&gt; 'Details about &lt;mirror lake&gt;'
+chatbot('view hike lost lake');
+// =&gt; 'No such hike.'
+chatbot('show hike blue ridge');
+// =&gt; 💥 ValidationError: show hike blue ridge
+</code></pre>
+<p>Unfortunately, we can’t just stack invocations of <code>rescue()</code>, so how do we also handle a <code>ValidationError</code>? Hang tight and we’ll address this problem on the next episode of TL;DR. Till then, search for try…catch statements in your codebase and enforce good error handling practices with <code>rescue()</code>.</p>
+<p>That’s it for today. Want to keep leveling up your craft? Don’t forget to <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">subscribe to the channel</a> for more rapid codecasts on design patterns, refactoring and development approaches.</p>
+<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[03. Enforcer Pattern]]></title><description><![CDATA[🎬 Find yourself copy-pasting small if-else statements across several functions? 💂‍♂️ With higher-order functions and the enforcer pattern, you can compose guard behaviors!]]></description><link>https://jonathanleemartin.com/tldr/03-enforcer-pattern/</link><guid isPermaLink="false">5d9e1d61ed2f711a7b1a0136</guid><category><![CDATA[tl;dr]]></category><category><![CDATA[JavaScript]]></category><category><![CDATA[Design Pattern]]></category><category><![CDATA[Web]]></category><category><![CDATA[React]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 09 Oct 2019 17:49:05 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/03-enforcers.png" alt="03. Enforcer Pattern"><p>How can you cut down small if-else statements that recur across several functions? Let’s cover another pattern for nuking if-else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
 <iframe src="https://www.youtube.com/embed/H-L6BMD4hN8" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
 <h3 id="transcript">Transcript</h3>
 <p>Over the past few episodes, we’ve been covering design patterns to help cut down the size and depth of if-else statements. If you’re new to this vendetta against if-else statements, hop back to the episode on <a href="https://jonathanleemartin.com/tldr/01-nested-ternaries/">nested ternaries</a> to get up to speed.</p>
@@ -2884,136 +3053,4 @@ dbus.exceptions.DBusException: org.freedesktop.DBus.Error.UnknownMethod: Method 
 <p>A D-Bus issue? After all that work, it turns out that the PAN interface <code>Network1</code> is not available. This isn't a spurious failure: Bluetooth Low Energy doesn't support the PAN profile, so <code>Network1</code> is never exposed on the D-Bus interface. Only regular Bluetooth supports PAN!</p>
 <h2 id="nexttime">Next time...</h2>
 <p>To my disappointment, we aren't quite to the point of <code>telnet</code>ing into the drone. But never fear! In Part 3, we will backtrack to another clue in <code>/etc/init.d/rcS</code> to complete our journey of wirelessly shelling into the mini-drone.</p>
-<!--kg-card-end: markdown--><!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[To Kill -9 a Drone, Part 1]]></title><description><![CDATA[This year marks my second visit to JSConf’s paradisiacal backdrop on Amelia Island, and is particularly memorable—the talks demoed unusual applications and dazzled the imagination. But the swag item this year blows all the branded beach balls out of the beach water.
-]]></description><link>https://jonathanleemartin.com/blog/to-kill-9-a-drone-part-1/</link><guid isPermaLink="false">5d476ef72ee5ff3d4aa3cb02</guid><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Tue, 16 Jun 2015 12:00:00 GMT</pubDate><content:encoded><![CDATA[<!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/to-kill-9-a-drone-daemon-part-1/">Big Nerd Ranch blog</a>.</em></small></p>
-<p><em>TL;DR: JSConf 2015 was awesome, and you can open a shell to the Parrot Rolling Spider’s Linux innards with screen /dev/tty.usbmodem…</em></p>
-<p>May is beach month. Every year, I head to the Sunshine State for a fair dose of UV rays to counteract an epidemic skin disease (the treatment usually involves sunburn). Afternoon swims are among the most palatable treatment options, although poolside activities often interrupt it. It takes a certain amount of agility to dodge incoming gulls, beach balls and Node.js-controlled boats.</p>
-<p>But contrary to my family’s opinion, I’m not out on vacation. This, in a nutshell, is <a href="http://jsconf.com/">JSConf</a>: the premier JavaScript conference for nerds in search of web expertise, hardware hackery and East Coast sunlight.</p>
-<p><img src="https://jonathanleemartin.com/content/images/2017/12/omni-amelia-resort.jpg" alt="Omni Amelia Island Resort"></p>
-<p>This year marks my second visit to JSConf’s paradisiacal backdrop on Amelia Island, and is particularly memorable—the talks demoed <a href="https://www.youtube.com/watch?v=nydh_2NRn-c">unusual applications</a> and <a href="https://simonswain.com/coldwar">dazzled the imagination</a>. I also gave my first JSConf talk on <a href="https://www.youtube.com/watch?v=O7vOxYoswKY">replacing native local variables with prototypes</a>.</p>
-<p>But I think everyone would agree: the swag item this year blows all the t-shirts and branded beach balls out of the [beach] water.</p>
-<h2 id="somanydrones">So. Many. Drones.</h2>
-<p>I thought the twenty or so AR.Drone quadcopters at last year’s NodeCopter event was unnerving. This year, the conference was swarmed by <strong>700</strong> <a href="http://www.parrot.com/usa/products/rolling-spider/">Parrot Rolling Spider</a> quadcopters.</p>
-<p><img src="https://jonathanleemartin.com/content/images/2017/12/rolling-spider.jpg" alt="Parrot Rolling Spider Mini-drone"></p>
-<p>Despite the drone’s apocalyptic appearance, the human finger inflicts more damage on the tiny plastic props than it does in return. But at 1400 LED eyes and 2800 props strong, the same cannot be said for terrorized house pets and seagulls.</p>
-<p>Unlike their bigger brothers, the mini-drones are remote-controlled over Bluetooth Low Energy. So anywhere else, I’d pilot my drone from the <a href="http://www.parrot.com/usa/apps/">FreeFlight mobile app</a>. But JSConf is not just anywhere else. At JSConf, anything that can be, must be controlled by JavaScript.</p>
-<p>Thanks to <a href="https://github.com/voodootikigod/node-rolling-spider">Chris Williams’s pre-conference homework</a>, I was able to pilot my drone from my laptop with vim-style controls and an <a href="https://twitter.com/nybblr/status/609481347338403840">Xbox 360 controller</a>. That’s pretty awesome, but a little boring, considering we did that last year.</p>
-<p>I think my four-winged friend can do so much more: I want to run my own software <em>directly</em> on the drone to make something truly autonomous! I figured there would be docs and posts detailing how this could be done. However.</p>
-<p><em>Eerie silence…</em></p>
-<h2 id="serialobsessions">Serial Obsessions</h2>
-<p>At Georgia Tech, the CS program had a minor obsession with the original AR.Drone, so I've worked with it on a few occasions. Interestingly, it ran Linux, so I suspected that the Rolling Spider also runs Linux. If that was the case, I might be able to open a terminal and peek into the drone’s guts!</p>
-<p>With the guidance of my <a href="https://vimeo.com/68340179">proc killin’</a> colleague <a href="https://www.bignerdranch.com/about/the-team/steve-sparks/">Steve Sparks</a>, we took a historical detour to reminisce about the days of 56k dial-up modems. Coincidentally, <a href="http://slides.com/samccone/jsconf-uy#/">modems made an appearance at JSConf</a>, so I had some background.</p>
-<p>In the distant past, operators would relay text over telephone lines with keyboards. Similar to dial-up modems, different keys would be converted to a <a href="https://en.wikipedia.org/wiki/Baudot_code">5-bit code called Baudot code</a> and transmitted over wire. Baudot code was later standardized as ITA2, the predecessor to 7-bit ASCII. The <a href="https://en.wikipedia.org/wiki/Teleprinter">Teletype Writer</a>, as it was called, was later modified for communicating with computer terminals. Nowadays, most Linux devices listen for serial connections (directly through COM, or emulated over USB) and communicate to TTY (Teletype) sockets.</p>
-<p>On UNIX machines, TTY devices mount under <code>/dev/tty*</code>. Plugging in my drone over USB, two new entries show up:</p>
-<pre><code class="language-bash">$ ls -1 /dev
-...
-/dev/cu.usbmodem1d113
-...
-/dev/tty.usbmodem1d113
-...
-</code></pre>
-<p>The drone exposes a TTY socket over USB. This is thanks to the <code>getty</code> utility running on the drone, which listens for incoming connections and forwards traffic to the machine’s virtual console.</p>
-<p>If the drone is listening, my laptop needs to request and display the login shell. Like yesteryear’s kitchen appliances, the venerable <code>screen</code> terminal emulator can do anything: it even knows how to communicate with a TTY device over serial ports:</p>
-<pre><code>$ screen /dev/tty.usbmodem1d113
-</code></pre>
-<p>And I’m in!</p>
-<pre><code>BusyBox v1.20.2 (2015-03-06 17:53:39 CET) built-in shell (ash)
-Enter 'help' for a list of built-in commands.
-
-#
-</code></pre>
-<p>It doesn’t require a username and password, so it’s probably running root in single-user mode:</p>
-<pre><code># whoami
-/bin/sh: whoami: not found
-</code></pre>
-<p>Wow, seems a bit short on conveniences. Let’s try:</p>
-<pre><code># echo $USER
-root
-</code></pre>
-<p>That's it! One slight problem though: <strong>the drone disconnects after 60 seconds.</strong> It’s exasperating to explore the drone’s filesystem one minute at a time, so maybe it’s time for a different approach.</p>
-<h2 id="lookingforclues">Looking for Clues</h2>
-<p>While upgrading my drone, I peruse the mysterious <code>rollingspider_update.plf</code> file, which presumably wraps the core firmware update. Since the drone is Linux based, there should be several shell scripts scattered in the update file that could hint at turning off the auto-sleep. Unfortunately, none of the open source AR.Drone PLF extractors work with the Rolling Spider variant.</p>
-<p>Time to analyze the update myself. Maybe the update is just a <code>.tar.gz</code> with a different file extension:</p>
-<pre><code>$ file rollingspider_update.plf
-rollingspider_update.plf: data
-</code></pre>
-<p>Nope. Let’s try <code>strings rollingspider_update.plf</code>, which finds plain text sequences terminated by the NUL character (typical in binaries).</p>
-<pre><code>$ strings rollingspider_update.plf
-[gobbledygook and  ༼ ༎ຶ ෴ ༎ຶ༽]
-</code></pre>
-<p>Sigh; a few readable bits turn up, but most of the file looks like compressed gobbledygook. <code>strings</code> doesn’t know how to extract compressed strings, but <a href="https://github.com/devttys0/binwalk">Binwalk</a> does. Binwalk analyzes binary files and extracts resources, like images and text, into their respective files by searching for tell-tale signatures.</p>
-<pre><code>$ binwalk --extract rollingspider_update.plf
-</code></pre>
-<p>Binwalk spits out a directory of arbitrarily named files, most of which are binaries.</p>
-<pre><code>$ ls -1 _rollingspider_update.plf.extracted
-105F5E.zlib
-107CC1.zlib
-10865F.zlib
-10D400.zlib
-1134B1.zlib
-114918.zlib
-...
-525E34
-529C28
-52A63B.zlib
-52A761.zlib
-52ACE.zlib
-...
-</code></pre>
-<p>However, a fair number of files without the <code>.zlib</code> extension are scripts, so I explore all the files starting with the <code>#!/bin/sh</code> shebang. One in particular stands out:</p>
-<pre><code>$ cat 43DDA4
-etc/init.d/rcS[gobbledygook]#!/bin/sh
-
-# IP_ADDR - this target IP address using CIDR notation:
-# &lt;target-ip&gt;/&lt;target-bitmask&gt;
-#
-# For example:
-
-echo init started...
-
-source /bin/delos_shell.sh
-
-...
-
-echo &quot;Launching Dragon&quot; | logger -s -t &quot;rcS&quot; -p user.info
-DragonStarter.sh -out2null &amp;
-
-# Start the FSM managing USB Modes
-(delos_monitor_vbus_script.sh)&amp;
-
-echo end init...
-</code></pre>
-<p>Looks like the <code>/etc/init.d/rcS</code> script. On a Linux system, <code>rcS</code> is run after the kernel has booted into single-user mode: it typically initializes some services and mounts the filesystem before kicking off the main program (e.g., the piloting software). The Rolling Spider happens to start up the <code>getty</code> program (which allows us to shell in), <code>telnetd</code> and <code>BLEproxy</code> in <code>rcS</code>. More on the <code>BLEproxy</code> later…</p>
-<h2 id="wakeywakeyspidey">Wakey Wakey, Spidey</h2>
-<p>After digging through the update file, I’m ready to double down on the 60-second time limit. On a Linux device, “sleeping” likely means the system is shutting down entirely. So if it shuts down, maybe we can search the extracted files for scripts that have the shebang and mention <code>shutdown</code>:</p>
-<pre><code>$ comm -12 &lt;(ag -l --search-binary shutdown) &lt;(ag -l --search-binary '#!/bin/sh')
-...
-7B6170
-...
-
-$ head -n1 7B6170
-bin/device_monitoring.sh[gobbledygook]#!/bin/sh
-</code></pre>
-<p>Sure enough, one of the scripts, <code>/bin/device_monitoring.sh</code>, appears to track device state (flying, connected over USB, etc.) and notes when 60 seconds of inactivity have passed. The bottom of the script is especially pertinent:</p>
-<pre><code class="language-bash">if [ ! -f /tmp/.bleproxy.ftpinprogress -a ! -f /tmp/.shell.userconnected ]; then
-  /bin/delos_shutdown.sh
-fi
-
-if [ -f /tmp/.bleproxy.ftpinprogress ]; then
-  (/bin/device_monitoring.sh)&amp;
-fi
-</code></pre>
-<p>It looks like <code>shutdown</code> gets called after 60 seconds, unless <code>/tmp/.bleproxy.ftpinprogress</code> or <code>/tmp/.shell.userconnected</code> exist on the filesystem. So, let’s try logging back into the drone and run:</p>
-<pre><code># touch /tmp/.shell.userconnected
-</code></pre>
-<p>Success! Now the drone will stay on so we can explore indefinitely. It’s a bit inconvenient to run this every time we connect to our drone. It’s also irritating to run <code>screen</code> in the terminal since we lose our nice scrollback, but we can remedy both issues.</p>
-<p>Most terminal emulators let you specify “Profiles,” so let’s make one for the drone. I use <a href="https://www.iterm2.com/">iTerm2</a>, but the standard terminal bundled with OS X supports profiles as well.</p>
-<p>In your preferences, create a new Profile (I named mine “Drone”) and override the login shell. By default, this will be your system’s default shell (like Bash or ZSH), but you can specify <code>screen</code> instead. <code>screen</code> normally connects to the computer’s virtual terminal, but we can pass in our drone’s TTY instead.</p>
-<p><img src="https://jonathanleemartin.com/content/images/2017/12/iterm2-drone-profile.png" alt="Custom Drone Profile in iTerm2"></p>
-<p>To connect to the drone now, I can open the “Drone” profile and enjoy native scrollback controls. Finally, I want to run <code>touch /tmp/.shell.userconnected</code> as soon as the shell is up, so add that to “Send text at start.”</p>
-<p>Now it couldn’t be more convenient to turn those fearsome red eyes to a more interesting orange:</p>
-<pre><code># /bin/set_led_orange_both.sh
-</code></pre>
-<h2 id="nexttime">Next time…</h2>
-<p>This isn’t the <em>entire</em> story. In reality, I didn’t figure out the easy-peasy USB method until after trying to connect via Bluetooth. In my next post, we’ll take a detour into virtual machines and the Linux Bluetooth stack for more interesting ways to connect to and control embedded Linux devices.</p>
 <!--kg-card-end: markdown--><!--kg-card-end: markdown-->]]></content:encoded></item></channel></rss>
