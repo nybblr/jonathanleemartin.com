@@ -10,6 +10,9 @@ body {
 .page-tldr .m-header:not(.fixed) .m-mobile-topbar .m-icon-button {
   color: #ffffff;
 }
+.m-mobile-topbar {
+  justify-content: flex-start;
+}
 .m-article-card__author {
   display: none;
 }
