@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>Custom Exceptions + Error Handling Patterns &lt;/&gt; TL;DR: JavaScript Codecasts</title>
+    <title>Better Error Handling with Function Composition &lt;/&gt; TL;DR: JavaScript Codecasts</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -16,51 +16,53 @@
 
       <style>
     .m-hero__picture {
-      background-image: url(/content/images/size/w2000/2019/10/04-custom-exceptions.png);
+      background-image: url(/content/images/size/w2000/2019/10/05-exception-composition.png);
     }
   
     @media(max-width: 1000px) {
       .m-hero__picture {
-        background-image: url(/content/images/size/w1000/2019/10/04-custom-exceptions.png);
+        background-image: url(/content/images/size/w1000/2019/10/05-exception-composition.png);
       }
     }
   
     @media(max-width: 600px) {
       .m-hero__picture {
-        background-image: url(/content/images/size/w600/2019/10/04-custom-exceptions.png);
+        background-image: url(/content/images/size/w600/2019/10/05-exception-composition.png);
       }
     }
   </style>
 
 
-    <meta name="description" content="🎬 Spooked out by errors and stack traces? 😱 With solid error handling patterns, Custom Exceptions can help us eliminate if…else statements!" />
+    <meta name="description" content="🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!" />
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://jonathanleemartin.com/tldr/04-custom-exceptions/" />
+    <link rel="canonical" href="https://jonathanleemartin.com/tldr/05-exception-composition/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/04-custom-exceptions/amp/" />
+    <link rel="amphtml" href="https://jonathanleemartin.com/tldr/05-exception-composition/amp/" />
     
     <meta property="og:site_name" content="tl;dr" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Custom Exceptions + Error Handling Patterns &lt;/&gt; TL;DR: JavaScript Codecasts" />
-    <meta property="og:description" content="🎬 Spooked out by errors and stack traces? 😱 With solid error handling patterns, Custom Exceptions can help us eliminate if…else statements!" />
-    <meta property="og:url" content="https://jonathanleemartin.com/tldr/04-custom-exceptions/" />
-    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/10/04-custom-exceptions.png" />
-    <meta property="article:published_time" content="2019-10-16T16:28:24.000Z" />
-    <meta property="article:modified_time" content="2019-10-16T18:21:11.000Z" />
+    <meta property="og:title" content="Better Error Handling with Function Composition &lt;/&gt; TL;DR: JavaScript Codecasts" />
+    <meta property="og:description" content="🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!" />
+    <meta property="og:url" content="https://jonathanleemartin.com/tldr/05-exception-composition/" />
+    <meta property="og:image" content="https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png" />
+    <meta property="article:published_time" content="2019-10-23T12:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-10-23T12:13:37.000Z" />
     <meta property="article:tag" content="tl;dr" />
     <meta property="article:tag" content="JavaScript" />
+    <meta property="article:tag" content="Design Pattern" />
+    <meta property="article:tag" content="Web" />
     
     <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
     <meta property="article:author" content="https://www.facebook.com/yellowscale" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Custom Exceptions + Error Handling Patterns &lt;/&gt; TL;DR: JavaScript Codecasts" />
-    <meta name="twitter:description" content="🎬 Spooked out by errors and stack traces? 😱 With solid error handling patterns, Custom Exceptions can help us eliminate if…else statements!" />
-    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/04-custom-exceptions/" />
-    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/10/04-custom-exceptions.png" />
+    <meta name="twitter:title" content="Better Error Handling with Function Composition &lt;/&gt; TL;DR: JavaScript Codecasts" />
+    <meta name="twitter:description" content="🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!" />
+    <meta name="twitter:url" content="https://jonathanleemartin.com/tldr/05-exception-composition/" />
+    <meta name="twitter:image" content="https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Jonathan Lee Martin" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="tl;dr, JavaScript" />
+    <meta name="twitter:data2" content="tl;dr, JavaScript, Design Pattern, Web" />
     <meta name="twitter:site" content="@nybblr" />
     <meta name="twitter:creator" content="@nybblr" />
     <meta property="og:image:width" content="1920" />
@@ -96,18 +98,18 @@
             "https://twitter.com/nybblr"
         ]
     },
-    "headline": "Custom Exceptions + Error Handling Patterns &lt;/&gt; TL;DR: JavaScript Codecasts",
-    "url": "https://jonathanleemartin.com/tldr/04-custom-exceptions/",
-    "datePublished": "2019-10-16T16:28:24.000Z",
-    "dateModified": "2019-10-16T18:21:11.000Z",
+    "headline": "Better Error Handling with Function Composition &lt;/&gt; TL;DR: JavaScript Codecasts",
+    "url": "https://jonathanleemartin.com/tldr/05-exception-composition/",
+    "datePublished": "2019-10-23T12:00:00.000Z",
+    "dateModified": "2019-10-23T12:13:37.000Z",
     "image": {
         "@type": "ImageObject",
-        "url": "https://jonathanleemartin.com/content/images/2019/10/04-custom-exceptions.png",
+        "url": "https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png",
         "width": 1920,
         "height": 1080
     },
-    "keywords": "tl;dr, JavaScript",
-    "description": "🎬 Spooked out by errors and stack traces? 😱 With solid error handling patterns, Custom Exceptions can help us eliminate if…else statements!",
+    "keywords": "tl;dr, JavaScript, Design Pattern, Web",
+    "description": "🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://jonathanleemartin.com/"
@@ -130,7 +132,7 @@
       const ghostHost = "https://jonathanleemartin.com"
     </script>
   </head>
-  <body class="post-template tag-tldr tag-javascript">
+  <body class="post-template tag-tldr tag-javascript tag-design-pattern tag-web">
     
 
 <div class="main-wrap">
@@ -271,20 +273,20 @@
         <div class="l-wrapper in-post js-aos-wrapper">
           <div class="l-post-content has-subscribe-form js-progress-content">
             <header class="m-heading">
-              <h1 class="m-heading__title in-post">04. Custom Exceptions</h1>
+              <h1 class="m-heading__title in-post">05. Exception Composition</h1>
               <div class="m-heading__meta">
                 <a href="/tag/tldr/" class="m-heading__meta__tag">tl;dr</a>
                 <span class="m-heading__meta__divider">&bull;</span>
-                <span class="m-heading__meta__time">October 16, 2019</span>
+                <span class="m-heading__meta__time">October 23, 2019</span>
               </div>
             </header>
             <div class="pos-relative js-post-content">
               <div class="m-share">
                 <div class="m-share__content js-sticky">
-                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/04-custom-exceptions/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://jonathanleemartin.com/tldr/05-exception-composition/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Facebook">
                     <span class="icon-facebook"></span>
                   </a>
-                  <a href="https://twitter.com/intent/tweet?text=04.%20Custom%20Exceptions&url=https://jonathanleemartin.com/tldr/04-custom-exceptions/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
+                  <a href="https://twitter.com/intent/tweet?text=05.%20Exception%20Composition&url=https://jonathanleemartin.com/tldr/05-exception-composition/" class="m-icon-button filled in-share" target="_blank" rel="noopener" aria-label="Twitter">
                     <span class="icon-twitter"></span>
                   </a>
                   <button class="m-icon-button filled in-share progress js-scrolltop" aria-label="Scroll to top">
@@ -295,13 +297,12 @@
                   </button>
                 </div>
               </div>
-              <!--kg-card-begin: markdown--><p>Do you get spooked by runtime errors? They can be a pain to deal with, but we’ll see just how much solid error handling strategies can help in our crusade against if…else statements on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
-<iframe src="https://www.youtube.com/embed/d5eyTy0QOgg" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
+              <!--kg-card-begin: markdown--><p>How do you handle runtime errors without a mess of try…catch and if…else statements? Let’s see how higher-order functions and composition can help on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<iframe src="https://www.youtube.com/embed/kzYjAfSoyBk" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
 <h3 id="transcript">Transcript</h3>
-<p>When you invoke a function, what might happen? Most of the time we get back a simple return value, but there’s another kind of result a function can produce: an <code>Error</code>.</p>
-<p>An <code>Error</code> typically makes us think we did something wrong, but errors are just another feedback mechanism for a program, and unlike returning a value, throwing an <code>Error</code> has a peculiar superpower: it automatically propagates up the caller stack — interrupting the caller functions as it propagates — until it’s caught. This propagation behavior makes <code>throw</code> and try…catch statements a powerful control flow construct.</p>
-<p>But handling errors correctly can quickly turn elegant functions into a hot mess of try…catch statements and nested if…else statements — exactly <a href="/tldr/01-nested-ternaries/">the sort of thing</a> we’ve <a href="/tldr/02-router-pattern/">been obliterating</a> in the <a href="/tldr/03-enforcer-pattern/">last few episodes</a>.</p>
-<p>Today we’re working on a tiny version of the chatbot we started a couple episodes back that helps outdoor enthusiasts find great trails to hike.</p>
+<p>Last episode we saw how Custom Errors can often make our code worse, but Custom Exceptions can help by allowing intermediary functions to focus only on the feature’s happy path. If you’re just now joining us, hop back to the <a href="/tldr/04-custom-exceptions/">previous episode on Custom Exceptions</a>.</p>
+<p>Exceptions are useful when they eliminate if…else statements from calling functions, but at some point an Exception needs to be caught and handled, and that’s where the try…catch statement tends to make a mess of things.</p>
+<p>Today we’re continuing to refactor a tiny chatbot we started <a href="/tldr/02-router-pattern/">a few episodes ago</a> that helps outdoor enthusiasts find great trails to hike.</p>
 <pre><code class="language-javascript">let chatbot = (message) =&gt; {
   return viewHike(message);
 };
@@ -313,41 +314,8 @@ chatbot('view hike lost lake');
 chatbot('show hike blue ridge');
 // =&gt; 💥 ValidationError: show hike blue ridge
 </code></pre>
-<p>We’ve cut down the chatbot code from the last couple episodes: it only understands one command, <code>view hike</code>, which shows details about a hike. But sometimes users ask for a hike that isn’t in the database or their syntax is a bit off. To simulate these edge cases, the <code>viewHike()</code> function uses a few custom error types:</p>
-<pre><code class="language-javascript">class NotFound extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'NotFound';
-  }
-}
-
-class ValidationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'ValidationError';
-  }
-}
-</code></pre>
-<p><code>viewHike()</code> throws a <code>NotFound</code> error if the hike has the word “lost”, and a <code>ValidationError</code> if the format of the message is off.</p>
-<pre><code class="language-javascript">let viewHike = (message) =&gt; {
-  let match = /^view hike (.+)$/.exec(message);
-  let hike = match &amp;&amp; match[1];
-
-  return (
-    !hike ?
-      raise(new ValidationError(message))
-  : hike.includes('lost') ?
-      raise(new NotFound(hike))
-  :
-      `Details about &lt;${hike}&gt;`
-  );
-};
-</code></pre>
-<p>Like <code>return</code> and <code>continue</code>, <code>throw</code> is a statement, so to use it in a <a href="/tldr/01-nested-ternaries/">nested ternary</a>, we wrote a simple helper called <code>raise()</code>.</p>
-<pre><code class="language-javascript">let raise = (error) =&gt; { throw error; };
-</code></pre>
-<p>There’s a <a href="https://github.com/tc39/proposal-throw-expressions">stage 2 proposal</a> for an expression-friendly version of <code>throw</code> in the works, but until it lands it’s easy enough to make our own. So all told, the <code>viewHike()</code> function can result in one of two things: a return value, or a thrown <code>Error</code>.</p>
-<p>Our chatbot is terse, but it already has some issues. We definitely don’t want the chatbot to blow up and stop running if a <code>NotFound</code> error is thrown, so let’s wrap the call with a try…catch statement to instead return a safe fallback message:</p>
+<p>Like last time, our chatbot only understands one command, <code>view hike</code>. Most of the time this command replies with details about the hike, but when users ask for a hike that isn’t in the database or their syntax is a bit off, the <code>viewHike()</code> function will throw a custom exception like a <code>NotFound</code> error or a <code>ValidationError</code>.</p>
+<p>In either case, the chatbot shouldn’t blow up and stop running, so we started by wrapping a try…catch statement around the problematic code.</p>
 <pre><code class="language-javascript">let chatbot = (message) =&gt; {
   try {
     return viewHIke(message);
@@ -363,92 +331,11 @@ chatbot('view hike lost lake');
 chatbot('show hike blue ridge');
 // =&gt; 'No such hike.'
 </code></pre>
-<p>Wait, why is our chatbot always responding with “No such hike” now? That first command definitely worked before. Let’s comment out the try…catch statement to see what’s happening.</p>
+<p>But we quickly realized that every use of try…catch takes a substantial amount of boilerplate to keep from introducing a catch-all bug, like accidentally suppressing a <code>ReferenceError</code>.</p>
+<p>To make sure we only rescued a particular error type, we introduced a simple utility called <code>rescue()</code>: a guard clause which rethrows the error if the type differs from what we intended to catch.</p>
 <pre><code class="language-javascript">let chatbot = (message) =&gt; {
-  // try {
+  try {
     return viewHIke(message);
-  // } catch (error) {
-  //   return `No such hike.`;
-  // }
-};
-
-chatbot('view hike mirror lake');
-// =&gt; 💥 ReferenceError: viewHIke is not defined
-chatbot('view hike lost lake');
-// =&gt;
-chatbot('show hike blue ridge');
-// =&gt;
-</code></pre>
-<p>It looks like we were swallowing a <code>ReferenceError</code>. Well that would be a horrible bug to deploy to production!</p>
-<p>We just made the cardinal mistake of error handling: <strong>a catch all.</strong> The try…catch statement will swallow any error — including errors we didn’t mean to catch.</p>
-<p>It may sound obvious now, but just about any open source framework you’ve used probably has a catch-all bug in the codebase, from frontend frameworks like Ember.js to backend libraries like Passport and Jekyll. A catch-all ranks in the top 5 most frustrating bugs a library can make because it suppresses important errors unrelated to the library that the developer would otherwise see in the logs.</p>
-<p>So it’s up to us to whitelist the type of error we want to handle, and otherwise rethrow it. Since we made custom error subclasses, we can use the <code>instanceof</code> operator to guarantee we’re catching an error we can handle. Otherwise, we’ll rethrow it.</p>
-<pre><code class="language-javascript">let chatbot = (message) =&gt; {
-  try {
-    return viewHike(message);
-  } catch (error) {
-    if (error instanceof NotFound) {
-      return `No such hike.`;
-    } else {
-      throw error;
-    }
-  }
-};
-
-chatbot('view hike mirror lake');
-// =&gt; 'Details about &lt;mirror lake&gt;'
-chatbot('view hike lost lake');
-// =&gt; 'No such hike.'
-chatbot('show hike blue ridge');
-// =&gt; 💥 ValidationError: show hike blue ridge
-</code></pre>
-<p>To rescue a <code>ValidationError</code>, we add another else-if case.</p>
-<pre><code class="language-diff"> let chatbot = (message) =&gt; {
-   try {
-     return viewHike(message);
-   } catch (error) {
-     if (error instanceof NotFound) {
-       return `No such hike.`;
-+    } else if (error instanceof ValidationError) {
-+      return `Invalid format.`;
-     } else {
-       throw error;
-     }
-   }
- };
- 
- chatbot('show hike blue ridge');
- // =&gt; 'Invalid format.'
-</code></pre>
-<p>The chatbot is behaving well and not blowing up, but handling an error correctly looks awful. We definitely can’t leave these checks out, but a try…catch is a branching construct just like an if…else, so these are essentially nested, cascading if…else statements all over again. And we’ll have to repeat this boilerplate each time we need to handle an error correctly.</p>
-<p>It really doesn’t seem like custom errors are making our code any better — in fact, it seems to be getting much worse!</p>
-<p>That’s why you should never be too quick to sprinkle custom errors throughout your codebase. Because throw statements are fundamentally a control flow construct, they can often fight against everything we’ve been working towards in the previous episodes.</p>
-<p>So when, if ever, should you use custom errors? Well, I prefer the alternative name <strong>“Custom Exceptions”</strong> because it tells us exactly when to use them: for unusual, exceptional cases that most of our codebase shouldn’t care about, like a <code>NetworkError</code>. These are cases that one or two functions in the codebase will handle with the same response: on the backend, a <code>NotFound</code> error thrown from any route should just generate a 404 response.</p>
-<p>Used sparingly, custom exceptions can actually eliminate branching logic: since the rest of our functions can assume the happy path, they don’t need an if…else statement to check for an unusual return value, like a null check.</p>
-<p>So a custom exception is worthwhile when it eliminates edge cases and if…else statements from calling functions, and throwing custom exceptions makes sense when the function would blow up anyway with a useless generic runtime error, like a <code>TypeError</code>.</p>
-<p>Let’s see if we can find an error handling solution that cuts down if…else statements and common typos. Throwing an error triggers an early exit, even from a catch clause. Let’s shuffle the error checking code so it looks more like a <a href="/tldr/03-enforcer-pattern/">guard clause</a>:</p>
-<pre><code class="language-javascript">let chatbot = (message) =&gt; {
-  try {
-    return viewHike(message);
-  } catch (error) {
-    if (error instanceof NotFound) {
-      throw error;
-    }
-    return `No such hike.`;
-  }
-};
-</code></pre>
-<p>Now there’s nothing stopping us from extracting this entire guard clause into a function! Let’s call it <code>rescue()</code>.</p>
-<pre><code class="language-javascript">let rescue = (error, type) =&gt;
-  error instanceof type
-    ? error
-    : raise(error)
-;
-</code></pre>
-<p>Now when using a try…catch, we just need to make sure we precede the catch code with <code>rescue()</code>. This behaves much better than what we started with, and it only added one line to our naive catch-all version.</p>
-<pre><code class="language-javascript">let chatbot = (message) =&gt; {
-  try {
-    return viewHike(message);
   } catch (error) {
     rescue(error, NotFound);
     return `No such hike.`;
@@ -456,13 +343,93 @@ chatbot('show hike blue ridge');
 };
 
 chatbot('view hike mirror lake');
+// =&gt; 💥 ReferenceError: viewHIke is not defined
+</code></pre>
+<pre><code class="language-diff"> let chatbot = (message) =&gt; {
+   try {
+-   return viewHIke(message);
++   return viewHike(message);
+   } catch (error) {
+     rescue(error, NotFound);
+     return `No such hike.`;
+   }
+ };
+</code></pre>
+<pre><code class="language-javascript">chatbot('view hike mirror lake');
 // =&gt; 'Details about &lt;mirror lake&gt;'
 chatbot('view hike lost lake');
 // =&gt; 'No such hike.'
 chatbot('show hike blue ridge');
 // =&gt; 💥 ValidationError: show hike blue ridge
 </code></pre>
-<p>Unfortunately, we can’t just stack invocations of <code>rescue()</code>, so how do we also handle a <code>ValidationError</code>? Hang tight and we’ll address this problem on the next episode of TL;DR. Till then, search for try…catch statements in your codebase and enforce good error handling practices with <code>rescue()</code>.</p>
+<p>The problem with <code>rescue()</code> is that it only helps us catch one type of error at a time. So how do we handle both a <code>NotFound</code> error and <code>ValidationError</code>? We could make the <code>rescue()</code> function accept multiple error types, but then we couldn’t customize the fallback message based on the error type.</p>
+<p>So do we have to give up the <code>rescue()</code> utility altogether and use cascading if…else statements to uniquely handle different error types? Maybe not if we factor a little further.</p>
+<p>Our remaining try…catch boilerplate is starting to turn into an obvious pattern: if we were to reuse this try…catch in another part of the codebase, all that changes is the function to invoke, what type of error to rescue, and what to return if there is an error.</p>
+<p>Let’s extract this formula into a function called <code>swallow()</code>, which takes the error type to swallow, a fallback function, and a function that will potentially throw an error.</p>
+<pre><code class="language-javascript">let swallow = (type, fail, fn) =&gt; {
+  try {
+    return fn();
+  } catch (error) {
+    rescue(error, type);
+    return fail(error);
+  }
+};
+</code></pre>
+<p>Now we’ll use <code>swallow()</code> to create a new version of <code>viewHike()</code> that is safe from <code>NotFound</code> errors.</p>
+<pre><code class="language-javascript">let safeViewHike = (message) =&gt;
+  swallow(NotFound, () =&gt; `No such hike.`,
+    () =&gt; viewHike(message)
+  )
+;
+
+let chatbot = safeViewHike;
+</code></pre>
+<p>It seems to work as before! But this code is still pretty verbose, and some might argue it’s more cryptic than simply writing a try…catch with cascading if…else statements. Well, if we just change the signature of <code>swallow()</code> a bit to take advantage of currying, we can eliminate a lot of the extra function calls and argument gathering.</p>
+<pre><code class="language-diff">-let swallow = (type, fail, fn) =&gt; {
++let swallow = (type) =&gt; (fail) =&gt; (fn) =&gt; (...args) =&gt; {
+   try {
+-    return fn();
++    return fn(...args);
+   } catch (error) {
+     rescue(error, type);
+     return fail(error);
+   }
+ };
+</code></pre>
+<pre><code class="language-javascript">let safeViewHike =
+  swallow(NotFound)(() =&gt; `No such hike.`)(
+    viewHike
+  );
+</code></pre>
+<p>Whoah, look at <code>swallow()</code> now! It’s a <a href="https://medium.com/javascript-scene/higher-order-functions-composing-software-5365cf2cbe99">Higher-Order Function</a>: it takes in an unsafe function that throws a particular kind of error, and returns a safe version of the function.</p>
+<p>Because <code>swallow()</code> returns a function that is safe from the <code>NotFound</code> error type, there’s no reason we can’t pass that function into <code>swallow()</code> again to make it safe from a <code>ValidationError</code> too!</p>
+<pre><code class="language-javascript">let safeViewHike =
+  swallow(ValidationError)(() =&gt; `Invalid format.`)(
+    swallow(NotFound)(() =&gt; `No such hike.`)(
+      viewHike
+    )
+  );
+</code></pre>
+<pre><code class="language-javascript">chatbot('view hike mirror lake');
+// =&gt; 'Details about &lt;mirror lake&gt;'
+chatbot('view hike lost lake');
+// =&gt; 'No such hike.'
+chatbot('show hike blue ridge');
+// =&gt; 'Invalid format.'
+</code></pre>
+<p>That nesting is a bit nasty, but this is just the sort of thing the <code>compose()</code> utility is for:</p>
+<pre><code class="language-javascript">let compose = (...fns) =&gt; x =&gt; fns.reduceRight((v, f) =&gt; f(v), x);
+</code></pre>
+<p>Instead of nesting <code>swallow()</code>s inside each other, we can list them out from top to bottom and feed the original <code>viewHike()</code> function at the very end. It works exactly the same way as manually feeding the results of each <code>swallow()</code> into the other, but it’s much easier to read and maintain.</p>
+<pre><code class="language-javascript">let safeViewHike = compose(
+  swallow(ValidationError)(() =&gt; `Invalid format.`),
+  swallow(NotFound)(() =&gt; `No such hike.`),
+)(viewHike);
+</code></pre>
+<p>This style of creating functions without first gathering and passing around all their arguments is called <a href="https://wiki.haskell.org/Pointfree">Point-free style</a>, and it’s a big part of what makes functional programming so elegant.</p>
+<p>It took us some time to arrive at this design, and many of the intermediate steps seemed a lot worse off than just using try…catch. But just like the <a href="/tldr/03-enforcer-pattern/">Enforcer pattern</a> we covered in an earlier episode, the best way to combine behaviors is through composition. Rather than cascading if-else statements, complex multiple error handling logic, or experimental catch syntax, we handled two kinds of errors through composition.</p>
+<p>If you aren’t already in love with function composition, hang tight until the next episode: we’ll use error composition to put a functional twist on a popular Object-Oriented Programming pattern called the Null Object Pattern.</p>
+<p>Today, look for try…catch statements in your codebase, and break down the parent function until you can replace the try…catch altogether with <code>swallow()</code>. And if you need to handle multiple error types, just layer them with <code>compose()</code>.</p>
 <p>That’s it for today. Want to keep leveling up your craft? Don’t forget to <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">subscribe to the channel</a> for more rapid codecasts on design patterns, refactoring and development approaches.</p>
 <!--kg-card-end: markdown-->
             </div>
@@ -595,22 +562,22 @@ chatbot('show hike blue ridge');
   </article>
     </div>
     <div class="m-recommended-slider__item">
-    <article class="m-article-card post tag-tldr tag-javascript tag-design-pattern tag-web">
-      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/10/05-exception-composition.png);">
-      <a href="/tldr/05-exception-composition/" class="m-article-card__picture-link" aria-label="Article"></a>
+    <article class="m-article-card post tag-tldr tag-javascript tag-design-pattern tag-react">
+      <div class="m-article-card__picture" style="background-image: url(/content/images/2019/09/01-nested-ternaries.png);">
+      <a href="/tldr/01-nested-ternaries/" class="m-article-card__picture-link" aria-label="Article"></a>
       <a href="/author/jonathan/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by Jonathan Lee Martin ">
           <div style="background-image: url(//www.gravatar.com/avatar/6dc50195bf39376a9154e48d6b5df778?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x);"></div>
       </a>
     </div>
       <div class="m-article-card__info">
         <a href="/tag/tldr/" class="m-article-card__tag">tl;dr</a>
-      <a href="/tldr/05-exception-composition/" class="m-article-card__info-link">
+      <a href="/tldr/01-nested-ternaries/" class="m-article-card__info-link">
         <div class="m-article-card__excerpt">
-          <h2 class="m-article-card__title">05. Exception Composition</h2>
-          <p class="m-article-card__description">🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!</p>
+          <h2 class="m-article-card__title">01. Nested Ternaries</h2>
+          <p class="m-article-card__description">🎬 How many times does “else if” appear in your codebase? 😬 Here’s one way you can cut down on if-else statements: nested ternary expressions!</p>
         </div>
         <div class="m-article-card__timestamp">
-          <span>October 23, 2019</span>
+          <span>September 11, 2019</span>
           <span>&bull;</span>
           <span>5 min read</span>
         </div>
