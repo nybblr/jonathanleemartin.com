@@ -1,4 +1,271 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[tl;dr]]></title><description><![CDATA[Software design. Craftsmanship. And lots of JavaScript. 🙌]]></description><link>https://jonathanleemartin.com/</link><image><url>https://jonathanleemartin.com/favicon.png</url><title>tl;dr</title><link>https://jonathanleemartin.com/</link></image><generator>Ghost 2.27</generator><lastBuildDate>Wed, 23 Oct 2019 12:13:58 GMT</lastBuildDate><atom:link href="https://jonathanleemartin.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[05. Exception Composition]]></title><description><![CDATA[🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!]]></description><link>https://jonathanleemartin.com/tldr/05-exception-composition/</link><guid isPermaLink="false">5daf5eada054730c1ccd8438</guid><category><![CDATA[tl;dr]]></category><category><![CDATA[JavaScript]]></category><category><![CDATA[Design Pattern]]></category><category><![CDATA[Web]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 23 Oct 2019 12:00:00 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png" alt="05. Exception Composition"><p>How do you handle runtime errors without a mess of try…catch and if…else statements? Let’s see how higher-order functions and composition can help on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[tl;dr]]></title><description><![CDATA[Software design. Craftsmanship. And lots of JavaScript. 🙌]]></description><link>https://jonathanleemartin.com/</link><image><url>https://jonathanleemartin.com/favicon.png</url><title>tl;dr</title><link>https://jonathanleemartin.com/</link></image><generator>Ghost 2.27</generator><lastBuildDate>Wed, 30 Oct 2019 16:15:07 GMT</lastBuildDate><atom:link href="https://jonathanleemartin.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[06. Null Object Pattern]]></title><description><![CDATA[🎬 Is your code overly defensive? 🤨 A functional take on the Null Object Pattern can restore a culture of trust and eliminate flow control bugs!]]></description><link>https://jonathanleemartin.com/tldr/06-null-object/</link><guid isPermaLink="false">5db9b50007e91c0417335e8d</guid><category><![CDATA[tl;dr]]></category><category><![CDATA[JavaScript]]></category><category><![CDATA[Design Pattern]]></category><category><![CDATA[Node]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 30 Oct 2019 16:08:24 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/06-null-object.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/06-null-object.png" alt="06. Null Object Pattern"><p>Are your functions overly distrustful? We’ll see just how the Null Object Pattern can restore a culture of trust and cut down flow control bugs on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
+<iframe src="https://www.youtube.com/embed/N23mqZBP0kQ" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
+<h3 id="transcript">Transcript</h3>
+<p><a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">We just hit 100 subscribers</a>, and I want to thank you so much for watching, sharing and subscribing! This series is based on problems faced in real-world consulting projects, so each episode is designed to teach powerful patterns that save you and your team time. But that takes a lot of time! Each 5–7 minute episode takes around 30 hours from inception to release.</p>
+<p>So I want to ask you to consider <a href="https://www.patreon.com/jonathanleemartin">supporting me on Patreon</a> so I can keep crafting great content that helps you craft exceptional code. Think of it as a pay-what-you-like screencast subscription.</p>
+<p>Alright, on to today’s pattern.</p>
+<p>When each line of code has to defend against previous lines, we’re left with a tangle of branching and flow control constructs, like if…else and early returns. This is especially tricky for error handling code, which can turn an otherwise docile function into a flow control nightmare.</p>
+<p>Today we’re working on authentication middleware that’s taken from a chapter in my book, <a href="https://jonathanleemartin.com/books/">Functional Design Patterns for Express.js</a>. If you’re hopping into a Node backend and have loved the design-oriented approach we take on TL;DR, I encourage you to check it out.</p>
+<p>We’re making authenticated HTTP requests to an Express backend and supplying a special token called a <a href="https://jwt.io/">JSON Web Token</a>. If you’re new to JWTs, think of them as the picture page of a passport: they encode details about the user, and are securely signed so the backend knows they’re authentic.</p>
+<pre><code class="language-javascript">makeRequestWithToken('g00d_t0k3n');
+// =&gt; '✅ 200: Welcome to the backend.'
+makeRequestWithToken('3mpt1_t0k3n');
+// =&gt; '🚫 401: Bad token.'
+makeRequestWithToken('0ld_t0k3n');
+// =&gt; 💥 TokenExpiredError: jwt expired
+makeRequestWithToken('f@k3_t0k3n');
+// =&gt; 💥 JsonWebTokenError: jwt malformed
+</code></pre>
+<p>As long as the token is valid, the backend lets us use any of its APIs. But if the token is missing some information, has expired, or has been tampered with, the backend halts the request in its tracks.</p>
+<p>The function responsible for this guard behavior is a middleware function called <code>checkToken()</code>:</p>
+<pre><code class="language-javascript">let checkToken = (req, res, next) =&gt; {
+  let payload = jwt.verify(req.token, 's3cr3t');
+
+  if (payload &amp;&amp; payload.user) {
+    req.user = payload.user;
+  } else {
+    res.status(401).send('Bad token.');
+    return;
+  }
+
+  next();
+};
+</code></pre>
+<p>It tries to decode the contents of the JSON Web Token, called the payload. If the token is successfully decoded, it stores the user information on the request object and invokes <code>next()</code> to continue. But if the token is bad, it halts the request and immediately responds with a 401 Unauthorized status code.</p>
+<p>But a lot of other things can go wrong. A client could supply an expired token, or they might tamper with it; in either case, the <code>jwt.verify()</code> function throws an exception. Right now, the <code>checkToken()</code> function is completely oblivious to these potential errors.</p>
+<p>We should never allow a known exception to go uncaught, otherwise the backend’s response will just hang. So instead, we need to catch any JWT-related errors and respond with a 401 status code.</p>
+<pre><code class="language-diff"> let checkToken = (req, res, next) =&gt; {
+-  let payload = jwt.verify(req.token, 's3cr3t');
++  let payload;
++  try {
++    payload = jwt.verify(req.token, 's3cr3t');
++  } catch (error) {
++    /* Suppress the error */
++  }
+
+   if (payload &amp;&amp; payload.user) {
+     ...
+ };
+
+</code></pre>
+<p>To do that, we can wrap try…catch around the <code>verify()</code> call. But as we learned in the last two episodes, an <a href="https://jonathanleemartin.com/tldr/04-custom-exceptions/">unqualified catch is almost always a bug</a>. We must only catch error types we intend to handle. We’ll use an if…else statement to rethrow the error if it isn’t a <code>TokenExpiredError</code> or <code>JsonWebTokenError</code>.</p>
+<pre><code class="language-javascript">let checkToken = (req, res, next) =&gt; {
+  let payload;
+  try {
+    payload = jwt.verify(req.token, 's3cr3t');
+  } catch (error) {
+    if (error instanceof TokenExpiredError
+     || error instanceof JsonWebTokenError) {
+      /* Suppress the error */
+    } else {
+      throw error;
+    }
+  }
+
+  if (payload &amp;&amp; payload.user) {
+    req.user = payload.user;
+  } else {
+    res.status(401).send('Bad token.');
+    return;
+  }
+
+  next();
+};
+</code></pre>
+<pre><code class="language-javascript">makeRequestWithToken('g00d_t0k3n');
+// =&gt; '✅ 200: Welcome to the backend.'
+makeRequestWithToken('3mpt1_t0k3n');
+// =&gt; '🚫 401: Bad token.'
+makeRequestWithToken('0ld_t0k3n');
+// =&gt; '🚫 401: Bad token.'
+makeRequestWithToken('f@k3_t0k3n');
+// =&gt; '🚫 401: Bad token.'
+</code></pre>
+<p>This is the correct way to handle all these edge cases, but now <code>checkToken()</code> is swimming in flow control constructs: early returns, try…catch, throw, and an unhealthy dose of if…else statements too. And sadly, this style is typical of most popular middleware libraries.</p>
+<p>Each line of code is constantly on guard, as though it can’t trust the lines before it. So how do we nuke these flow control constructs?</p>
+<p><a href="https://jonathanleemartin.com/tldr/05-exception-composition">Last episode</a> we derived a helper called <code>swallow()</code> that could help. <code>swallow()</code> is a <a href="https://medium.com/javascript-scene/higher-order-functions-composing-software-5365cf2cbe99">higher-order function</a> that runs some code that could potentially blow up. If it does, it suppresses the error and instead returns the result of another function.</p>
+<pre><code class="language-javascript">let swallow = (type) =&gt; (fail) =&gt; (fn) =&gt; (...args) =&gt; {
+  try {
+    return fn(...args);
+  } catch (error) {
+    if (!(error instanceof type)) { throw error; }
+    return fail(error);
+  }
+};
+
+let safeFindBlog = swallow(NotFound)(
+  () =&gt; 'Missing blog'
+)(unsafeFindBlog);
+
+unsafeFindBlog({ id: 5 });
+// =&gt; { title: 'I 😍 JS' }
+unsafeFindBlog({ id: 100 });
+// =&gt; 💥 NotFound
+safeFindBlog({ id: 100 });
+// =&gt; 'Missing blog'
+</code></pre>
+<p>Let’s try using <code>swallow()</code> in place of the try…catch and if…else statements. If <code>jwt.verify()</code> throws a <code>TokenExpiredError</code>, we’ll catch it and instead return null to make it mirror the old behavior.</p>
+<pre><code class="language-javascript">let checkToken = (req, res, next) =&gt; {
+  let payload =
+    swallow(TokenExpiredError)(
+      () =&gt; null
+    )(
+      () =&gt; jwt.verify(req.token, 's3cr3t')
+    )();
+
+  if (payload &amp;&amp; payload.user) {
+    ...
+};
+</code></pre>
+<p>Since <code>swallow()</code> is a higher-order function, we can also catch a <code>JsonWebTokenError</code> by composing it with another <code>swallow()</code>.</p>
+<pre><code class="language-diff"> let checkToken = (req, res, next) =&gt; {
+   let payload =
++    swallow(JsonWebTokenError)(
++      () =&gt; null
++    )(
+       swallow(TokenExpiredError)(
+         () =&gt; null
+       )(
+         () =&gt; jwt.verify(req.token, 's3cr3t')
++      )
+     )();
+
+   if (payload &amp;&amp; payload.user) {
+     ...
+ };
+</code></pre>
+<p>This is horrible to read, but it behaves correctly and removed several flow control constructs. What about the remaining conditionals? It would help if we could go ahead and destructure the payload’s user property. Then the following code could be less defensive about the shape of payload.</p>
+<p>Well if a <code>TokenExpiredError</code> is thrown, <code>swallow()</code> will return null, which isn’t an object and can’t be destructured. So what if instead of returning null, we returned a benign value that has the shape of a valid payload, such as an object with a user property? Then even if an exception is thrown, we can be sure that the payload will have the right shape.</p>
+<pre><code class="language-diff"> let checkToken = (req, res, next) =&gt; {
+-  let payload =
++  let { user } =
+     swallow(JsonWebTokenError)(
+-      () =&gt; null
++      () =&gt; ({ user: null })
+     )(
+       swallow(TokenExpiredError)(
+-        () =&gt; null
++        () =&gt; ({ user: null })
+       )(
+         () =&gt; jwt.verify(req.token, 's3cr3t')
+       )
+     )();
+
+-  if (payload &amp;&amp; payload.user) {
++  if (user) {
+-    req.user = payload.user;
++    req.user = user;
+   } else {
+     ...
+ };
+</code></pre>
+<p>By substituting a benign value as early as possible, we don’t have to be defensive later on. In Object-Oriented Programming, this benign value is called a <a href="https://en.wikipedia.org/wiki/Null_object_pattern">Null Object</a>. It’s often a subclass of the expected object type, and should respond to the same messages.</p>
+<pre><code class="language-javascript">class User {
+  constructor({ id, name, email }) {
+    this.name = name;
+    this.email = email;
+    this.id = id || generateId();
+  }
+}
+
+class NullUser extends User {
+  constructor() {
+    super({
+      id: '00000000',
+      name: 'NullUser',
+      email: 'null@app.com'
+    });
+  }
+}
+</code></pre>
+<p>Since we’re taking a more functional approach, we won’t create a Null Object class, but we can still lift this Null Object into a variable called <code>nullPayload</code> to better communicate intent.</p>
+<pre><code class="language-javascript">let nullPayload = { user: null };
+</code></pre>
+<p>I use this pattern so often, I like to create a utility called <code>rescueWith()</code> that behaves exactly like <code>swallow()</code>, except that we don’t need the extra function wrapping around the <code>nullPayload</code>.</p>
+<pre><code class="language-javascript">let rescueWith = (type) =&gt; (fallback) =&gt;
+  swallow(type)(() =&gt; fallback);
+
+let checkToken = (req, res, next) =&gt; {
+  let { user } =
+    rescueWith(JsonWebTokenError)(nullPayload)(
+      rescueWith(TokenExpiredError)(nullPayload)(
+        () =&gt; jwt.verify(req.token, 's3cr3t')
+      )
+    )();
+
+  if (user) {
+    ...
+};
+</code></pre>
+<p>That helps cut down the syntactic noise, and once we move the arguments for <code>jwt.verify()</code> to the end:</p>
+<pre><code class="language-javascript">let checkToken = (req, res, next) =&gt; {
+  let { user } =
+    rescueWith(JsonWebTokenError)(nullPayload)(
+      rescueWith(TokenExpiredError)(nullPayload)(
+        jwt.verify
+      )
+    )(req.token, 's3cr3t');
+
+  if (user) {
+    ...
+</code></pre>
+<p>We now see the entire function can be extracted from <code>checkToken()</code> altogether! Let’s call it <code>safeVerifyJWT</code> since it works exactly like <code>jwt.verify()</code> but just replaces errors with a safe value.</p>
+<pre><code class="language-javascript">let safeVerifyJWT =
+  rescueWith(JsonWebTokenError)(nullPayload)(
+    rescueWith(TokenExpiredError)(nullPayload)(
+      jwt.verify
+    )
+  );
+
+let checkToken = (req, res, next) =&gt; {
+  let { user } = safeVerifyJWT(req.token, 's3cr3t');
+
+  if (user) {
+    ...
+</code></pre>
+<p>Finally, let’s whip out our <code>compose()</code> helper to remove the nesting.</p>
+<pre><code class="language-javascript">let safeVerifyJWT = compose(
+  rescueWith(JsonWebTokenError)(nullPayload),
+  rescueWith(TokenExpiredError)(nullPayload),
+)(jwt.verify);
+</code></pre>
+<p>This refactor has helped us discover the boundary we should have seen all along: all that try…catch and if…else nonsense was just about making a version of <code>jwt.verify()</code> that behaved a little differently — just the sort of thing higher-order functions do so well.</p>
+<p>And now <code>checkToken()</code> is back to focusing on the naive happy path. With all the noise out of the way, we can confidently reason that <code>next()</code> will only be called if there’s a user, so we can move it into the if clause and eliminate the early return in the else. This code now has zero flow control constructs!</p>
+<pre><code class="language-diff"> let checkToken = (req, res, next) =&gt; {
+   let { user } = safeVerifyJWT(req.token, 's3cr3t');
+
+   if (user) {
+     req.user = user;
++    next();
+   } else {
+     res.status(401).send('Bad token.');
+-    return;
+   }
+
+-  next();
+ };
+</code></pre>
+<p>Optionally, we can even rewrite the remaining if…else statement into <a href="https://jonathanleemartin.com/tldr/01-nested-ternaries/">a ternary expression</a> to prohibit any flow control constructs at all. But whether or not you use the ternary, the final <code>checkToken()</code> function reads nicely thanks to small, well-behaved functions and a predictable flow.</p>
+<pre><code class="language-javascript">let nullPayload = { user: null };
+
+let safeVerifyJWT = compose(
+  rescueWith(JsonWebTokenError)(nullPayload),
+  rescueWith(TokenExpiredError)(nullPayload),
+)(jwt.verify);
+
+let checkToken = (req, res, next) =&gt; {
+  let { user } = safeVerifyJWT(req.token, 's3cr3t');
+
+  return user
+    ? (req.user = user, next())
+    : res.status(401).send('Bad token.');
+};
+</code></pre>
+<p>We’ve been building up to this refactor for a few episodes, but by letting things get ugly instead of skipping directly to <code>rescueWith()</code>, we saw how composition always wins in the end — even if the process seems to produce more code.</p>
+<p>And that journey helped us identify and solve the underlying problem: trust. Each line of code was defensive because it couldn’t safely trust the results of lines before it. With this variation of the Null Object Pattern, we replaced edge cases with benign values. Once we did that, the boundaries became detangled so we could extract a safe version of <code>jwt.verify()</code>.</p>
+<p>Trust is a powerful refactoring tool. Today, look for try…catch statements, followed by if…else statements, and use the Null Object Pattern and <code>rescueWith()</code> to restore a culture of trust.</p>
+<p>That’s it for today! If you loved today’s episode, please consider <a href="https://www.patreon.com/jonathanleemartin">supporting the channel on Patreon</a>. Want to keep leveling up your craft? Don’t forget to <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">subscribe to the channel</a> for more rapid codecasts on design patterns, refactoring and development approaches.</p>
+<!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[05. Exception Composition]]></title><description><![CDATA[🎬 How do you safely handle runtime errors without a mess of try…catch and if…else? 😷 Why, function composition of course!]]></description><link>https://jonathanleemartin.com/tldr/05-exception-composition/</link><guid isPermaLink="false">5daf5eada054730c1ccd8438</guid><category><![CDATA[tl;dr]]></category><category><![CDATA[JavaScript]]></category><category><![CDATA[Design Pattern]]></category><category><![CDATA[Web]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Wed, 23 Oct 2019 12:00:00 GMT</pubDate><media:content url="https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png" medium="image"/><content:encoded><![CDATA[<!--kg-card-begin: markdown--><img src="https://jonathanleemartin.com/content/images/2019/10/05-exception-composition.png" alt="05. Exception Composition"><p>How do you handle runtime errors without a mess of try…catch and if…else statements? Let’s see how higher-order functions and composition can help on today’s episode of <a href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">TL;DR</a>, the JavaScript codecast series that teaches working web developers to craft exceptional software in 5 minutes a week.</p>
 <iframe src="https://www.youtube.com/embed/kzYjAfSoyBk" allow="autoplay; encrypted-media" allowfullscreen width="16" height="9"></iframe>
 <h3 id="transcript">Transcript</h3>
 <p>Last episode we saw how Custom Errors can often make our code worse, but Custom Exceptions can help by allowing intermediary functions to focus only on the feature’s happy path. If you’re just now joining us, hop back to the <a href="https://jonathanleemartin.com/tldr/04-custom-exceptions/">previous episode on Custom Exceptions</a>.</p>
@@ -2945,54 +3212,4 @@ iterator.promise.then(finished =&gt; {
 <li><strong><code>mod_pagespeed</code></strong> to automate CSS inlining and other improvements.</li>
 <li><strong>Speedier Node-based build.</strong> Jekyll greatly improved our internal publishing process, but we’ve felt some major architectural frustrations. We foresee bringing our expertise with Node-based pipelines to our internal build process.</li>
 </ul>
-<!--kg-card-end: markdown--><!--kg-card-end: markdown-->]]></content:encoded></item><item><title><![CDATA[Metrics, Metrics: How We Improved our Website Performance]]></title><description><![CDATA[Developers geek out on numbers, designers labor over information visualization, and ops + marketing love upward trends. Web developers, too, love upward trends in web performance graphs, like time-to-first-load and info gleaned from Google Analytics.]]></description><link>https://jonathanleemartin.com/blog/metrics-metrics-how-we-improved-website-performance-part-1/</link><guid isPermaLink="false">5d476ef72ee5ff3d4aa3cb00</guid><category><![CDATA[Web]]></category><dc:creator><![CDATA[Jonathan Lee Martin]]></dc:creator><pubDate>Fri, 04 Sep 2015 12:00:00 GMT</pubDate><content:encoded><![CDATA[<!--kg-card-begin: markdown--><!--kg-card-begin: markdown--><p><small><em>This post first appeared on the <a href="https://www.bignerdranch.com/blog/metrics-metrics-how-we-improved-website-performance-part-1/">Big Nerd Ranch blog</a>.</em></small></p>
-<p>Our Nerds love graphs. Developers geek out on numbers, designers labor over information visualization, and ops + marketing love upward trends.</p>
-<p>Web developers, too, love upward trends, particularly in web optimization. We derive excitement from web performance graphs, like time-to-first-load and info gleaned from Google Analytics.</p>
-<h2 id="countthecost">Count the Cost</h2>
-<p>The web’s humble beginnings left many with the impression that performance is not all that important for the web. However, analytics would beg to differ.</p>
-<p>A load time above 3 seconds <a href="https://blog.kissmetrics.com/loading-time/">could cost you <strong>40%</strong> of your traffic</a>, and it’s unlikely those users will return. Just an extra 1-second delay can cost about 7% in conversions (or, equivalently, sales).</p>
-<p>Visitors who stumble upon your site from search engines are especially vulnerable: even if your result ranks high, people will just click on the next result if your page takes more than 2 seconds to load, and they will likely avoid your site in the future!</p>
-<p>A slow site could also affect your standing with search engines. In February, <a href="http://googlewebmastercentral.blogspot.com/2015/02/finding-more-mobile-friendly-search.html">Google added mobile “friendliness” as a ranking factor</a>; but since 2010, PageSpeed score has been part of ranking.</p>
-<p>So PageSpeed-Driven-Optimization may not be such a bad thing after all, especially if the information you disseminate is readily available from competing sources.</p>
-<p>Still, it’s easy to go overboard with optimization. Premature optimization is a velocity-killing rabbit hole that drains the lives of products and company budgets. So when should optimization become a priority? Will shaving a few bytes noticeably improve the user experience?</p>
-<h2 id="measuretwicecutonce">Measure Twice, Cut Once</h2>
-<blockquote>
-<p>“What’s measured improves.” – Peter F. Drucker</p>
-</blockquote>
-<p>Before diving into the “bucket-list” of optimization techniques, you need to have a comprehensive idea of how our site currently performs.</p>
-<p>To qualify performance, you need to determine which metrics are important to you, or which affect your market.</p>
-<p>There are a number of general metrics that are useful on most sites.</p>
-<ul>
-<li><strong>Time-To-First-Byte (TTFB):</strong> The time from the first HTTP request to the first byte of the response.</li>
-<li><strong>Time-To-First-Render (TTFR):</strong> The time before the browser first renders the page. This varies from browser to browser, but is generally after the HTML page and resources in the <code>&lt;head&gt;</code> tag have finished downloading.</li>
-<li><strong>Time-To-Visual-Completeness (TTVC):</strong> The time it takes for the main elements of the page (e.g., content and images, but not ads or widgets) to load and remain visually static (e.g., styles are loaded and parsed).</li>
-<li><strong>Time-To-First-Interaction (TTFI):</strong> The time elapsed before the app is fully interactive (e.g., scripts are loaded and executed). This metric is useful in full-fledged web apps.</li>
-</ul>
-<p>These higher-level metrics are all facets of “perceptual” performance, but for the average user, Time-To-Visual-Completeness will be the most important. TTVC is often a reference to above-the-fold TTVC, although many <a href="http://thereisnopagefold.com/">convincingly argue</a> that <a href="https://blog.kissmetrics.com/why-the-fold-is-a-myth/">there is no such thing</a>. For our audit, we concurred with the “no-fold” opinion.</p>
-<p>Why TTVC? A user’s <em>perception</em> of site speed is a great determinant for how likely they will visit again, better than <em>Time-To-Load-Absolutely-Everything</em>. While in actuality it may take some time to load all of the page’s resources like JavaScript and analytics, the user will be more likely to convert or make a purchase if the page <em>feels</em> like it finished loading quickly (by prioritizing content and basic styles).</p>
-<p>We can improve these perceptual metrics by addressing smaller constituents. We primarily rely on three tools for in-depth performance auditing:</p>
-<ul>
-<li><a href="https://developers.google.com/speed/pagespeed/">Google PageSpeed</a></li>
-<li><a href="https://developer.chrome.com/devtools">Chrome Profiler</a></li>
-<li><a href="http://www.webpagetest.org/">WebPageTest</a></li>
-</ul>
-<p>How do you qualify improvement and goals? The first part is easy: just use the same metrics against your top pages! We targeted main landing pages, which coincidentally covered the different layouts of our site:</p>
-<ul>
-<li><a href="https://www.bignerdranch.com/">Our home page</a></li>
-<li><a href="https://www.bignerdranch.com/blog/">Our blog's landing page</a></li>
-<li><a href="https://www.bignerdranch.com/blog/server-side-validation-in-your-ember-application/">A sample blog entry</a></li>
-<li><a href="https://www.bignerdranch.com/work/">We Develop</a></li>
-<li><a href="https://www.bignerdranch.com/training/">We Teach</a></li>
-<li><a href="https://www.bignerdranch.com/books/">We Write</a></li>
-</ul>
-<p>When optimizing your own site, you should set your goals based on your marketing and current standing. We aimed to get PageSpeed scores near the 90s (green zone) and reduce TTVC to 2 seconds.</p>
-<h2 id="whatarethehurdles">What Are the Hurdles?</h2>
-<p>Modern browsers are incredibly sophisticated and diverse, but they share some basic similarities when it comes to page loading. The speed of this loading process depends on the <a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/">critical rendering path</a>.</p>
-<p>As the HTML source is streamed, the parser begins building the DOM. As soon as it discovers a script or stylesheet, it blocks the parsing process and dispatches a request for the resource. Only after the request completes does it continue building the DOM.</p>
-<p>Some browsers continue parsing the document looking for other resources (images, or fonts in stylesheets), but it still blocks the DOM. Usually, these resources are scripts and stylesheets in the <code>&lt;head&gt;</code> tag (often labeled “blocking” resources). To speed up TTFR, we need to get rid of blocking resources and shrink remaining blocking resources.</p>
-<p>Shrinking resources can provide a major boost, but it would be better to avoid extra requests altogether. Most pages are made of ~75 small resources; at this size, latency (TTFB for a particular resource) far outweighs the actual time it takes to transmit the resource.</p>
-<p>To reduce latency, we needed to cut server response time and the number of requests. The latter can be done with image sprites, CSS/JS concatenation and caching techniques.</p>
-<h2 id="whatnow">What Now?</h2>
-<p>In theory, we understand where our site’s bottlenecks are, so we should be well on our way to making it snappier! But beyond wishing bytes away, what techniques can we use to speed up the critical rendering path, and ultimately Time-To-Visual-Completeness?</p>
-<p>Next time, we’ll <a href="https://www.bignerdranch.com/blog/metrics-metrics-how-we-improved-website-performance-part-2/">apply optimization techniques and examine the results</a>.</p>
 <!--kg-card-end: markdown--><!--kg-card-end: markdown-->]]></content:encoded></item></channel></rss>
