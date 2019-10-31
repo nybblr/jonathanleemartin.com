@@ -1,0 +1,12 @@
+.block {
+  padding: calc(0.5 * var(--inset)) var(--inset);
+}
+
+.block.block-invert {
+  background-color: var(--purple);
+  color: var(--text-invert);
+}
+
+.block h2 {
+  margin: 0;
+}

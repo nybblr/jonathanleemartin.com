@@ -1,0 +1,34 @@
+:root {
+
+}
+
+.hero {
+  position: relative;
+  background-color: var(--purple);
+}
+
+.hero .hero-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+}
+
+.hero .hero-content {
+  position: relative;
+  padding: var(--inset);
+  color: var(--text-invert);
+}
+
+.hero .title {
+  line-height: 1;
+  margin-top: 0.25em;
+  margin-bottom: 0;
+  margin-left: -0.05em; /* Move over just a tad */
+}
+
+.hero .subtitle {
+  margin: 0;
+  font-weight: 500;
+}

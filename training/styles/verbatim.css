@@ -1,0 +1,8 @@
+.verbatim {
+  padding: var(--inset);
+}
+
+.verbatim .big {
+  margin: 0;
+  line-height: 1.25;
+}

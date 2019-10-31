@@ -1,0 +1,43 @@
+:root {
+  --menu-height: calc(2 * var(--grid-base));
+  --menu-item-height: calc(0.5 * var(--menu-height));
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-start;
+  background-color: var(--purple-dark);
+  height: var(--menu-height);
+  color: var(--text-invert);
+}
+
+.menu .menu-item {
+  display: block;
+  height: var(--menu-item-height);
+  line-height: var(--menu-item-height);
+  margin: calc(0.5 * var(--menu-item-height));
+  font-weight: 500;
+}
+
+/* Ditch these */
+.menu .icon {
+  display: inline-block;
+  text-align: center;
+  width: var(--menu-item-height);
+}
+
+.menu .menu-group {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu .menu-space {
+  flex: 1;
+}
+
+.menu .menu-left > :first-child .menu-item {
+  margin-left: 0;
+}
