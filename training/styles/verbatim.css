@@ -1,8 +1,26 @@
 .verbatim {
+  position: relative;
   padding: var(--inset);
 }
 
 .verbatim .big {
   margin: 0;
   line-height: 1.25;
+}
+
+.verbatim .content {
+  position: relative;
+}
+
+.verbatim .background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0.15;
+  object-fit: cover;
+
+  -webkit-mask-image: linear-gradient(to top, black,transparent 80%);
 }

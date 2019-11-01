@@ -7,7 +7,7 @@
   background-color: var(--purple);
 }
 
-.hero .hero-background {
+.hero .background {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -15,7 +15,7 @@
   opacity: 0.15;
 }
 
-.hero .hero-content {
+.hero .content {
   position: relative;
   padding: var(--inset);
   color: var(--text-invert);
