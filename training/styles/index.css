@@ -9,8 +9,8 @@
   /*
    * Grid
    */
-  --grid-base: 24px /* 7.5vw */; /* 24px in styleguide */
-  --font-base: 16px /* 5vw */; /* 16px in styleguide */
+  --grid-base: 24px /* 4.444vw */; /* 24px in styleguide */
+  --font-base: 16px /* 2.963vw */; /* 16px in styleguide */
   --inset: calc(2 * var(--grid-base));
 
   /*
