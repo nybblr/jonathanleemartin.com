@@ -1,3 +1,7 @@
+:root {
+  --reviews-margin: var(--grid-base);
+}
+
 .reviews {
   list-style: none;
   padding: 0;
@@ -5,7 +9,7 @@
 }
 
 .reviews .review {
-  margin-top: calc(0.5 * var(--inset));
+  margin-top: var(--reviews-margin);
 }
 
 .reviews .review > blockquote {

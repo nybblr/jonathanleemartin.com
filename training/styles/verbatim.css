@@ -1,6 +1,10 @@
+:root {
+  --verbatim-margin: calc(2.5 * var(--grid-base));
+}
+
 .verbatim {
   position: relative;
-  padding: var(--inset);
+  padding: var(--verbatim-margin) var(--inset);
 }
 
 .verbatim .big {
