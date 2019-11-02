@@ -1,6 +1,7 @@
 :root {
   --menu-height: calc(2 * var(--grid-base));
   --menu-item-height: calc(0.5 * var(--menu-height));
+  --menu-item-margin: calc(0.5 * var(--menu-item-height));
 }
 
 .menu {
@@ -15,7 +16,7 @@
   display: block;
   height: var(--menu-item-height);
   line-height: var(--menu-item-height);
-  margin: calc(0.5 * var(--menu-item-height));
+  margin: var(--menu-item-margin);
   font-weight: 500;
 }
 
@@ -24,6 +25,12 @@
   display: inline-block;
   text-align: center;
   width: var(--menu-item-height);
+  vertical-align: top;
+}
+
+/* :( */
+.menu .icon.pad-left {
+  margin-left: var(--menu-item-margin);
 }
 
 .menu .menu-group {
