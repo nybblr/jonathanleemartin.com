@@ -4,6 +4,7 @@
 @import url('block.css');
 @import url('review.css');
 @import url('collage.css');
+@import url('publication.css');
 
 :root {
   /*
@@ -84,10 +85,20 @@ h2 {
   font-weight: 500;
 }
 
-h3, .big {
+h3 {
   font-size: var(--h3-font-size);
-  font-weight: 400;
-}
-h3 strong, .big strong {
   font-weight: 500;
+}
+
+.big {
+  font-size: var(--h3-font-size);
+}
+.big strong {
+  font-weight: 500;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
