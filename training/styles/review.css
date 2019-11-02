@@ -17,7 +17,7 @@
   content: "“";
   position: absolute;
   font-size: calc(2 * var(--font-base));
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Helvetica Neue', Times, sans-serif;
   color: var(--purple-dark);
   margin-left: -0.6em;
   margin-top: -0.25em;
