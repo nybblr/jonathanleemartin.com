@@ -1,11 +1,5 @@
 :root {
   --book-row-height: calc(6 * var(--grid-base));
-  --post-row-margin: calc(0.5 * var(--grid-base));
-
-  --block-header-margin: var(--grid-base);
-
-  --icon-margin: calc(0.5 * var(--grid-base));
-  --icon-size: calc(2 * var(--grid-base));
 }
 
 .books {
@@ -33,36 +27,4 @@
   order: 1;
   height: var(--book-row-height);
   margin-left: var(--grid-base);
-}
-
-.posts {
-  margin-top: var(--block-header-margin);
-}
-
-.posts .post {
-  display: flex;
-  align-items: center;
-  margin-left: calc(-1 * var(--icon-size));
-}
-
-.posts .post .icon {
-  flex: 0 0 auto;
-  margin: var(--icon-margin);
-}
-
-.posts .post header {
-  flex: 1 1 auto;
-}
-
-.posts .post header h4 {
-  margin-top: 0;
-  margin-bottom: 0.25em;
-}
-
-.posts .post header p {
-  margin: 0;
-}
-
-.posts .post:not(:last-child) {
-  margin-bottom: var(--post-row-margin);
 }

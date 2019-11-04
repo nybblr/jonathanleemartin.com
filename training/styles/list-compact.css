@@ -1,0 +1,37 @@
+:root {
+  --list-item-margin: calc(0.5 * var(--grid-base));
+  --icon-margin: calc(0.5 * var(--grid-base));
+  --icon-size: calc(2 * var(--grid-base));
+}
+
+.list-compact {
+  margin-top: var(--block-header-margin);
+}
+
+.list-compact .list-item {
+  display: flex;
+  align-items: center;
+  margin-left: calc(-1 * var(--icon-size));
+}
+
+.list-compact .list-item .icon {
+  flex: 0 0 auto;
+  margin: var(--icon-margin);
+}
+
+.list-compact .list-item header {
+  flex: 1 1 auto;
+}
+
+.list-compact .list-item header h4 {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.list-compact .list-item header p {
+  margin: 0;
+}
+
+.list-compact .list-item:not(:last-child) {
+  margin-bottom: var(--list-item-margin);
+}
