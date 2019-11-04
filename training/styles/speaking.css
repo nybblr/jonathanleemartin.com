@@ -48,5 +48,5 @@
 
 /* Nuke this */
 .video .overlay .icon {
-  width: calc(2 * var(--grid-base));
+  width: calc(3 * var(--grid-base));
 }
