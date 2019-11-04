@@ -4,7 +4,6 @@
 
 .verbatim {
   position: relative;
-  padding: var(--verbatim-margin) var(--inset);
 }
 
 .verbatim .big {
@@ -14,6 +13,7 @@
 
 .verbatim .content {
   position: relative;
+  padding: var(--verbatim-margin) var(--inset);
 }
 
 .verbatim .background {

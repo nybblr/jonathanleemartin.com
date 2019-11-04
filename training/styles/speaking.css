@@ -1,0 +1,52 @@
+:root {
+  --video-header-margin: var(--grid-base);
+}
+
+.video {
+  position: relative;
+  margin: 0 calc(-1 * var(--inset));
+  margin-top: calc(-1 * var(--video-header-margin));
+}
+
+.video .background {
+  position: relative;
+  display: block;
+  opacity: 0.5;
+  object-position: center top;
+  width: 100%;
+  max-height: 45vw;
+}
+
+.video .content {
+  position: absolute;
+  bottom: 0;
+  padding: var(--video-header-margin) var(--inset);
+}
+
+.video .content h3 {
+  font-weight: bold;
+  font-size: var(--h1-font-size);
+  margin: 0;
+  margin-left: -0.05em; /* Move over just a tad */
+}
+
+.video .content p {
+  margin: 0;
+}
+
+.video .overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Nuke this */
+.video .overlay .icon {
+  width: calc(2 * var(--grid-base));
+}

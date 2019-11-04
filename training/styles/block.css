@@ -4,7 +4,6 @@
 
 .block {
   position: relative;
-  padding: var(--block-header-margin) var(--inset);
 }
 
 .block.block-invert {
@@ -14,6 +13,14 @@
 
 .block h2 {
   margin: 0;
+}
+
+.block > h2 {
+  padding: var(--block-header-margin) var(--inset);
+}
+
+.block > .content > h2 {
+  margin-top: var(--block-header-margin);
 }
 
 .block .background {
@@ -29,6 +36,7 @@
 
 .block .content {
   position: relative;
+  padding: var(--block-header-margin) var(--inset);
 }
 
 .block .block-cta h3 {
