@@ -80,6 +80,7 @@
 .text-input .input {
   display: block;
   position: relative;
+  z-index: 1; /* Not a fan, required to overlap label. */
   -webkit-appearance: none;
   appearance: none;
   resize: none;
