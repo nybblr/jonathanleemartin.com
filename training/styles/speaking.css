@@ -15,7 +15,7 @@
   position: relative;
   display: block;
   opacity: 0.5;
-  object-position: center top;
+  object-position: center 30%;
   width: 100%;
   max-height: 45vw;
 }
