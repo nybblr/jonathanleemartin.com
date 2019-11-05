@@ -39,6 +39,14 @@
   padding: var(--block-header-margin) var(--inset);
 }
 
+.block > .content > :first-child {
+  margin-top: 0;
+}
+
+.block > .content > :last-child {
+  margin-bottom: 0;
+}
+
 .block .block-cta h3 {
   margin-bottom: 0;
 }

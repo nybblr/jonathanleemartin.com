@@ -5,6 +5,9 @@
 .video {
   position: relative;
   margin: 0 calc(-1 * var(--inset));
+}
+
+.block > .content > .video:first-child {
   margin-top: calc(-1 * var(--video-header-margin));
 }
 
