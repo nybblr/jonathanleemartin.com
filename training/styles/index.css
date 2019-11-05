@@ -7,6 +7,7 @@
 @import url('list-compact.css');
 @import url('publication.css');
 @import url('speaking.css');
+@import url('form.css');
 
 :root {
   /*
@@ -15,6 +16,7 @@
   --grid-base: 24px /* 4.444vw */; /* 24px in styleguide */
   --font-base: 16px /* 2.963vw */; /* 16px in styleguide */
   --inset: calc(2 * var(--grid-base));
+  --line-height: 1.25;
 
   /*
    * Fonts
@@ -57,7 +59,7 @@
 html {
   font-family: var(--body-font);
   font-size: var(--font-base);
-  line-height: 1.25;
+  line-height: var(--line-height);
   color: var(--text);
 
   -webkit-font-smoothing: antialiased;
@@ -103,4 +105,8 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.icon {
+  vertical-align: middle;
 }

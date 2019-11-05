@@ -1,0 +1,155 @@
+:root {
+  --form-input-height: calc(2.5 * var(--grid-base));
+  --form-input-font-size: var(--h3-font-size);
+}
+
+.radio-button-group {
+}
+
+.radio-button-group .radio-button {
+  font-size: var(--form-input-font-size);
+  height: var(--form-input-height);
+  margin: 0 calc(-1 * var(--inset));
+}
+
+.radio-button-group .radio-button > label {
+  display: block;
+  position: relative;
+  background-color: var(--purple-dark);
+  font-weight: 500;
+  height: inherit;
+  padding: 0 var(--inset);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-button-group .radio-button > input {
+  display: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.radio-button-group .radio-button > input:checked + label {
+  background-color: var(--purple-light);
+  color: var(--purple-dark);
+}
+
+.radio-button-group .radio-button > label:before {
+  display: none;
+  content: "";
+  position: absolute;
+  margin-left: calc(-1 * var(--icon-size-with-gutter));
+  width: var(--icon-size);
+  height: var(--icon-size);
+  background-image: url(/training/icons/arrow-dark.svg);
+  background-repeat: no-repeat;
+  background-size: var(--icon-size);
+  background-position: center;
+  padding: var(--icon-gutter);
+}
+
+.radio-button-group .radio-button > input:checked + label:before {
+  display: block;
+}
+
+.text-input {
+  position: relative;
+  font-size: var(--form-input-font-size);
+  font-weight: 500;
+}
+
+.text-input label {
+  display: block;
+  position: absolute;
+  height: var(--form-input-height);
+  width: 100%;
+  padding-top: 1em;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.1s;
+  transition-property: font-size, height;
+}
+
+.text-input .input {
+  display: block;
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  resize: none;
+  width: 100%;
+  height: var(--form-input-height);
+  padding: 0;
+  color: inherit;
+  font: inherit;
+
+  border: none;
+  background: transparent;
+}
+
+.text-input .input:focus:placeholder-shown + label {
+  /* color: var(--purple-light); */
+}
+
+.text-input .input:not(:placeholder-shown) + label {
+  font-size: calc(0.5 * var(--form-input-font-size));
+  height: 2em;
+  color: var(--purple-dark);
+}
+
+.text-input .input::placeholder {
+  color: transparent;
+}
+
+.text-input .input {
+  border-bottom: 2px solid transparent;
+  box-sizing: border-box;
+  border-top: var(--form-input-font-size) solid transparent;
+}
+
+.text-input .input:focus {
+  border-bottom-color: var(--purple-dark);
+  outline: none;
+}
+
+.text-input textarea.input {
+  border-top-width: calc(3/24 * var(--grid-base) + var(--form-input-font-size)); /* Yuck. Saves some math */
+  padding-bottom: calc(2/24 * var(--grid-base)); /* Yuck. Saves some math */
+  height: auto;
+}
+
+.button {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: content-box;
+  width: 100%;
+  height: var(--form-input-height);
+
+  border: none;
+
+  background-color: var(--red);
+  font: inherit;
+  font-size: var(--form-input-font-size);
+  font-weight: 700;
+  color: inherit;
+
+  margin: 0 calc(-1 * var(--inset));
+  padding: 0 var(--inset);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.contact-form > .content {
+  padding-bottom: 0;
+}
+
+.contact-form > .content form button:last-child {
+  margin-top: var(--block-header-margin);
+}
