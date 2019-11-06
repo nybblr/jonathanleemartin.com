@@ -66,9 +66,16 @@ html {
   font-size: var(--font-base);
   line-height: var(--line-height);
   color: var(--text);
+  scroll-behavior: smooth;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 html, body {

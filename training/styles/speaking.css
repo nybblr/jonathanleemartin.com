@@ -26,11 +26,14 @@
   padding: var(--video-header-margin) var(--inset);
 }
 
-.video .content h3 {
+.video .content h2 {
   font-weight: bold;
-  font-size: var(--h1-font-size);
   margin: 0;
   margin-left: -0.05em; /* Move over just a tad */
+}
+
+.video .content h2.huge {
+  font-size: var(--h1-font-size);
 }
 
 .video .content p {
