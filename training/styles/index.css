@@ -54,6 +54,11 @@
 
   --text: var(--black);
   --text-invert: var(--white);
+
+  /*
+   * Misc
+   */
+  --easing: cubic-bezier(.37,1.12,.07,1);
 }
 
 html {
