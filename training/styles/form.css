@@ -12,6 +12,14 @@
   margin: 0 calc(-1 * var(--inset));
 }
 
+.radio-button-group .radio-button {
+  transition: opacity 0.3s var(--easing);
+}
+
+.radio-button-group:active .radio-button:not(:active) {
+  opacity: 0.5;
+}
+
 .radio-button-group .radio-button > label {
   display: block;
   position: relative;
