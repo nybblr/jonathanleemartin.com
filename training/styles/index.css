@@ -14,8 +14,10 @@
   /*
    * Grid
    */
-  --grid-base: 24px /* 4.444vw */; /* 24px in styleguide */
-  --font-base: 16px /* 2.963vw */; /* 16px in styleguide */
+  /* --grid-base: 24px; */
+  --grid-base: 4.444vw;
+  /* --font-base: 16px; */
+  --font-base: 2.963vw;
   --inset: calc(2 * var(--grid-base));
   --line-height: 1.25;
   --line-height-small: 1.5;
