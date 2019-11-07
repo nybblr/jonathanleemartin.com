@@ -83,3 +83,7 @@
 .background.background-collage .collage-image:nth-child(2) {
   grid-column: span 5;
 }
+
+.engagement {
+  margin: var(--block-header-margin) 0;
+}

@@ -1,12 +1,13 @@
 @import url('menu.css');
 @import url('hero.css');
-@import url('verbatim.css');
 @import url('block.css');
+@import url('verbatim.css');
 @import url('review.css');
 @import url('collage.css');
 @import url('list-compact.css');
 @import url('publication.css');
 @import url('speaking.css');
+@import url('approach.css');
 @import url('form.css');
 
 :root {
@@ -17,6 +18,7 @@
   --font-base: 16px /* 2.963vw */; /* 16px in styleguide */
   --inset: calc(2 * var(--grid-base));
   --line-height: 1.25;
+  --line-height-small: 1.5;
 
   /*
    * Fonts
@@ -38,6 +40,7 @@
 
   --purple: #838EF8;
   --purple-light: #D0D4FF;
+  --purple-medium: #6b75d1;
   --purple-dark: #51589A;
 
   --blue: #00AEEE;
@@ -88,6 +91,10 @@ a {
   text-decoration: none;
 }
 
+p {
+  line-height: var(--line-height-small);
+}
+
 h1 {
   font-size: var(--h1-font-size);
   font-weight: 400;
@@ -104,6 +111,12 @@ h2 {
 h3 {
   font-size: var(--h3-font-size);
   font-weight: 500;
+}
+
+h4 {
+  font-size: var(--base-font-size);
+  font-weight: 500;
+  line-height: var(--line-height-small);
 }
 
 .big {

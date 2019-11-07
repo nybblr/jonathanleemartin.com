@@ -1,0 +1,12 @@
+.approach .content > .big {
+  margin: 1em 0;
+}
+
+.approach ul {
+  padding: 0;
+  list-style-type: square;
+}
+
+.approach ul li:not(:first-child) {
+  margin-top: 0.75em;
+}

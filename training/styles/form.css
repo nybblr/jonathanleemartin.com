@@ -10,6 +10,7 @@
   font-size: var(--form-input-font-size);
   height: var(--form-input-height);
   margin: 0 calc(-1 * var(--inset));
+  color: var(--purple-dark);
 }
 
 .radio-button-group .radio-button {
@@ -23,7 +24,7 @@
 .radio-button-group .radio-button > label {
   display: block;
   position: relative;
-  background-color: var(--purple-dark);
+  background-color: var(--purple-light);
   font-weight: 500;
   height: inherit;
   padding: 0 var(--inset);
@@ -39,8 +40,8 @@
 }
 
 .radio-button-group .radio-button > input:checked + label {
-  background-color: var(--purple-light);
-  color: var(--purple-dark);
+  background-color: var(--purple-medium);
+  color: var(--text-invert);
 }
 
 .radio-button-group .radio-button > label:before {
@@ -50,7 +51,7 @@
   margin-left: calc(-1 * var(--icon-size-with-gutter));
   width: var(--icon-size);
   height: var(--icon-size);
-  background-image: url(/training/icons/arrow-dark.svg);
+  background-image: url(/training/icons/arrow.svg);
   background-repeat: no-repeat;
   background-size: var(--icon-size);
   background-position: center;
@@ -141,10 +142,10 @@
 
   border: none;
 
-  background-color: var(--red);
+  background-color: var(--purple-medium);
   font: inherit;
   font-size: var(--form-input-font-size);
-  font-weight: 700;
+  font-weight: 500;
   color: inherit;
 
   margin: 0 calc(-1 * var(--inset));
@@ -153,6 +154,10 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+}
+
+.button:active {
+  background-color: var(--purple-dark);
 }
 
 .contact-form > .content {
@@ -164,7 +169,8 @@
 }
 
 .form .form-header {
-  background-color: var(--purple-dark);
+  background-color: var(--purple-light);
+  color: var(--purple-dark);
   margin: 0 calc(-1 * var(--inset));
   padding: var(--block-header-margin) var(--inset);
 }

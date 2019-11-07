@@ -28,3 +28,8 @@
 
   -webkit-mask-image: linear-gradient(to top, black,transparent 80%);
 }
+
+.verbatim .content p,
+.verbatim .content li {
+  line-height: var(--line-height-small);
+}
