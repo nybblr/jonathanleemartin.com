@@ -162,3 +162,17 @@
 .contact-form > .content form button:last-child {
   margin-top: var(--block-header-margin);
 }
+
+.form .form-header {
+  background-color: var(--purple-dark);
+  margin: 0 calc(-1 * var(--inset));
+  padding: var(--block-header-margin) var(--inset);
+}
+
+.form .form-header > :first-child {
+  margin-top: 0;
+}
+
+.form .form-header > :last-child {
+  margin-bottom: 0;
+}
