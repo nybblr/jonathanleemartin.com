@@ -24,6 +24,8 @@
   position: absolute;
   bottom: 0;
   padding: var(--video-header-margin) var(--inset);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .video .content h2 {
@@ -55,4 +57,29 @@
 /* Nuke this */
 .video .overlay .icon {
   width: calc(3 * var(--grid-base));
+}
+
+.image-header .background {
+  height: 35vw;
+}
+
+.background.background-collage {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-flow: column;
+}
+
+.background.background-collage .collage-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background.background-collage .collage-image:nth-child(1) {
+  grid-column: span 7;
+}
+
+.background.background-collage .collage-image:nth-child(2) {
+  grid-column: span 5;
 }
