@@ -54,6 +54,10 @@
   align-items: center;
 }
 
+.video a.overlay {
+  border-bottom: none;
+}
+
 /* Nuke this */
 .video .overlay .icon {
   width: calc(3 * var(--grid-base));

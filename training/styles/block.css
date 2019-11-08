@@ -3,12 +3,25 @@
 }
 
 .block {
+  background-color: var(--white);
   position: relative;
 }
 
 .block.block-invert {
   background-color: var(--purple);
   color: var(--text-invert);
+}
+
+.block .content a {
+  border-bottom: solid 0.1em;
+}
+
+.block .content a {
+  border-bottom-color: var(--gray-faint);
+}
+
+.block.block-invert .content a {
+  border-bottom-color: var(--white-faint);
 }
 
 .block h2 {

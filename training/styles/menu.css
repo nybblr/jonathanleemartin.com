@@ -18,6 +18,7 @@
   line-height: var(--menu-item-height);
   margin: var(--menu-item-margin);
   font-weight: 500;
+  border-bottom: none;
 }
 
 /* Ditch these */

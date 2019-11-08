@@ -37,8 +37,10 @@
    * Colors
    */
   --gray: #BAD1DB;
+  --gray-faint: #BAD1DB88;
   --black: #37444A;
   --white: #ffffff;
+  --white-faint: #ffffff55;
 
   --purple: #838EF8;
   --purple-light: #D0D4FF;
@@ -71,6 +73,7 @@ html {
   font-size: var(--font-base);
   line-height: var(--line-height);
   color: var(--text);
+  background-color: var(--purple-dark);
   scroll-behavior: smooth;
 
   -webkit-font-smoothing: antialiased;

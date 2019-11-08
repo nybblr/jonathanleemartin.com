@@ -27,4 +27,10 @@
   order: 1;
   height: var(--book-row-height);
   margin-left: var(--grid-base);
+  border-bottom: none;
+}
+
+.books .book .book-cover img {
+  height: 100%;
+  display: block;
 }
