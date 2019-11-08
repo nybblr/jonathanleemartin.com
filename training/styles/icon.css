@@ -1,0 +1,10 @@
+:root {
+  --icon-gutter: calc(0.5 * var(--grid-base));
+  --icon-size: var(--grid-base);
+  --icon-size-with-gutter: calc(2 * var(--grid-base));
+}
+
+.icon {
+  width: var(--icon-size);
+  vertical-align: middle;
+}

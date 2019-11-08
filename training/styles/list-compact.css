@@ -1,8 +1,5 @@
 :root {
   --list-item-margin: calc(0.5 * var(--grid-base));
-  --icon-gutter: calc(0.5 * var(--grid-base));
-  --icon-size: var(--grid-base);
-  --icon-size-with-gutter: calc(2 * var(--grid-base));
 }
 
 .list-compact {
@@ -18,7 +15,6 @@
 .list-compact .list-item .icon {
   flex: 0 0 auto;
   margin: var(--icon-gutter);
-  width: var(--icon-size);
 }
 
 .list-compact .list-item header {
