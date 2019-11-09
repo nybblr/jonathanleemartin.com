@@ -3,7 +3,7 @@
 let toggleMenu = document.querySelectorAll('.js-toggle-menu');
 let navbar = document.querySelector('.js-menu');
 let scrollBody = document.querySelector('.js-scroll-body');
-let clickBody = document.body;
+let clickBody = document;
 
 let hide = () => {
   navbar.classList.remove('menu-expanded');

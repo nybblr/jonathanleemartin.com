@@ -1,5 +1,7 @@
 :root {
   --video-header-margin: var(--grid-base);
+  --image-banner-height: 35vw;
+  --video-banner-height: 45vw;
 }
 
 .video {
@@ -17,7 +19,7 @@
   opacity: 0.5;
   object-position: center 30%;
   width: 100%;
-  max-height: 45vw;
+  max-height: var(--video-banner-height);
 }
 
 .video .content {
@@ -64,7 +66,7 @@
 }
 
 .image-header .background {
-  height: 35vw;
+  height: var(--image-banner-height);
 }
 
 .background.background-collage {

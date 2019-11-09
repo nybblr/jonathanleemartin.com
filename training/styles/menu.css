@@ -50,6 +50,7 @@
 .menu-secondary {
   position: fixed;
   z-index: 1;
+  pointer-events: none;
   height: calc(100% - var(--menu-height));
   display: block;
   color: var(--text-invert);
@@ -62,6 +63,7 @@
 }
 
 .menu-expanded .menu-secondary {
+  pointer-events: all;
   transform: translateX(0);
   opacity: 1;
 }
