@@ -1,6 +1,7 @@
 :root {
   --form-input-height: calc(2.5 * var(--grid-base));
   --form-input-font-size: var(--h3-font-size);
+  --textarea-max-rows: 10;
 }
 
 .radio-button-group {
@@ -132,6 +133,8 @@
   border-top-width: calc(3/24 * var(--grid-base) + var(--form-input-font-size)); /* Yuck. Saves some math */
   padding-bottom: calc(2/24 * var(--grid-base)); /* Yuck. Saves some math */
   height: auto;
+  max-height: calc(var(--textarea-max-rows) * var(--form-input-font-size) * var(--line-height));
+  box-sizing: content-box;
 }
 
 .button {

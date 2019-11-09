@@ -1,4 +1,4 @@
-(global => {
+(document => {
 
 let toggleMenu = document.querySelectorAll('.js-toggle-menu');
 let navbar = document.querySelector('.js-menu');
@@ -33,9 +33,9 @@ toggleMenu.forEach(button => {
   button.addEventListener('click', handleToggle);
 });
 
-})(window);
+})(window.document);
 
-(global => {
+(document => {
 
 let contactLinks = document.querySelectorAll('a[data-service]');
 
@@ -49,4 +49,11 @@ contactLinks.forEach(link => {
   link.addEventListener('click', handleContactLink);
 });
 
-})(window);
+})(window.document);
+
+((document, autosize) => {
+
+let textareas = document.querySelector('textarea.autogrow');
+autosize(textareas);
+
+})(window.document, window.autosize);
