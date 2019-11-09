@@ -98,6 +98,12 @@ html, body {
 
 @media screen and (max-width: 400px) {
   /* Tiny */
+  :root {
+    --font-base: 3.75vw;
+    --h1-font-size: calc(3 * var(--font-base));
+    --h2-font-size: calc(1.5 * var(--font-base));
+    --h3-font-size: calc(1.125 * var(--font-base));
+  }
 }
 
 @media screen and (min-width: 540px) {
