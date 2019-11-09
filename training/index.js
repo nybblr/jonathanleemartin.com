@@ -34,3 +34,19 @@ toggleMenu.forEach(button => {
 });
 
 })(window);
+
+(global => {
+
+let contactLinks = document.querySelectorAll('a[data-service]');
+
+let handleContactLink = ({ currentTarget: link }) => {
+  let { service } = link.dataset;
+  let serviceButton = document.querySelector(`input[data-service="${service}"]`)
+  serviceButton.checked = true;
+};
+
+contactLinks.forEach(link => {
+  link.addEventListener('click', handleContactLink);
+});
+
+})(window);
