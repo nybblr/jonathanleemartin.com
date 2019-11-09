@@ -46,3 +46,56 @@
 .menu .menu-left > :first-child .menu-item {
   margin-left: 0;
 }
+
+.menu-secondary {
+  position: fixed;
+  z-index: 1;
+  height: calc(100% - var(--menu-height));
+  display: block;
+  color: var(--text-invert);
+
+  opacity: 0;
+  transform: translateX(-100%);
+  transition-duration: 0.5s;
+  transition-timing-function: var(--easing);
+  transition-property: transform, opacity;
+}
+
+.menu-expanded .menu-secondary {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.menu-secondary .menu-group {
+  padding: 0 var(--inset);
+}
+
+.menu-secondary .menu-group .menu-item {
+  font-size: var(--h1-font-size);
+  font-weight: 500;
+}
+
+.body {
+  transition-duration: 0.5s;
+  transition-timing-function: var(--easing);
+  transition-property: opacity, transform;
+  transform-origin: center 50vh;
+}
+
+body {
+  /* Fancy 3D */
+  /* perspective: 750px; */
+  /* perspective-origin: 100% 50vh; */
+}
+
+.menus.menu-expanded + .body {
+  transform: scale(0.95);
+  /* Fancy 3D */
+  /* transform: scale(.95) rotateY(-25deg) translateZ(-95px); */
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.body-scroll-lock {
+  overflow-y: hidden;
+}

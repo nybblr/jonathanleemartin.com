@@ -67,21 +67,34 @@
     gtag('config', 'UA-30173272-6');
   </script>
 </head>
-<body>
-  <nav class="menu">
-    <a class="menu-item menu-toggle" href="#">
-      <img class="icon" src="/training/icons/menu.svg" />
-    </a>
-    <ul class="menu-group menu-left">
-      <li><a class="menu-item" href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a></li>
-      <li><a class="menu-item" href="/blog/">Blog</a></li>
-      <li><a class="menu-item" href="/books/">Books</a></li>
-    </ul>
-    <div class="menu-space"></div>
-    <ul class="menu-group menu-right">
-      <li><a class="menu-item" href="#bootcamps">Corporate Training<img class="icon pad-left" src="/training/icons/arrow.svg" /></a></li>
-    </ul>
+<body class="js-scroll-body">
+  <nav class="menus js-menu">
+    <div class="menu">
+      <a class="menu-item js-toggle-menu" href="#">
+        <img class="icon" src="/training/icons/menu.svg" />
+      </a>
+      <ul class="menu-group menu-left">
+        <li><a class="menu-item" href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a></li>
+        <li><a class="menu-item" href="/blog/">Blog</a></li>
+        <li><a class="menu-item" href="/books/">Books</a></li>
+      </ul>
+      <div class="menu-space"></div>
+      <ul class="menu-group menu-right">
+        <li><a class="menu-item" href="#bootcamps">Corporate Training<img class="icon pad-left" src="/training/icons/arrow.svg" /></a></li>
+      </ul>
+    </div>
+    <div class="menu-secondary">
+      <ul class="menu-group">
+        <li><a class="menu-item" href="/tldr/">TL;DR &lt;/&gt;</a></li>
+        <li><a class="menu-item" href="https://twitter.com/nybblr">Twitter</a></li>
+        <li><a class="menu-item" href="https://github.com/nybblr/">Github</a></li>
+        <li><a class="menu-item" href="https://www.linkedin.com/in/nybblr/">LinkedIn</a></li>
+        <li><a class="menu-item" href="https://www.yellowscale.com">Photography</a></li>
+      </ul>
+    </div>
   </nav>
+
+  <article class="body">
 
   <header class="hero">
     <img class="background" src="/training/img/jsconf-budapest.jpg" />
@@ -363,5 +376,9 @@
       </form>
     </div>
   </section>
+
+  </article>
+
+  <script src="/training/index.js"></script>
 </body>
 </html>
