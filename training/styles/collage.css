@@ -1,5 +1,5 @@
 :root {
-  --collage-height: calc(5 * var(--grid-base));
+  --collage-height: calc(6 * var(--grid-base));
 }
 
 .collage {
@@ -16,26 +16,24 @@
   grid-auto-flow: column;
 }
 
-.collage .collage-images > li:nth-of-type(1),
-.collage .collage-images > li:nth-of-type(5) {
+.collage .collage-images > li:nth-of-type(1) {
   grid-column: span 4;
   grid-row: span 2;
 }
 
 .collage .collage-images > li:nth-of-type(2) {
-  grid-column: span 2;
+  grid-column: span 3;
   grid-row: span 1;
 }
 
 .collage .collage-images > li:nth-of-type(3) {
+  grid-column: span 3;
   grid-row: span 1;
-  grid-column-start: 7;
-  grid-column-end: span 2;
 }
 
 .collage .collage-images > li:nth-of-type(4) {
-  grid-column: span 4;
-  grid-row: span 1;
+  grid-column: span 5;
+  grid-row: span 2;
 }
 
 .collage .collage-image {
