@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-css": "postcss styles/index.css -d build/",
-    "build-js": "uglifyjs -c -m -o build/bundle.js -- index.js"
+    "build-js": "terser -c -m -o build/index.js -- index.js"
   },
   "browserslist": [
     "last 2 versions and > 0.5%",
@@ -20,6 +20,6 @@
     "postcss-import": "^12.0.1",
     "postcss-import-url": "^4.0.0",
     "postcss-preset-env": "^6.7.0",
-    "uglify-js": "^3.6.8"
+    "terser": "^4.4.0"
   }
 }
