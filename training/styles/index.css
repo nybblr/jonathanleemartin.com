@@ -15,7 +15,7 @@
   /*
    * Grid
    */
-  --grid-base: 4.444vw;
+  --grid-base: calc(30vw / 700 * 100);
   --font-base: 3.75vw;
   --inset: calc(2 * var(--grid-base));
   --line-height: 1.25;
@@ -102,7 +102,7 @@ html, body {
 @media screen and (min-width: 540px) {
   /* Phone */
   :root {
-    --font-base: 2.963vw;
+    --font-base: calc(20vw / 700 * 100);
     --h1-font-size: calc(4 * var(--font-base));
     --h2-font-size: calc(2 * var(--font-base));
     --h3-font-size: calc(1.5 * var(--font-base));

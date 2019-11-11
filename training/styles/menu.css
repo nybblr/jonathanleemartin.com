@@ -16,7 +16,7 @@
   display: block;
   height: var(--menu-item-height);
   line-height: var(--menu-item-height);
-  margin: var(--menu-item-margin);
+  padding: var(--menu-item-margin);
   font-weight: 500;
   border-bottom: none;
 }
@@ -44,7 +44,7 @@
 }
 
 .menu .menu-left > :first-child .menu-item {
-  margin-left: 0;
+  padding-left: 0;
 }
 
 .menu-secondary {
