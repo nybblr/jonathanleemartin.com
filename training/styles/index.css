@@ -163,6 +163,7 @@ html, body {
 
   .body > .collage {
     height: auto;
+    max-height: var(--hero-height);
   }
 
   #reviews {
