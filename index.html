@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Jonathan Lee Martin | Web developer. Author. Educator. Photographer.</title>
-    <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JavaScript Training &lt;/&gt; Jonathan Lee Martin</title>
+  <link rel="shortcut icon" href="/img/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap&subset=latin-ext">
+  <link rel="stylesheet" href="/build/index.css">
 
-    <!-- BEGIN SEO tags -->
-    <meta name="description" content="Digital nomad tips and minimalist travel guides from a chronic globetrotter and fine art landscape photographer in Atlanta. By day I work remotely as a developer + international trainer, but at twilight I scale mountains to discover non-touristy landscapes." />
-    <link rel="canonical" href="https://jonathanleemartin.com/" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <meta property="og:site_name" content="Jonathan Lee Martin" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Jonathan Lee Martin" />
-    <meta property="og:description" content="Web developer. Author. Educator. Photographer." />
-    <meta property="og:url" content="https://jonathanleemartin.com/" />
-    <meta property="og:image" content="https://jonathanleemartin.com/img/budapest.jpg" />
-    <meta property="article:publisher" content="https://www.facebook.com/yellowscale" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Jonathan Lee Martin" />
-    <meta name="twitter:description" content="Web developer. Author. Educator. Photographer." />
-    <meta name="twitter:url" content="https://jonathanleemartin.com/" />
-    <meta name="twitter:image" content="https://jonathanleemartin.com/img/budapest.jpg" />
-    <meta name="twitter:site" content="@nybblr" />
-    <script type="application/ld+json">
+  <!-- BEGIN SEO tags -->
+  <meta name="description" content="I’m a JavaScript educator with a passion for craft. I’ve trained hundreds of developers in immersive bootcamps, from career switchers to senior developers at Fortune 100 companies. Ready to level up your team? I can come to you! I provide custom training solutions through workshops, curriculum and speaking engagements." />
+  <link rel="canonical" href="https://jonathanleemartin.com/" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <meta property="og:site_name" content="⚛️ JavaScript Training // Jonathan Lee Martin" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="⚛️ JavaScript Training // Jonathan Lee Martin" />
+  <meta property="og:description" content="I’m a JavaScript educator with a passion for craft. I’ve trained hundreds of developers in immersive bootcamps, from career switchers to senior developers at Fortune 100 companies. Ready to level up your team? I can come to you! I provide custom training solutions through workshops, curriculum and speaking engagements." />
+  <meta property="og:url" content="https://jonathanleemartin.com/" />
+  <meta property="og:image" content="https://jonathanleemartin.com/img/social-banner.jpg" />
+  <meta property="article:publisher" content="https://www.facebook.com/nybblr" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="⚛️ JavaScript Training // Jonathan Lee Martin" />
+  <meta name="twitter:description" content="I’m a JavaScript educator with a passion for craft. I’ve trained hundreds of developers in immersive bootcamps, from career switchers to senior developers at Fortune 100 companies. Ready to level up your team? I can come to you! I provide custom training solutions through workshops, curriculum and speaking engagements." />
+  <meta name="twitter:url" content="https://jonathanleemartin.com/" />
+  <meta name="twitter:image" content="https://jonathanleemartin.com/img/social-banner.jpg" />
+  <meta name="twitter:site" content="@nybblr" />
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Website",
   "publisher": {
     "@type": "Person",
     "sameAs": [
+      "https://jonathanleemartin.com/",
       "https://www.yellowscale.com/",
       "https://www.nybblr.com/",
       "https://www.facebook.com/yellowscale",
@@ -43,332 +46,347 @@
   "url": "https://jonathanleemartin.com/",
   "image": {
     "@type": "ImageObject",
-    "url": "https://jonathanleemartin.com/img/budapest.jpg"
+    "url": "https://jonathanleemartin.com/img/social-banner.jpg"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://jonathanleemartin.com/"
   },
-  "description": "Web developer. Author. Educator. Photographer."
+  "description": "⚛️ JavaScript Training // Jonathan Lee Martin"
 }
-    </script>
-    <!-- END SEO tags -->
+  </script>
+  <!-- END SEO tags -->
 
-    <link rel="preload" href="build/index.css" as="style">
-    <link rel="stylesheet" href="build/index.css">
+  <script async src="https://unpkg.com/lazysizes@5.1.2/lazysizes.min.js"></script>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v13/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v13/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/lora/v12/0QIhMX1D_JOuMw_LIftLtfOm8w.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/lora/v12/0QIvMX1D_JOuMwr7I_FMl_E.woff2" as="font" type="font/woff2" crossorigin>
-    <style type="text/css">
-      @font-face {
-        font-family: 'Lora';
-        font-style: italic;
-        font-weight: 400;
-        src: local('Lora Italic'), local('Lora-Italic'), url(https://fonts.gstatic.com/s/lora/v12/0QIhMX1D_JOuMw_LIftLtfOm8w.woff2) format('woff2');
-      }
-      @font-face {
-        font-family: 'Lora';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Lora Regular'), local('Lora-Regular'), url(https://fonts.gstatic.com/s/lora/v12/0QIvMX1D_JOuMwr7I_FMl_E.woff2) format('woff2');
-      }
-      @font-face {
-        font-family: 'Playfair Display';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url(https://fonts.gstatic.com/s/playfairdisplay/v13/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2) format('woff2');
-      }
-      @font-face {
-        font-family: 'Playfair Display';
-        font-style: normal;
-        font-weight: 700;
-        src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url(https://fonts.gstatic.com/s/playfairdisplay/v13/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2) format('woff2');
-      }
-    </style>
-    <script async src="https://unpkg.com/lazysizes@4.0.4/lazysizes.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-30173272-6');
+  </script>
+</head>
+<body class="js-scroll-body">
+  <nav class="menus js-menu">
+    <div class="menu">
+      <a class="menu-item js-toggle-menu" href="#" aria-label="Toggle menu">
+        <img alt="Menu" class="icon" src="/img/icons/menu.svg" />
+      </a>
+      <ul class="menu-group menu-left">
+        <li><a class="menu-item" href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">YouTube</a></li>
+        <li><a class="menu-item" href="/blog/">Blog</a></li>
+        <li><a class="menu-item" href="/books/">Books</a></li>
+      </ul>
+      <div class="menu-space"></div>
+      <ul class="menu-group menu-right">
+        <li><a class="menu-item" href="#bootcamps">Corporate Training<img alt="Arrow" class="icon pad-left" src="/img/icons/arrow.svg" /></a></li>
+      </ul>
+    </div>
+    <div class="menu-secondary">
+      <ul class="menu-group">
+        <li><a class="menu-item" href="/tldr/">TL;DR &lt;/&gt;</a></li>
+        <li><a class="menu-item" href="https://twitter.com/nybblr">Twitter</a></li>
+        <li><a class="menu-item" href="https://github.com/nybblr/">Github</a></li>
+        <li><a class="menu-item" href="https://www.linkedin.com/in/nybblr/">LinkedIn</a></li>
+        <li><a class="menu-item" href="https://www.yellowscale.com">Photography</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30173272-6"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-30173272-6');
-    </script>
-  </head>
-  <body>
-    <h2 class="me"><a href="#connect">Jonathan Lee Martin</a></h2>
-    <nav class="navbar">
+  <article class="body">
+
+  <header class="hero">
+    <img class="background lazyload" data-src="/img/jsconf-budapest.jpg" alt="Jonathan Lee Martin speaking at JSConf Budapest in the Urania Movie Theater" />
+    <div class="content">
+      <p class="subtitle">I teach developers to</p>
+      <h1 class="title">
+        <span class="word">Craft</span><br>
+        <span class="word">exceptional</span><br>
+        <strong class="word">JavaScript;</strong>
+      </h1>
+    </div>
+  </header>
+
+  <section class="collage">
+    <ul class="collage-images">
+      <li><img class="collage-image lazyload" data-src="/img/jsconf-colombia.jpg" alt="Jonathan Lee Martin speaking at JSConf Colombia in Medellin" /></li>
+      <li><img class="collage-image lazyload" data-src="/img/bootcamp.jpg" alt="Jonathan Lee Martin graduating a group of senior developers after a 5-day coding bootcamp" /></li>
+      <li><img class="collage-image lazyload" data-src="/img/corporate-training.jpg" alt="Jonathan Lee Martin speaks to a group of web developers during a 5-day corporate bootcamp" /></li>
+      <li><img class="collage-image lazyload" data-src="/img/jsconf-budapest-venue.jpg" alt="Jonathan Lee Martin speaks at JSConf Budapest in the Urania Movie Theater" /></li>
+    </ul>
+  </section>
+
+  <section class="block verbatim">
+    <img class="background lazyload" data-src="/img/card.jpg" alt="Thank-you card from students after a 16-week bootcamp" />
+    <div class="content">
+      <p class="big">I help <strong>developers</strong> craft their best work,
+      <strong>achieve</strong> personal &amp; professional goals,
+      and <strong>grow</strong> without bounds.</p>
+    </div>
+  </section>
+
+  <section class="block block-invert" id="reviews">
+    <div class="content">
+      <h2>Student Testimonials</h2>
+      <ul class="reviews">
+        <li class="review">
+          <blockquote>
+            <p>Jonathan is responsible for one of the best learning environments I have ever participated in. It is obvious that he is a talented programmer, but more impressive is the kindness and empathy he demonstrates while teaching. His relentless positivity made coming into class an absolute joy.</p>
+            <p><strong>— Rachel</strong></p>
+          </blockquote>
+        </li>
+        <li class="review">
+          <blockquote>
+            <p>I cannot speak highly enough about his skills as a teacher. He is a true genius and brings great energy and heightened level of charisma to all of his lectures.</p>
+            <p><strong>— Matt</strong></p>
+          </blockquote>
+        </li>
+        <li class="review">
+          <blockquote>
+            <p>Jonathan was amazing. He was knowledgable, patient, prepared, and just a really good guy.</p>
+            <p><strong>— Aron</strong></p>
+          </blockquote>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block verbatim" id="about">
+    <div class="content">
+      <h2>About Jonathan</h2>
+      <p><strong><a href="/">Jonathan Lee Martin</a></strong> is a globetrotting educator, author and international speaker with a passion for craft. He’s trained hundreds of developers — from career switchers to senior devs at <strong>NASA</strong> and <strong>HP</strong> — in immersive bootcamps. He also helps working web developers craft exceptional code through his screencast series, <strong><a href="/tldr/">TL;DR</a></strong>.</p>
+      <p>While waiting on npm install, he travels the world as a fine art <strong><a href="https://www.yellowscale.com/">landscape photographer</a></strong>.</p>
+    </div>
+  </section>
+
+  <section class="block block-invert" id="speaking">
+    <div class="content">
+      <div class="video">
+        <img class="background lazyload" data-src="/img/tldr-studio.jpg" alt="Jonathan Lee Martin teaches JavaScript design patterns on his YouTube channel called TL;DR" />
+        <header class="content">
+          <h2 class="huge">tl;dr.</h2>
+          <p><strong>Rapid JavaScript codecasts</strong>
+            <br>for working web developers.</p>
+        </header>
+        <a class="overlay" href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg" aria-label="Watch an episode of TL;DR on YouTube">
+          <img class="icon" src="/img/icons/play.svg" alt="Play" />
+        </a>
+      </div>
+      <h2>Speaking &amp; Seminars</h2>
+      <ul class="talks list-compact">
+        <li class="talk list-item">
+          <img class="icon" src="/img/icons/video.svg" alt="Play" />
+          <header>
+            <h4><a href="https://youtu.be/2R6hc0WSHR8">Collaborating over mountaintop mesh networks</a></h4>
+            <p><a href="https://youtu.be/pMMDVphop40">NDC Oslo</a>, <a href="https://youtu.be/2R6hc0WSHR8">JSConf Colombia</a></p>
+          </header>
+        </li>
+        <li class="talk list-item">
+          <img class="icon" src="/img/icons/video.svg" alt="Play" />
+          <header>
+            <h4><a href="https://youtu.be/5SNiZpER-2I">Async design patterns to scale to multicore</a></h4>
+            <p><a href="https://youtu.be/726eZyVtC0Y">JSConf Budapest</a>, <a href="https://youtu.be/5SNiZpER-2I">AtlantaJS</a>, EdinburghJS</p>
+          </header>
+        </li>
+      </ul>
+      <footer class="block-cta">
+        <h3>I can speak at your conference;<br>
+          <strong><a href="#contact" data-service="speaker">Get in touch. <img class="icon" src="/img/icons/arrow.svg" alt="Arrow" /></a></strong></h3>
+      </footer>
+    </div>
+  </section>
+
+  <section class="block verbatim" id="author">
+    <div class="content">
+      <h2>Publications</h2>
+      <ul class="books">
+        <li class="book">
+          <a class="book-cover" href="/books/" aria-label="Learn more about Functional Design Patterns for Express.js">
+            <img class="lazyload" data-src="/img/fdp4e.png" alt="Book cover of Functional Design Patterns for Express.js" />
+          </a>
+          <header class="book-header">
+            <h3><a href="/books/">Functional Design Patterns for Express.js</a></h3>
+            <p>A step-by-step guide to building elegant, maintainable Node.js backends.</p>
+          </header>
+        </li>
+      </ul>
+      <h3>Technical Blogs</h3>
+      <ul class="posts list-compact">
+        <li class="post list-item">
+          <img class="icon" src="/img/icons/post.svg" alt="Blog post" />
+          <header>
+            <h4><a href="/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/">Concurrency Patterns for JavaScript</a></h4>
+            <p>Manage highly concurrent JavaScript with the Async IIFE pattern.</p>
+          </header>
+        </li>
+        <li class="post list-item">
+          <img class="icon" src="/img/icons/post.svg" alt="Blog post" />
+          <header>
+            <h4><a href="/blog/asyncing-feeling-about-javascript-generators/">Asyncing Feeling about JavaScript Generators</a></h4>
+            <p>Functional Reactive Programming lands in JS with Async Generator Functions.</p>
+          </header>
+        </li>
+        <li class="post list-item">
+          <img class="icon" src="/img/icons/post.svg" alt="Blog post" />
+          <header>
+            <h4><a href="/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/">Create an MP3 reader with DataViews + TextDecoder.</a></h4>
+            <p>Yep, JavaScript knows binary thanks to ArrayBuffers and TypedArrays.</p>
+          </header>
+        </li>
+      </ul>
+      <footer class="block-cta">
+        <h3>Guest blogs, custom curriculum;<br>
+            <strong><a href="#contact" data-service="author">Get in touch. <img class="icon" src="/img/icons/arrow-black.svg" alt="Arrow" /></a></strong></h3>
+      </footer>
+    </div>
+  </section>
+
+  <section class="block block-invert" id="bootcamps">
+    <div class="content">
+      <h2>Bootcamps &amp; Workshops</h2>
+      <h4>React, ES2017 JavaScript, design patterns, collaboration skills… I’ve trained hundreds of developers, from career switchers to senior developers at Fortune 100 companies.</h4>
+      <footer class="block-cta">
+        <h3>I can train your team;<br>
+          <strong><a href="#contact" data-service="instructor">Get in touch. <img class="icon" src="/img/icons/arrow.svg" alt="Arrow" /></a></strong></h3>
+      </footer>
+      <section class="engagement">
+        <div class="video image-header">
+          <div class="background background-collage">
+            <img class="collage-image lazyload" data-src="/img/cohort.jpg" alt="Jonathan Lee Martin graduates a group of career switchers after a 16-week bootcamp" />
+            <img class="collage-image lazyload" data-src="/img/debugger-ducks.jpg" alt="A student uses her debugger ducks to solve problems at a 16-week bootcamp" />
+          </div>
+          <header class="content">
+            <h2>DigitalCrafts</h2>
+            <p><strong>Full Stack Immersive Web</strong>
+              <br>16-week bootcamp for career switchers.</p>
+          </header>
+        </div>
+        <h3>Career Switchers</h3>
+        <p>I worked with 120+ career switchers through their 480-hour journey to becoming junior web developers at <strong>Atlanta’s #1 rated coding school.</strong></p>
+        <p><strong>Topics:</strong> Python, JavaScript, Node, React, Redux, TDD, pair programming, Git workflows, Agile + collaboration professional skills, and (much) more.</p>
+      </section>
+      <section class="engagement">
+        <div class="video image-header">
+          <img class="background lazyload" data-src="/img/corporate-training-2.jpg" alt="Jonathan Lee Martin graduates a group of developers after a 5-day corporate bootcamp in New York City" />
+          <header class="content">
+            <h2>Big Nerd Ranch</h2>
+            <p><strong>Front-End Web Development</strong>
+              <br>5-day bootcamps for mid-to-senior developers</p>
+          </header>
+        </div>
+        <h3>Corporate Training</h3>
+        <p>I trained mid-to-senior developers from <strong>Fortune 100 companies</strong> like <strong>NASA</strong> and <strong>HP</strong> in 5-day intensive bootcamps.</p>
+        <p><strong>Topics:</strong> ES5–ES2017 JavaScript, Ember.js, React, Node, HTML5 + CSS3, Progressive Web App APIs, TDD (Mocha + Chai), design patterns, functional programming.</p>
+      </section>
+    </div>
+  </section>
+
+  <section class="block verbatim approach" id="approach">
+    <div class="content">
+      <h2>Approach</h2>
+      <p class="big"><strong>Pedagogy: the art, method and practice of teaching.</strong></p>
+      <p>When courses emphasize topic scope without regard to pedagogical approach, the result is a grab bag that <strong>entertains</strong> the learner rather than <strong>educates.</strong> This model cripples developers in both the workplace and classroom.</p>
+      <p>Over the last six years of training developers, I’ve iterated on a pedagogical approach that blends industry-leading best practices with a highly collaborative learning environment:</p>
       <ul>
-        <li><a href="#developer">Developer</a></li>
-        <li><a href="#author">Author</a></li>
-        <li><a href="#educator">Educator</a></li>
-        <li><a href="#photographer">Photographer</a></li>
-        <li><a href="#nomad">Nomad</a></li>
+        <li><strong>Failure is the most effective teacher.</strong> Therefore, provide an environment that rewards failure and fearless curiosity.</li>
+        <li><strong>A teacher is a learning facilitator.</strong> Therefore, facilitate self-discovery and follow with reinforcement.</li>
+        <li><strong>Active learning is hard.</strong> Therefore, teach and apply one concept at a time to minimize cognitive load and promote contextual learning.</li>
+        <li><strong>Exhaustive knowledge has a brief shelf life.</strong> Therefore, emphasize best practices and transmutable concepts over comprehensive scope.</li>
+        <li><strong>Quality is inversely proportional to length.</strong> Therefore, be concise: it’s kindness in practice.</li>
+        <li><strong>Learners are infinitely intelligent.</strong> Therefore, exercise their ability to generalize concepts and apply in new contexts.</li>
+        <li><strong>Blatant magic hinders the learner.</strong> Therefore, avoid or dispel magic by first building it from scratch.</li>
+        <li><strong>Premature abstraction produces impractical code.</strong> Therefore, only derive the abstract after the concrete.</li>
+        <li><strong>Topics can be learned quickly; intuition takes a lifetime.</strong> Therefore, aim to transfer intuition — not concepts.</li>
+
       </ul>
-    </nav>
-    <section class="page page-light software" id="developer">
-      <h1 class="headline">
-        <span class="line drop">I <a href="#consulting">craft</a> exceptional software,</span>
-        <span class="line drop">and <a href="#educator">teach</a> others to do the same.</span>
-      </h1>
-      <p class="body">As an educator, author and developer, my passion is to help developers craft their best work, achieve their personal &amp; professional goals, and grow without bounds.</p>
-    </section>
-    <section class="grid">
-      <section class="card card-dark" id="tldr" data-span="12" style="background-color: #FF5370">
-        <div class="backdrop backdrop-image">
-          <img class="backdrop-image lazyload" data-src="img/tldr.png" alt="Functional Design Patterns for Express.js" style="object-position: 90% center; height: 35%; object-fit: contain;">
-        </div>
-        <a class="card-anchor" aria-hidden="true" href="https://jonathanleemartin.com/tldr/"></a>
-        <div class="content content-spacey">
-          <h2 class="underline">Teaching design<br />at the speed of TL;DR</h2>
-          <p class="body">Rapid JavaScript codecasts for working web developers. <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/channel/UCol-gOYBawJGqUn2AhwxhNg">Head to YouTube</a> or <a href="https://jonathanleemartin.com/tldr/">read a transcript</a>.</p>
-        </div>
-      </section>
-      <section class="card card-dark" id="author" data-span="12" style="background-color: var(--blue)">
-        <div class="backdrop backdrop-image">
-          <img class="backdrop-image lazyload" data-src="img/express.jpg" alt="Functional Design Patterns for Express.js">
-        </div>
-        <a class="card-anchor" aria-hidden="true" rel="noopener" target="_blank" href="https://jonathanleemartin.com/books/"></a>
-        <div class="content" style="padding-right:40%;">
-          <h2 class="underline">Writing about<br />software design patterns</h2>
-          <p class="body">Author of the <small>#1 new release</small> <a rel="noopener noreferrer" target="_blank" href="https://jonathanleemartin.com/books/">Functional Design Patterns for Express.js</a>: <em>A step-by-step guide to building elegant, maintainable Node.js backends.</em></p>
-        </div>
-      </section>
-      <section class="card card-light" id="educator" data-span="12" style="background-color: var(--paisley)">
-        <div class="content">
-          <h2 class="underline">Training web developers<br /> at DigitalCrafts</h2>
-          <p class="body">I guide 100+ students through their 480-hour journey in JavaScript, Node and React at <a rel="noopener noreferrer" target="_blank" href="https://www.digitalcrafts.com/">Atlanta’s #1 rated coding bootcamp</a>.</p>
-          <blockquote class="body quote">Jonathan reaches his hand into your soul and finds the question you were trying to ask even though you didn’t have the words for it.</blockquote>
-        </div>
-      </section>
-      <section class="card card-dark card-gradient" id="speaking" data-span="6">
-        <div class="backdrop backdrop-fade">
-          <img class="backdrop-image lazyload" data-src="img/budapest.jpg" alt="Jonathan Martin speaking at JSConf Budapest">
-        </div>
-        <div class="content content-spacey">
-          <h2 class="underline">Speaking at conferences<br /> around the world</h2>
-          <p class="body">Sharing makes everyone better. I’m a frequent speaker at international conferences and local meetups on web tech, design patterns and professional skills.</p>
-          <blockquote class="body quote">
-            <a rel="noopener noreferrer" target="_blank" href="https://vimeo.com/223983123">Does the network seem thin up here? Collaborating with CRDTs & mountaintop mesh networks.</a>
-            <h3>@NDC Oslo</h3>
-          </blockquote>
-          <blockquote class="body quote">
-            <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/watch?v=726eZyVtC0Y">Async patterns to scale your multicore JavaScript… elegantly.</a>
-            <h3>@JSConf Budapest</h3>
-          </blockquote>
-        </div>
-      </section>
-      <section class="card card-light" id="tech-writing" data-span="6" style="background-color: var(--pink)">
-        <div class="content">
-          <h2 class="underline">Writing about the<br /> evergreen web</h2>
-          <p class="body"><a rel="noopener" target="_blank" href='/blog/'>Avid blogger</a>, well shared in newsletters like <a rel="noopener noreferrer" target="_blank" href='http://javascriptweekly.com/issues/318'>JavaScript Weekly</a>, <a rel="noopener noreferrer" target="_blank" href='http://reactjsnewsletter.com/issues/78'>React.js Newsletter</a> and <a rel="noopener noreferrer" target="_blank" href='https://react.statuscode.com/issues/50'>React Status</a>.</p>
-          <blockquote class="body quote"><a rel="noopener" target="_blank" href="/blog/destroy-all-classes-turn-react-components-inside-out-with-functional-programming/">Turn React Components Inside Out with Functional Programming</a></blockquote>
-          <blockquote class="body quote"><a rel="noopener" target="_blank" href="/blog/cross-stitching-elegant-concurrency-patterns-for-javascript/">Cross Stitching: Elegant Concurrency Patterns for JavaScript</a></blockquote>
-          <blockquote class="body quote"><a rel="noopener" target="_blank" href="/blog/encore-javascript-create-an-mp3-reader-with-dataviews-textdecoder/">Encore, JavaScript! Create an MP3 reader with DataViews + TextDecoder.</a></blockquote>
-        </div>
-      </section>
-      <section class="card card-dark" id="consulting" data-span="12" style="background-color: var(--purple)">
-        <div class="content">
-          <h2 class="underline">Spreading best practices<br /> at Big Nerd Ranch</h2>
-          <p class="body">Best practices go beyond code: <em>they demonstrate kindness.</em> I reworked our course and blog toolchains to demolish barriers for new authors, and <a rel="noopener" target="_blank" href='/blog/metrics-metrics-how-we-improved-website-performance-part-1/'>cut load time</a> for our readers by 2–4x.</p>
-          <p class="body">I collaborated on hardware projects like <a rel="noopener noreferrer" target="_blank" href='https://github.com/nybblr/remotebot'>Remotebot</a> — a kindly Arduino Slackbot that helps foster a remote-first work culture — and <a rel="noopener noreferrer" target="_blank" href='https://www.bignerdranch.com/blog/clash-of-the-coders-2017-winners/'>Course Correct</a>, an augmented reality web app to aid instructors.</p>
-        </div>
-      </section>
-    </section>
-    <section class="page page-light travel" id="photographer">
-      <h1 class="headline">
-        <span class="line drop">I <a href="#travel">travel</a> the world</span>
-        <span class="line drop">as a <a href="#photography">landscape photographer</a>.</span>
-      </h1>
-      <p class="body">Five years ago, I hated travel. Today, I’m taking a <a rel="noopener" target="_blank" href='https://www.yellowscale.com/im-going-on-a-travel-sabbatical-and-you-can-too/'>year long travel sabbatical</a> to photograph landscapes around the world. I blog about these escapades on <a rel="noopener" target="_blank" href="https://www.yellowscale.com/">Yellowscale</a>, my travel and photography brand.</p>
-    </section>
-    <section class="grid">
-      <section class="card card-dark" id="travel" data-span="12" style="background-color: var(--paisley)">
-        <iframe class="backdrop backdrop-map lazyload" style="pointer-events:none" title="Map of Europe" data-src="https://www.openstreetmap.org/export/embed.html?bbox=-366.946406364441%2C49.43369641249455%2C-353.872675895691%2C54.63683984957628&amp;layer=mapnik"></iframe>
-        <div class="content content-backdrop">
-          <h2 class="underline">Traveling the world<br /> to discover unique landscapes</h2>
-          <p class="body">Amazing landscapes begin with stunning locations, and they won’t be found in cities or bucket list tourist destinations. By day I work as a developer and international trainer, but at twilight I scale mountains to <a rel="noopener noreferrer" target="_blank" href="https://fstoppers.com/originals/how-discover-unique-landscape-photography-spots-takeoff-238487">discover unique landscapes</a>.</p>
-        </div>
-      </section>
-      <section class="card card-light" id="writing" data-span="6" style="background-color: var(--paisley)">
-        <div class="content">
-          <h2 class="underline">Writing at Fstoppers<br /> & Digital Photography School</h2>
-          <p class="body">Staff writer for <a rel="noopener noreferrer" target="_blank" href="https://fstoppers.com/profile/133626/articles">Fstoppers</a> and guest author at <a rel="noopener noreferrer" target="_blank" href="https://digital-photography-school.com/author/jonathan-martin/">Digital Photography School</a>.</p>
-          <blockquote class="body quote">
-            <a rel="noopener noreferrer" target="_blank" href="https://fstoppers.com/education/lessons-shooting-landscapes-my-first-ultra-wide-lens-257408">Lessons From Shooting Landscapes With My First Ultra-Wide Lens</a>
-            <h3>@Fstoppers</h3>
-          </blockquote>
-          <blockquote class="body quote">
-            <a rel="noopener noreferrer" target="_blank" href="https://digital-photography-school.com/neutral-tones-realistic-edits-landscape-photos/">Use Neutral Tones to Craft Realistic Edits for Landscape Photos</a>
-            <h3>@Digital Photography School</h3>
-          </blockquote>
-        </div>
-      </section>
-      <section class="card card-dark" id="blogging" data-span="6" style="background-color: var(--purple)">
-        <div class="content">
-          <h2 class="underline">Vlogs &amp; tutorials<br /> on Yellowscale</h2>
-          <p class="body">Lighten your load. <em>Go further.</em> Minimalist travel tips and landscape photography tutorials every week on <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/c/Yellowscale">YouTube</a>.</p>
-          <blockquote class="body quote">
-            <a rel="noopener" target="_blank" href="https://www.yellowscale.com/how-neutral-tones-unlock-believable-edits-and-convey-drama/">How Neutral Tones Unlock Believable Edits and Convey Drama</a>
-          </blockquote>
-          <blockquote class="body quote">
-            <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/watch?v=woq3rZZsC1g">Struggling With a Photo? Turn It Upside Down!</a>
-          </blockquote>
-          <div class="no-inset">
-            <div class="video-wrapper">
-              <iframe class="video lazyload" title="Neutral Tones" data-src="https://www.youtube.com/embed/PCCTHmoSmsc?autoplay=1&showinfo=0&controls=1&modestbranding=1&autohide=1&rel=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
+      <p>Like a well-designed app, good pedagogy becomes a transparent part of the learning process by removing obstacles to learning — including itself.</p>
+    </div>
+  </section>
+
+  <section class="block block-invert contact-form" id="contact">
+    <div class="content">
+      <h2>Get in touch.</h2>
+      <p class="big">Drop me an email at<br>
+      <strong><a href="mailto:hello@jonathanleemartin.com">hello@jonathanleemartin.com <img class="icon" src="/img/icons/arrow.svg" alt="Arrow" /></a></strong></p>
+      <form class="form" action="https://formspree.io/xpzzdope" method="POST">
+        <header class="form-header">
+          <p class="big">Or answer a few questions to<br>
+          <strong>Let me know how I can help:</strong></p>
+        </header>
+        <div class="radio-button-group">
+          <div class="radio-button">
+            <input type="radio"
+                   checked="checked"
+                   name="service"
+                   data-service="instructor"
+                   id="contact-service-instructor"
+                   value="We need a bootcamp instructor.">
+            <label for="contact-service-instructor">We need a bootcamp instructor.</label>
+          </div>
+          <div class="radio-button">
+            <input type="radio"
+                   name="service"
+                   data-service="speaker"
+                   id="contact-service-speaker"
+                   value="We need a speaker.">
+            <label for="contact-service-speaker">We need a speaker.</label>
+          </div>
+          <div class="radio-button">
+            <input type="radio"
+                   name="service"
+                   data-service="author"
+                   id="contact-service-author"
+                   value="We need help authoring content.">
+            <label for="contact-service-author">We need help authoring content.</label>
+          </div>
+          <div class="radio-button">
+            <input type="radio"
+                   name="service"
+                   data-service="other"
+                   id="contact-service-other"
+                   value="We need something else…">
+            <label for="contact-service-other">We need something else…</label>
           </div>
         </div>
-      </section>
-      <!-- <section class="card card&#45;dark" id="photography" data&#45;span="12" style="background&#45;color: var(&#45;&#45;black)"> -->
-      <!--   <img class="backdrop backdrop&#45;image lazyload" data&#45;src="img/roads&#45;end.jpg" alt="Sunset at Road’s End, Oregon"> -->
-      <!--   <div class="content content&#45;backdrop"> -->
-      <!--     <h2 class="underline">Around the Bend<br /> in western Oregon</h2> -->
-      <!--     <p class="body">The Pacific Northwest is filled with outstanding beauty: from deserts and the most scenic coastline in the US, to snow&#45;capped peaks and volcano craters.</p> -->
-      <!--     <p class="body"><a rel="noopener" target="_blank" href="https://www.yellowscale.com/landscape&#45;photography&#45;from&#45;my&#45;15&#45;day&#45;trip&#45;through&#45;western&#45;oregon/">I spent 15 days in western Oregon</a> shooting landscapes by twilight, starting with Mt. Hood at the Columbia River Gorge and Mt. Bachelor just outside Bend.</p> -->
-      <!--   </div> -->
-      <!-- </section> -->
-      <!-- <section class="card card&#45;dark" data&#45;span="6" style="background&#45;color: var(&#45;&#45;black)"> -->
-      <!--   <img class="backdrop backdrop&#45;image lazyload" data&#45;src="img/snowdonia.jpg" alt="Mist over a lake in Snowdonia National Park, Wales"> -->
-      <!--   <div class="content content&#45;backdrop"> -->
-      <!--     <h2 class="underline">Brooding landscapes<br /> in the United Kingdom</h2> -->
-      <!--     <p class="body">Most travelers know of Ireland’s rugged beauty, but it’s the Welsh mountains and coastline that remain the hidden gem of the British Isles.</p> -->
-      <!--     <p class="body"><a rel="noopener" target="_blank" href='https://www.yellowscale.com/photo&#45;journal&#45;south&#45;stack&#45;lighthouse&#45;in&#45;wales/'>Snowdonia National Park</a> in North Wales echoes the brooding atmosphere of the Scottish Highlands mixed with the breathtaking scale of the Alps.</p> -->
-      <!--   </div> -->
-      <!-- </section> -->
-      <!-- <section class="card card&#45;dark" data&#45;span="6" style="background&#45;color: var(&#45;&#45;black)"> -->
-      <!--   <img class="backdrop backdrop&#45;image lazyload" data&#45;src="img/geroldsee.jpg" alt="Chalet against a backdrop of the Alps in Geroldsee, Bavaria"> -->
-      <!--   <div class="content content&#45;backdrop"> -->
-      <!--     <h2 class="underline">The Alps: Europe’s region of outstanding beauty</h2> -->
-      <!--     <p class="body">No region in the world carries the same breathtaking scale and snow&#45;capped magic of this 1,200 km mountain range.</p> -->
-      <!--     <p class="body"><a rel="noopener noreferrer" target="_blank" href='https://www.flickr.com/photos/nybblr/albums/72157672435569973'>See the amazing diversity of the Alps</a> from the Jungfrau in Switzerland, to Tre Cime in the Italian Dolomites.</p> -->
-      <!--   </div> -->
-      <!-- </section> -->
-      <section class="card card-dark" id="portfolio" data-span="12" style="background-color: var(--black)">
-        <div class="content content-backdrop">
-          <h2 class="underline center">Follow the year long adventure<br /> around the world</h2>
-          <p class="body">Head to <a rel="noopener" target="_blank" href="https://www.yellowscale.com/">Yellowscale</a> for landscape photography from a growing list of countries: Scotland. Wales. Ireland. England. Italy. Germany. Austria. Switzerland. Norway. Hungary. Poland.</p>
-          <ul class="social">
-            <li>
-              <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/c/Yellowscale">
-                <svg class="icon" aria-labelledby="simpleicons-youtube-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title id="simpleicons-youtube-icon">YouTube icon</title><path class="a" d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/yellowscale">
-                <svg class="icon" aria-labelledby="simpleicons-facebook-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-facebook-icon">Facebook icon</title><path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.408.593 24 1.324 24h11.494v-9.294H9.689v-3.621h3.129V8.41c0-3.099 1.894-4.785 4.659-4.785 1.325 0 2.464.097 2.796.141v3.24h-1.921c-1.5 0-1.792.721-1.792 1.771v2.311h3.584l-.465 3.63H16.56V24h6.115c.733 0 1.325-.592 1.325-1.324V1.324C24 .593 23.408 0 22.676 0"/></svg>
-              </a>
-            </li>
-            <li>
-              <a rel="noopener noreferrer" target="_blank" href="https://www.flickr.com/photos/nybblr">
-                <svg class="icon" aria-labelledby="simpleicons-flickr-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-flickr-icon">Flickr icon</title><path d="M0 12c0 3.074 2.494 5.564 5.565 5.564 3.075 0 5.569-2.49 5.569-5.564S8.641 6.436 5.565 6.436C2.495 6.436 0 8.926 0 12zm12.866 0c0 3.074 2.493 5.564 5.567 5.564C21.496 17.564 24 15.074 24 12s-2.492-5.564-5.564-5.564c-3.075 0-5.57 2.49-5.57 5.564z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a rel="noopener noreferrer" target="_blank" href="https://www.instagram.com/nybblr/">
-                <svg class="icon" aria-labelledby="simpleicons-instagram-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-instagram-icon">Instagram icon</title><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
-              </a>
-            </li>
-          </ul>
+        <div class="text-input">
+          <input type="text"
+                 name="name"
+                 required
+                 class="input"
+                 placeholder="Name"
+                 id="contact-name" />
+          <label for="contact-name">What’s your name?</label>
         </div>
-      </section>
-    </section>
-    <section class="page page-light nomad" id="nomad">
-      <h1 class="headline">
-        <span class="line drop">I <a href="#motivate">motivate</a> others to pursue</span>
-        <span class="line drop">their <a href="#goals">goals</a> with intentionality.</span>
-      </h1>
-      <p class="body">Lighten your load. <em>Go further.</em> The digital nomad lifestyle enables travel and remote work, but the defining characteristics are <em>intentionality</em> and <em>freedom.</em> It’s about <a rel="noopener" target="_blank" href="https://www.yellowscale.com/the-digital-nomad-lifestyle-is-more-about-freedom-and-less-about-travel/">aligning your time and money with your priorities</a> — whether or not you travel full-time.</p>
-    </section>
-    <section class="grid">
-      <section class="card card-light" id="motivate" data-span="12" style="background-color: var(--paisley)">
-        <!-- <a class="card&#45;anchor" aria&#45;hidden="true" rel="noopener" target="_blank" href="https://www.yellowscale.com/your&#45;map&#45;to&#45;mount&#45;nomad/"></a> -->
-        <div class="content">
-          <h2 class="underline">What is a digital nomad<br /> &amp; how do I become one?</h2>
-          <p class="body">A digital nomad leverages technology to work from anywhere. But more importantly, a nomad embraces lifestyle choices that free them to make decisions with intentionality.</p>
-          <p class="body">That won’t happen overnight, so <a rel="noopener" target="_blank" href='https://www.yellowscale.com/your-map-to-mount-nomad/'>start the journey today</a> — not tomorrow.</p>
+        <div class="text-input">
+          <input type="email"
+                 name="email"
+                 required
+                 class="input"
+                 placeholder="Email"
+                 id="contact-email" />
+          <label for="contact-email">What’s your email address?</label>
         </div>
-      </section>
-      <section class="card card-dark" data-span="6" style="background-color: var(--black)">
-        <div class="content content-backdrop">
-          <h2 class="underline">Traveling indefinitely<br /> with one carry-on bag</h2>
-          <p class="body">Honing your one bag packing will help turn your dream of traveling around the world indefinitely into reality, and now is the time for you to practice.</p>
-          <p class="body">Here’s my <a rel="noopener" target="_blank" href='https://www.yellowscale.com/ultralight-digital-nomad-packing-list/'>ultralight digital nomad packing list</a> for travel of any duration.</p>
+        <div class="text-input">
+          <textarea
+                 name="message"
+                 required
+                 class="input autogrow"
+                 rows="1"
+                 placeholder="Message"
+                 id="contact-message"
+          ></textarea>
+          <label for="contact-message">How can I help?</label>
         </div>
-      </section>
-      <!-- <section class="card card&#45;light" id="goals" data&#45;span="6" style="background&#45;color: var(&#45;&#45;pink)"> -->
-      <!--   <div class="content"> -->
-      <!--     <h2 class="underline">Cognitive biases<br /> that cripple your goals</h2> -->
-      <!--     <p class="body">Irrational behavior can make for a good laugh, but it’s no laughing matter when it prevents you from aligning your time, money and goals.</p> -->
-      <!--     <p class="body">Here’s how you can <a rel="noopener" target="_blank" href='https://www.yellowscale.com/advance&#45;your&#45;travel&#45;photography&#45;by&#45;spotting&#45;these&#45;cognitive&#45;biases/'>outwit insidious cognitive biases</a> like the Sunk Cost Fallacy and Impostor Syndrome so you can advance in your craft faster and drastically improve your productivity.</p> -->
-      <!--   </div> -->
-      <!-- </section> -->
-      <section class="card card-light" id="goals" data-span="6" style="background-color: var(--pink)">
-        <div class="content">
-          <h2 class="underline">Accomplish your goals<br /> on a travel sabbatical</h2>
-          <p class="body">What if you could take a year long travel sabbatical? I’m headed overseas to invest in landscape photography — <a rel="noopener" target="_blank" href='https://www.yellowscale.com/how-to-make-a-sabbatical-the-best-investment-of-your-life/'>and you can too</a>!</p>
-          <div class="no-inset">
-            <div class="video-wrapper">
-              <iframe class="video lazyload" title="Travel Sabbatical" data-src="https://www.youtube.com/embed/NctUN4id-yo?autoplay=1&showinfo=0&controls=1&modestbranding=1&autohide=1&rel=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="card card-dark" data-span="12" style="background-color: var(--purple)">
-        <div class="content">
-          <h2 class="underline">Funding full-time travel<br /> with your tax return</h2>
-          <p class="body">Imagine working remotely from the Alps, living in B&amp;Bs full-time as a location independent consultant. Sound like a dream only Phileas Fogg could realize?</p>
-          <p class="body">As a full-time traveler, you can substantially reduce your US tax burden by claiming the Foreign Earned Income Exclusion on your tax return! Learn <a rel="noopener" target="_blank" href='https://www.yellowscale.com/want-to-travel-full-time-your-us-tax-return-might-fund-a-year-off-the-grid/'>how tax day works for digital nomads</a>.</p>
-        </div>
-      </section>
-    </section>
-    <section class="page page-light contact" id="connect">
-      <h1 class="headline">
-        <span class="line drop">Let’s do something <a href="mailto:hello@jonathanleemartin.com">together</a>.</span>
-      </h1>
-      <p class="body">I love collaborating with others! Say hi at <a href='mailto:hello@jonathanleemartin.com' target='_blank' >hello@jonathanleemartin.com</a> or reach out on social media.</p>
-      <ul class="social social-small">
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/c/Yellowscale">
-            <svg class="icon" aria-labelledby="simpleicons-youtube-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title id="simpleicons-youtube-icon">YouTube icon</title><path class="a" d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-          </a>
-        </li>
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/yellowscale">
-            <svg class="icon" aria-labelledby="simpleicons-facebook-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-facebook-icon">Facebook icon</title><path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.408.593 24 1.324 24h11.494v-9.294H9.689v-3.621h3.129V8.41c0-3.099 1.894-4.785 4.659-4.785 1.325 0 2.464.097 2.796.141v3.24h-1.921c-1.5 0-1.792.721-1.792 1.771v2.311h3.584l-.465 3.63H16.56V24h6.115c.733 0 1.325-.592 1.325-1.324V1.324C24 .593 23.408 0 22.676 0"/></svg>
-          </a>
-        </li>
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://twitter.com/nybblr">
-            <svg class="icon" aria-labelledby="simpleicons-twitter-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-twitter-icon">Twitter icon</title><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/></svg>
-          </a>
-        </li>
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://github.com/nybblr">
-            <svg class="icon" aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-github-icon">GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          </a>
-        </li>
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.linkedin.com/in/nybblr/">
-            <svg class="icon" aria-labelledby="simpleicons-linkedin-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-linkedin-icon">LinkedIn icon</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-        </li>
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.flickr.com/photos/nybblr">
-            <svg class="icon" aria-labelledby="simpleicons-flickr-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-flickr-icon">Flickr icon</title><path d="M0 12c0 3.074 2.494 5.564 5.565 5.564 3.075 0 5.569-2.49 5.569-5.564S8.641 6.436 5.565 6.436C2.495 6.436 0 8.926 0 12zm12.866 0c0 3.074 2.493 5.564 5.567 5.564C21.496 17.564 24 15.074 24 12s-2.492-5.564-5.564-5.564c-3.075 0-5.57 2.49-5.57 5.564z"/></svg>
-          </a>
-        </li>
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.instagram.com/nybblr/">
-            <svg class="icon" aria-labelledby="simpleicons-instagram-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-instagram-icon">Instagram icon</title><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
-          </a>
-        </li>
-      </ul>
-    </section>
-    <script src="build/bundle.js"></script>
-  </body>
+        <button type="submit" class="button">Get in touch. <img class="icon" src="/img/icons/arrow.svg" alt="Arrow" /></button>
+      </form>
+    </div>
+  </section>
+
+  </article>
+
+  <script src="https://unpkg.com/autosize@4.0.2/dist/autosize.min.js"></script>
+  <script src="/build/index.js"></script>
+</body>
 </html>
