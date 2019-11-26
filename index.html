@@ -67,6 +67,19 @@
     gtag('js', new Date());
     gtag('config', 'UA-30173272-6');
   </script>
+
+  <!-- Catch those bots -->
+  <style type="text/css">
+    .ohnohoney {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 0;
+      width: 0;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body class="js-scroll-body">
   <nav class="menus js-menu">
@@ -380,6 +393,7 @@
           <label for="contact-message">How can I help?</label>
         </div>
         <button type="submit" class="button">Get in touch. <img class="icon" src="/img/icons/arrow.svg" alt="Arrow" /></button>
+        <input class="ohnohoney" type="text" name="_gotcha">
       </form>
     </div>
   </section>
