@@ -78,7 +78,7 @@
 .background.background-collage .collage-image {
   display: block;
   width: 100%;
-  height: 100%;
+  height: inherit;
   object-fit: cover;
 }
 
